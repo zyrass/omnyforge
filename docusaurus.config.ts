@@ -2,6 +2,15 @@ import { themes as prismThemes } from 'prism-react-renderer';
 import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
+// Import conditionnel pour éviter l'erreur au premier démarrage
+let docusaurusVersion = '3.8.1'; // Version par défaut
+try {
+    const siteMetadata = require('@generated/site-metadata');
+    docusaurusVersion = siteMetadata.docusaurusVersion;
+} catch (e) {
+    // Ignore l'erreur si le fichier n'existe pas encore
+}
+
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 const config: Config = {
@@ -42,31 +51,46 @@ const config: Config = {
             'classic',
             {
                 docs: {
-                    sidebarPath: './sidebars.ts',
+                    id: 'bases-fondamentales',
+                    path: 'docs/bases-fondamentales',
+                    routeBasePath: 'bases-fondamentales',
+                    sidebarPath: './sidebars.bases.ts',
                     // Please change this to your repo.
                     // Remove this to remove the "edit this page" links.
                     editUrl:
                         'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
                 },
-                blog: {
-                    showReadingTime: true,
-                    feedOptions: {
-                        type: ['rss', 'atom'],
-                        xslt: false,
-                    },
-                    // Please change this to your repo.
-                    // Remove this to remove the "edit this page" links.
-                    editUrl:
-                        'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-                    // Useful options to enforce blogging best practices
-                    onInlineTags: 'warn',
-                    onInlineAuthors: 'warn',
-                    onUntruncatedBlogPosts: 'warn',
-                },
+                // blog: {
+                //     showReadingTime: true,
+                //     feedOptions: {
+                //         type: ['rss', 'atom'],
+                //         xslt: false,
+                //     },
+                //     // Please change this to your repo.
+                //     // Remove this to remove the "edit this page" links.
+                //     editUrl:
+                //         'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+                //     // Useful options to enforce blogging best practices
+                //     onInlineTags: 'warn',
+                //     onInlineAuthors: 'warn',
+                //     onUntruncatedBlogPosts: 'warn',
+                // },
                 theme: {
                     customCss: './src/css/custom.css',
                 },
             } satisfies Preset.Options,
+        ],
+    ],
+
+    plugins: [
+        [
+            '@docusaurus/plugin-content-docs',
+            {
+                id: 'developpements',
+                path: 'docs/developpements',
+                routeBasePath: 'developpements',
+                sidebarPath: './sidebars.dev.ts',
+            },
         ],
     ],
 
@@ -82,9 +106,17 @@ const config: Config = {
             items: [
                 {
                     type: 'docSidebar',
-                    sidebarId: 'tutorialSidebar',
-                    position: 'right',
-                    label: 'Documentation',
+                    sidebarId: 'basesSidebar',
+                    docsPluginId: 'bases-fondamentales',
+                    position: 'left',
+                    label: 'Bases Fondamentales',
+                },
+                {
+                    type: 'docSidebar',
+                    sidebarId: 'devSidebar',
+                    docsPluginId: 'developpements',
+                    position: 'left',
+                    label: 'Développements',
                 },
                 // { to: '/blog', label: 'Blog', position: 'right' },
                 {
@@ -137,7 +169,7 @@ const config: Config = {
                     ],
                 },
             ],
-            copyright: `Copyright © ${new Date().getFullYear()} Ce projet est construit avec Docusaurus.`,
+            copyright: `Copyright © ${new Date().getFullYear()} Ce projet est construit avec Docusaurus en version ${docusaurusVersion}.`,
         },
         prism: {
             theme: prismThemes.nightOwl,
