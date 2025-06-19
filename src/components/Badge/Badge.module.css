@@ -1,0 +1,28 @@
+.badge {
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    display: inline-block;
+    margin-left: 8px;
+}
+
+.beginner {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.intermediate {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.advanced {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.default {
+    background-color: #e5e7eb;
+    color: #111827;
+}

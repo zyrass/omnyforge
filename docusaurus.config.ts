@@ -54,7 +54,7 @@ const config: Config = {
                     id: 'bases-fondamentales',
                     path: 'docs/bases-fondamentales',
                     routeBasePath: 'bases-fondamentales',
-                    sidebarPath: './sidebars.bases.ts',
+                    sidebarPath: './config/sidebars.bases.ts',
                     // Please change this to your repo.
                     // Remove this to remove the "edit this page" links.
                     editUrl:
@@ -86,13 +86,82 @@ const config: Config = {
         [
             '@docusaurus/plugin-content-docs',
             {
+                id: 'admin-sys',
+                path: 'docs/admin-sys',
+                routeBasePath: 'admin-sys',
+                sidebarPath: './config/sidebars.admin-sys.ts',
+            },
+        ],
+        [
+            '@docusaurus/plugin-content-docs',
+            {
+                id: 'admin-reseau',
+                path: 'docs/admin-reseau',
+                routeBasePath: 'admin-reseau',
+                sidebarPath: './config/sidebars.admin-reseau.ts',
+            },
+        ],
+        [
+            '@docusaurus/plugin-content-docs',
+            {
                 id: 'developpements',
                 path: 'docs/developpements',
                 routeBasePath: 'developpements',
-                sidebarPath: './sidebars.dev.ts',
+                sidebarPath: './config/sidebars.dev.ts',
+            },
+        ],
+        [
+            '@docusaurus/plugin-content-docs',
+            {
+                id: 'devsecops',
+                path: 'docs/devsecops',
+                routeBasePath: 'devsecops',
+                sidebarPath: './config/sidebars.devsecops.ts',
+            },
+        ],
+        [
+            '@docusaurus/plugin-content-docs',
+            {
+                id: 'cloud',
+                path: 'docs/cloud',
+                routeBasePath: 'cloud',
+                sidebarPath: './config/sidebars.cloud.ts',
+            },
+        ],
+        [
+            '@docusaurus/plugin-content-docs',
+            {
+                id: 'cybersecurity',
+                path: 'docs/cybersecurity',
+                routeBasePath: 'cybersecurity',
+                sidebarPath: './config/sidebars.cyber.ts',
+            },
+        ],
+        [
+            '@docusaurus/plugin-content-docs',
+            {
+                id: 'glossaire-it',
+                path: 'docs/glossaire-it',
+                routeBasePath: 'glossaire-it',
+                sidebarPath: './config/sidebars.glossaire-it.ts',
+            },
+        ],
+        [
+            '@docusaurus/plugin-content-docs',
+            {
+                id: 'it-akademy',
+                path: 'docs/it-akademy',
+                routeBasePath: 'it-akademy',
+                sidebarPath: './config/sidebars.it-akademy.ts',
             },
         ],
     ],
+
+    themes: ['@docusaurus/theme-mermaid'],
+
+    markdown: {
+        mermaid: true,
+    },
 
     themeConfig: {
         // Replace with your project's social card
@@ -113,10 +182,60 @@ const config: Config = {
                 },
                 {
                     type: 'docSidebar',
+                    sidebarId: 'adminSysSidebar',
+                    docsPluginId: 'admin-sys',
+                    position: 'left',
+                    label: 'Administration Système',
+                },
+                {
+                    type: 'docSidebar',
+                    sidebarId: 'adminReseauSidebar',
+                    docsPluginId: 'admin-reseau',
+                    position: 'left',
+                    label: 'Administration Réseau',
+                },
+                {
+                    type: 'docSidebar',
                     sidebarId: 'devSidebar',
                     docsPluginId: 'developpements',
                     position: 'left',
                     label: 'Développements',
+                },
+                {
+                    type: 'docSidebar',
+                    sidebarId: 'cloudSidebar',
+                    docsPluginId: 'cloud',
+                    position: 'left',
+                    label: 'Cloud',
+                },
+                {
+                    type: 'docSidebar',
+                    sidebarId: 'devsecopsSidebar',
+                    docsPluginId: 'devsecops',
+                    position: 'left',
+                    label: 'DevSecOps',
+                },
+                {
+                    type: 'docSidebar',
+                    sidebarId: 'cyberSidebar',
+                    docsPluginId: 'cybersecurity',
+                    position: 'left',
+                    label: 'Cybersécurité',
+                },
+
+                {
+                    type: 'docSidebar',
+                    sidebarId: 'glossaireItSidebar',
+                    docsPluginId: 'glossaire-it',
+                    position: 'right',
+                    label: 'Glossaire IT',
+                },
+                {
+                    type: 'docSidebar',
+                    sidebarId: 'itAkademySidebar',
+                    docsPluginId: 'it-akademy',
+                    position: 'right',
+                    label: 'IT-Akademy',
                 },
                 // { to: '/blog', label: 'Blog', position: 'right' },
                 {

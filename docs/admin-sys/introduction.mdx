@@ -1,0 +1,208 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import Badge from '@site/src/components/Badge';
+
+# Introduction
+
+## Administration Système (Linux & Windows) <Badge niveau="Intermédiaire" />
+
+**Objectif :** Comprendre, configurer et automatiser un système Linux ou Windows en environnement professionnel<br />
+(_les processus, les permissions, les services_)
+
+:::tip Objectif pédagogique
+Être capable de **gérer un système d’exploitation Linux/Windows**, automatiser certaines tâches, comprendre la structure du système, gérer les services et sécuriser les accès.
+:::
+
+<br />
+
+---
+
+## Sommaire
+
+-   [1. Introduction](#1-introduction)
+-   [2. Pré-requis](#2-pré-requis)
+-   [3. Concepts fondamentaux](#3-concepts-fondamentaux)
+-   [4. Cas pratiques Linux](#4-cas-pratiques-linux)
+-   [5. Vagrant pour simuler un système](#5-vagrant-pour-simuler-un-système)
+-   [6. Quiz & récapitulatif](#6-quiz--récapitulatif)
+-   [7. Pour aller plus loin](#7-pour-aller-plus-loin)
+
+<br />
+
+---
+
+## 1. Introduction
+
+> L’administration système est le **socle de toute infrastructure** informatique. Elle permet de comprendre et maîtriser le fonctionnement de la
+> machine, ce qui est indispensable pour la cybersécurité, le cloud et le développement.
+
+> 💡 C’est la fondation de tout. Sans ça, tu ne pourras pas sécuriser ou automatiser correctement.
+
+**Concepts clés :**
+
+-   Système de fichiers Linux (ext4, mount, fstab)
+-   Gestion des utilisateurs/groupes/permissions (chmod, chown)
+-   Services (systemd, journalctl, cron, bash)
+-   Scripting Shell (Bash)
+-   Virtualisation légère (WSL, LXC, KVM)
+
+Parfait ! Voici le **fichier MDX pour le module “Administration Système”**, dans un format **accessibilité pédagogique** mais avec une **approche rigoureuse et professionnelle**, prêt à être intégré dans ton site `Omnyforge`.
+
+## 2. Pré-requis
+
+| Compétence                          | Recommandé    |
+| ----------------------------------- | ------------- |
+| Savoir utiliser un terminal         | ✅ Oui        |
+| Connaître quelques commandes Linux  | ⚠️ Recommandé |
+| Avoir un PC avec VirtualBox ou WSL2 | ✅ Idéal      |
+
+---
+
+## 3. Concepts fondamentaux
+
+### Structure d’un système Linux
+
+```bash
+/
+├── bin/       # Commandes de base (ls, cp...)
+├── etc/       # Fichiers de configuration
+├── home/      # Dossiers utilisateurs
+├── var/       # Logs et données variables
+├── usr/       # Programmes installés
+├── root/      # Dossier de l'utilisateur root
+```
+
+### 🔁 Gestion des utilisateurs
+
+```bash
+adduser alice           # Crée un utilisateur
+passwd alice            # Définit un mot de passe
+usermod -aG sudo alice  # Ajoute alice au groupe sudo
+```
+
+> 💡 **Les groupes** permettent de gérer les droits en lot. Utilise `/etc/sudoers` pour restreindre finement.
+
+### 🔥 Services & journalisation
+
+```bash
+systemctl status sshd     # État du service SSH
+journalctl -u sshd        # Logs du service SSH
+```
+
+> 📌 Utilise `systemd` pour activer/désactiver des services au démarrage.
+
+<br />
+
+---
+
+## 4. 🧪 Cas pratiques Linux
+
+### 🎯 Objectif : créer un utilisateur et sécuriser l’accès SSH
+
+```bash
+# Créer l’utilisateur
+sudo adduser devuser
+
+# Activer l’authentification par clé SSH uniquement
+sudo nano /etc/ssh/sshd_config
+# Modifie :
+# PasswordAuthentication no
+# PermitRootLogin no
+
+sudo systemctl restart sshd
+```
+
+> 🔐 **Conseil pro** : Ne jamais exposer SSH avec `root` accessible ou un port standard sans fail2ban ou clés RSA.
+
+---
+
+## 5. ⚙️ Vagrant pour simuler un système
+
+> 🧪 Vagrant est un outil pour créer des VM reproductibles en quelques lignes. C’est **idéal pour tester des configurations** système ou réseau.
+
+### ✅ Exemple : créer une VM Ubuntu 24.04 avec Vagrant + VirtualBox
+
+```bash
+vagrant init ubuntu/bionic64
+```
+
+📄 Remplace le contenu de `Vagrantfile` :
+
+```ruby
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/bionic64"
+  config.vm.network "private_network", ip: "192.168.56.10"
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "2048"
+    vb.cpus = 2
+  end
+  config.vm.provision "shell", inline: <<-SHELL
+    apt update && apt install -y nginx
+  SHELL
+end
+```
+
+Puis :
+
+```bash
+vagrant up       # Lance la VM
+vagrant ssh      # Se connecter à la VM
+```
+
+> 🎯 Tu peux ainsi **tester un déploiement, du hardening, ou un fichier `ansible` localement.**
+
+---
+
+## 6. 🧠 Quiz & récapitulatif
+
+### ✅ Questions clés
+
+1. Quelle est la différence entre `systemctl stop` et `disable` ?
+2. Quel fichier contient les mots de passe hashés ?
+3. Quelle commande pour voir les ports ouverts ?
+4. Quelle est la commande pour afficher l'espace disque ?
+
+---
+
+## 7. 🔁 Pour aller plus loin
+
+-   [Documentation Debian Admin](https://wiki.debian.org/fr/SystemAdministration)
+-   [Arch Linux Systemd Guide](https://wiki.archlinux.org/title/systemd)
+-   [Guide Vagrant](https://developer.hashicorp.com/vagrant/docs)
+-   [Module suivant → Administration Réseau](../administration-reseau)
+
+---
+
+🖥️ Administration système (96/100)
+Systèmes d'exploitation avancés
+
+Gestion des processus : scheduling, IPC, signaux, daemon
+Gestion mémoire : pagination, segmentation, swap, optimization
+Systèmes de fichiers : ext4, XFS, ZFS, RAID, LVM, quotas
+Gestion utilisateurs : sudo, ACL, PAM, LDAP, Kerberos
+
+Services et démons
+
+Systemd : units, targets, timers, journald
+Réseau système : interfaces, routing tables, iptables/nftables
+Package management : APT, YUM, compilation from source
+Cron/scheduling : crontab, anacron, systemd timers
+
+Sécurité et hardening
+
+Durcissement : SELinux/AppArmor, fail2ban, SSH hardening
+Audit : auditd, logs analysis, compliance (CIS benchmarks)
+Chiffrement : LUKS, filesystem encryption, secure boot
+
+Monitoring et performance
+
+Métriques : CPU, RAM, I/O, réseau, processus
+Outils : htop, iotop, netstat, ss, tcpdump, strace
+Logs : rsyslog, journald, rotation, centralisation
+Troubleshooting : méthodologie, outils de diagnostic
+
+Virtualisation et containers
+
+Hyperviseurs : KVM, Xen, VMware, gestion des ressources
+Backup/restore : stratégies, automatisation, tests de restauration
+Haute disponibilité : clustering, failover, load balancing
