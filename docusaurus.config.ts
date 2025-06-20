@@ -149,10 +149,10 @@ const config: Config = {
         [
             '@docusaurus/plugin-content-docs',
             {
-                id: 'it-akademy',
-                path: 'docs/it-akademy',
-                routeBasePath: 'it-akademy',
-                sidebarPath: './config/sidebars.it-akademy.ts',
+                id: 'omnylearn',
+                path: 'docs/omnylearn',
+                routeBasePath: 'omnylearn',
+                sidebarPath: './config/sidebars.omnylearn.ts',
             },
         ],
     ],
@@ -169,8 +169,9 @@ const config: Config = {
         navbar: {
             title: 'Omnyforge',
             logo: {
-                alt: 'My Site Logo',
-                src: 'img/logo.svg',
+                alt: 'Le logo du site adapté avec le darkmode',
+                src: 'img/logo-omnyforge.svg',
+                srcDark: 'img/logo-omnyforge-dark.svg',
             },
             items: [
                 {
@@ -232,10 +233,10 @@ const config: Config = {
                 },
                 {
                     type: 'docSidebar',
-                    sidebarId: 'itAkademySidebar',
-                    docsPluginId: 'it-akademy',
+                    sidebarId: 'omnylearnSidebar',
+                    docsPluginId: 'omnylearn',
                     position: 'right',
-                    label: 'IT-Akademy',
+                    label: 'OmnyLearn',
                 },
                 // { to: '/blog', label: 'Blog', position: 'right' },
                 {

@@ -103,6 +103,27 @@ const sidebars: SidebarsConfig = {
                 },
             ],
         },
+        {
+            type: 'category',
+            label: 'Stack',
+            items: [
+                {
+                    type: 'category',
+                    label: 'MERN',
+                    items: ['stack/mern/introduction'],
+                },
+                {
+                    type: 'category',
+                    label: 'MEAN',
+                    items: ['stack/mean/introduction'],
+                },
+                {
+                    type: 'category',
+                    label: 'TALL',
+                    items: ['stack/tall/introduction'],
+                },
+            ],
+        },
     ],
 };
 
