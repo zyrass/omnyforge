@@ -1,0 +1,2231 @@
+import Badge from '../../../../src/components/Badge';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Markdown : Intermédiaire
+
+:::note
+**Temps de lecture :** 45 minutes  
+**Objectif :** Maîtriser les fonctionnalités avancées pour une utilisation professionnelle
+:::
+
+## 1. Tableaux Professionnels <Badge niveau="Intermédiaire" />
+
+### 1.1 Syntaxe et Formatage
+
+Les tableaux permettent d'organiser des données de manière structurée et lisible.
+
+:::tip Bonnes Pratiques Tableaux
+
+-   **Espacement cohérent** : Aligner visuellement les `|` dans le source
+-   **En-têtes descriptifs** : Noms de colonnes clairs et précis
+-   **Données homogènes** : Même type de contenu par colonne
+-   **Taille raisonnable** : Maximum 6-8 colonnes pour la lisibilité mobile
+
+:::
+
+<Tabs>
+<TabItem value="syntaxe" label="Syntaxe de Base">
+
+```markdown
+| Colonne 1 | Colonne 2 | Colonne 3 |
+| --------- | --------- | --------- |
+| Donnée 1  | Donnée 2  | Donnée 3  |
+| Ligne 2   | Valeur 2  | Valeur 3  |
+| Ligne 3   | Valeur 4  | Valeur 5  |
+```
+
+</TabItem>
+<TabItem value="resultat" label="Résultat">
+
+| Colonne 1 | Colonne 2 | Colonne 3 |
+| --------- | --------- | --------- |
+| Donnée 1  | Donnée 2  | Donnée 3  |
+| Ligne 2   | Valeur 2  | Valeur 3  |
+| Ligne 3   | Valeur 4  | Valeur 5  |
+
+</TabItem>
+<TabItem value="alignement" label="Alignement des Colonnes">
+
+```markdown
+| Gauche | Centré | Droite |   Auto |
+| :----- | :----: | -----: | -----: |
+| Texte  | Texte  |  Texte |  Texte |
+| Aligné | Aligné | Aligné | Normal |
+| Gauche | Centre | Droite | Défaut |
+```
+
+**Légende des alignements :**
+
+-   `:---` = Alignement à gauche
+-   `:---:` = Alignement centré
+-   `---:` = Alignement à droite
+-   `---` = Alignement automatique
+
+#### Résultat
+
+| Gauche | Centré | Droite |   Auto |
+| :----- | :----: | -----: | -----: |
+| Texte  | Texte  |  Texte |  Texte |
+| Aligné | Aligné | Aligné | Normal |
+| Gauche | Centre | Droite | Défaut |
+
+</TabItem>
+<TabItem value="schema" label="Schéma de construction d'un tableau">
+
+```mermaid
+graph TB
+    A[Tableau Markdown] --> B[Ligne d'en-têtes]
+    A --> C[Ligne de séparateurs]
+    A --> D[Lignes de données]
+
+    B --> E["| Colonne 1 | Colonne 2 |"]
+    C --> F["|:---------|:---------:|"]
+    D --> G["| Donnée 1 | Donnée 2 |"]
+    D --> H["| Donnée 3 | Donnée 4 |"]
+
+    F --> I[Alignement défini ici]
+
+    style A fill:#e3f2fd
+    style C fill:#fff3c4
+    style I fill:#ffccbc
+```
+
+</TabItem>
+</Tabs>
+
+### 1.2 Tableaux Complexes et Cas d'Usage
+
+<Tabs>
+<TabItem value="technique" label="Données Techniques">
+
+```markdown
+## Comparaison des Technologies
+
+| Technologie | Performance |  Sécurité  | Complexité |  Support   |  Score |
+| ----------- | :---------: | :--------: | :--------: | :--------: | -----: |
+| **Node.js** |  ⭐⭐⭐⭐   |   ⭐⭐⭐   |   ⭐⭐⭐   | ⭐⭐⭐⭐⭐ | 85/100 |
+| **Python**  |   ⭐⭐⭐    |  ⭐⭐⭐⭐  |    ⭐⭐    | ⭐⭐⭐⭐⭐ | 82/100 |
+| **Java**    | ⭐⭐⭐⭐⭐  | ⭐⭐⭐⭐⭐ |  ⭐⭐⭐⭐  | ⭐⭐⭐⭐⭐ | 95/100 |
+| **Go**      | ⭐⭐⭐⭐⭐  |  ⭐⭐⭐⭐  |   ⭐⭐⭐   |   ⭐⭐⭐   | 88/100 |
+```
+
+</TabItem>
+<TabItem value="resultat" label="Résultat Données Techniques">
+
+| Technologie | Performance |  Sécurité  | Complexité |  Support   |  Score |
+| ----------- | :---------: | :--------: | :--------: | :--------: | -----: |
+| **Node.js** |  ⭐⭐⭐⭐   |   ⭐⭐⭐   |   ⭐⭐⭐   | ⭐⭐⭐⭐⭐ | 85/100 |
+| **Python**  |   ⭐⭐⭐    |  ⭐⭐⭐⭐  |    ⭐⭐    | ⭐⭐⭐⭐⭐ | 82/100 |
+| **Java**    | ⭐⭐⭐⭐⭐  | ⭐⭐⭐⭐⭐ |  ⭐⭐⭐⭐  | ⭐⭐⭐⭐⭐ | 95/100 |
+| **Go**      | ⭐⭐⭐⭐⭐  |  ⭐⭐⭐⭐  |   ⭐⭐⭐   |   ⭐⭐⭐   | 88/100 |
+
+</TabItem>
+</Tabs>
+
+<Tabs>
+<TabItem value="devops" label="Tableau DevSecOps">
+
+```markdown
+## Pipeline CI/CD - Statut des Environnements
+
+| Environnement | Build Status | Tests  |  Sécurité  |  Deploy   | Monitoring |
+| ------------- | :----------: | :----: | :--------: | :-------: | :--------: |
+| **DEV**       |  ✅ Passing  | ✅ 98% | ⚠️ Warning |  ✅ Auto  | 🟢 Healthy |
+| **STAGING**   |  ✅ Passing  | ✅ 95% | ✅ Secure  |  ✅ Auto  | 🟢 Healthy |
+| **PROD**      |  ✅ Passing  | ✅ 99% | ✅ Secure  | 🔒 Manual | 🟢 Healthy |
+| **DR**        |  ⏸️ Stopped  | ➖ N/A | ✅ Secure  | 🔒 Manual | 🟡 Standby |
+```
+
+</TabItem>
+<TabItem value="resultat" label="Résultat Tableau DevSecOps">
+
+| Environnement | Build Status | Tests  |  Sécurité  |  Deploy   | Monitoring |
+| ------------- | :----------: | :----: | :--------: | :-------: | :--------: |
+| **DEV**       |  ✅ Passing  | ✅ 98% | ⚠️ Warning |  ✅ Auto  | 🟢 Healthy |
+| **STAGING**   |  ✅ Passing  | ✅ 95% | ✅ Secure  |  ✅ Auto  | 🟢 Healthy |
+| **PROD**      |  ✅ Passing  | ✅ 99% | ✅ Secure  | 🔒 Manual | 🟢 Healthy |
+| **DR**        |  ⏸️ Stopped  | ➖ N/A | ✅ Secure  | 🔒 Manual | 🟡 Standby |
+
+</TabItem>
+</Tabs>
+
+<Tabs>
+<TabItem value="audit" label="Audit de Sécurité">
+
+```markdown
+## Vulnérabilités par Criticité
+
+| Composant        | Critique | Élevé | Moyen | Faible | Score CVSS | Action                   |
+| ---------------- | :------: | :---: | :---: | :----: | :--------: | ------------------------ |
+| **API Core**     |    0     |   1   |   3   |   5    |    6.2     | ⚠️ Correction requise    |
+| **Auth Service** |    0     |   0   |   2   |   1    |    4.1     | ✅ Acceptable            |
+| **Database**     |    1     |   0   |   1   |   2    |    8.9     | 🚨 **URGENT**            |
+| **Frontend**     |    0     |   2   |   4   |   8    |    5.8     | ⚠️ Planifier correction  |
+| **Dependencies** |    0     |   3   |  12   |   25   |    5.4     | 📅 Mise à jour régulière |
+```
+
+</TabItem>
+<TabItem value="resultat" label="Résultat Audit">
+
+| Composant        | Critique | Élevé | Moyen | Faible | Score CVSS | Action                   |
+| ---------------- | :------: | :---: | :---: | :----: | :--------: | ------------------------ |
+| **API Core**     |    0     |   1   |   3   |   5    |    6.2     | ⚠️ Correction requise    |
+| **Auth Service** |    0     |   0   |   2   |   1    |    4.1     | ✅ Acceptable            |
+| **Database**     |    1     |   0   |   1   |   2    |    8.9     | 🚨 **URGENT**            |
+| **Frontend**     |    0     |   2   |   4   |   8    |    5.8     | ⚠️ Planifier correction  |
+| **Dependencies** |    0     |   3   |  12   |   25   |    5.4     | 📅 Mise à jour régulière |
+
+</TabItem>
+</Tabs>
+
+### 1.3 Limitations et Alternatives
+
+:::danger Comprendre la Limitations des Tableaux Markdown
+Les tableaux Markdown ont des contraintes importantes :
+
+-   **Pas de fusion de cellules** native
+-   **Pas de formatage avancé** (couleurs, bordures personnalisées)
+-   **Difficulté avec contenu long** dans les cellules
+-   **Responsive limité** sur mobile
+    :::
+
+<Tabs>
+<TabItem value="html" label="Solution HTML pour Cas Complexes">
+
+```html
+<!-- Tableau avec fusion de cellules -->
+<table>
+    <thead>
+        <tr>
+            <th rowspan="2">Service</th>
+            <th colspan="2">Performance</th>
+            <th rowspan="2">Status</th>
+        </tr>
+        <tr>
+            <th>Latence</th>
+            <th>Throughput</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>API Gateway</strong></td>
+            <td>15ms</td>
+            <td>10k req/s</td>
+            <td>🟢 Healthy</td>
+        </tr>
+        <tr>
+            <td><strong>Auth Service</strong></td>
+            <td>8ms</td>
+            <td>5k req/s</td>
+            <td>🟢 Healthy</td>
+        </tr>
+    </tbody>
+</table>
+```
+
+</TabItem>
+<TabItem value="html-result" label="Résultat Solution HTML pour Cas Complexes">
+
+<!-- Tableau avec fusion de cellules -->
+
+<table>
+    <thead>
+        <tr>
+            <th rowspan="2">Service</th>
+            <th colspan="2">Performance</th>
+            <th rowspan="2">Status</th>
+        </tr>
+        <tr>
+            <th>Latence</th>
+            <th>Throughput</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <strong>API Gateway</strong>
+            </td>
+            <td>15ms</td>
+            <td>10k req/s</td>
+            <td>🟢 Healthy</td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Auth Service</strong>
+            </td>
+            <td>8ms</td>
+            <td>5k req/s</td>
+            <td>🟢 Healthy</td>
+        </tr>
+    </tbody>
+</table>
+
+</TabItem>
+</Tabs>
+
+## 2. Blocs de Code Avancés <Badge niveau="Intermédiaire" />
+
+### 2.1 Code Inline Optimisé
+
+L'utilisation appropriée du code inline améliore la lisibilité technique.
+
+<Tabs>
+<TabItem value="variables" label="Variables et Configuration">
+
+```markdown
+## Configuration Serveur
+
+La variable d'environnement `NODE_ENV` doit être définie sur `production`.
+Le fichier de configuration `config.json` contient les paramètres `database.host` et `database.port`.
+
+Pour modifier le timeout, utilisez le paramètre `--timeout=30s` lors du démarrage.
+```
+
+</TabItem>
+<TabItem value="resultat-variables" label="Résultat Variables et Configuration">
+
+:::warning
+Ici **volontairement** j'ai défini un titre (h4) au lieu du (h2) pour éviter de casser la navigation sur votre droite.
+:::
+
+#### Confiuration Serveur
+
+La variable d'environnement `NODE_ENV` doit être définie sur `production`.
+Le fichier de configuration `config.json` contient les paramètres `database.host` et `database.port`.
+
+Pour modifier le timeout, utilisez le paramètre `--timeout=30s` lors du démarrage.
+
+</TabItem>
+</Tabs>
+
+<Tabs>
+<TabItem value="commandes" label="Commandes et API">
+
+```markdown
+## Commandes Docker
+
+Lancer le conteneur avec `docker run -d --name api-server image:latest`.
+Vérifier les logs avec `docker logs api-server`.
+Accéder au conteneur via `docker exec -it api-server /bin/bash`.
+
+## Endpoints API
+
+-   `GET /api/users` - Liste tous les utilisateurs
+-   `POST /api/users` - Crée un nouvel utilisateur
+-   `PUT /api/users/{id}` - Met à jour l'utilisateur `{id}`
+-   `DELETE /api/users/{id}` - Supprime l'utilisateur `{id}`
+```
+
+</TabItem>
+<TabItem value="resultat-commandes" label="Résultat Commandes et API">
+
+:::warning
+Ici **volontairement** j'ai défini un titre (h4) au lieu du (h2) pour éviter de casser la navigation sur votre droite.
+:::
+
+#### Commandes Docker
+
+Lancer le conteneur avec `docker run -d --name api-server image:latest`.
+Vérifier les logs avec `docker logs api-server`.
+Accéder au conteneur via `docker exec -it api-server /bin/bash`.
+
+#### Endpoints API
+
+-   `GET /api/users` - Liste tous les utilisateurs
+-   `POST /api/users` - Crée un nouvel utilisateur
+-   `PUT /api/users/{id}` - Met à jour l'utilisateur `{id}`
+-   `DELETE /api/users/{id}` - Supprime l'utilisateur `{id}`
+
+</TabItem>
+</Tabs>
+
+### 2.2 Blocs de Code avec Coloration Syntaxique
+
+La coloration syntaxique améliore la lisibilité et la compréhension du code.
+
+:::warning Attention
+Si vous ne comprenez pas les morceaux de codes présentés ici, **ce n'est vraiment pas grave**. L'essentiel ici est de comprendre comment créer un bloc de code et le présenter proprement.
+
+:::
+
+<Tabs>
+<TabItem value="javascript" label="JavaScript / Node.js">
+
+#### Syntaxe
+
+````markdown
+```js
+# Ceci est un commentaires
+const express = require('express');
+```
+````
+
+#### Exemple de code avec coloration syntaxique
+
+```javascript
+// Configuration sécurisée de l'API Express
+const express = require('express');
+const helmet = require('helmet'); // Sécurité HTTP headers
+const rateLimit = require('express-rate-limit'); // Rate limiting
+const jwt = require('jsonwebtoken');
+
+const app = express();
+
+// Middleware de sécurité
+app.use(helmet()); // Protection des headers HTTP
+app.use(express.json({ limit: '10mb' })); // Limite taille payload
+
+// Rate limiting global
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // Limite chaque IP à 100 requêtes par fenêtre
+    message: 'Too many requests from this IP',
+    standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+    legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
+
+app.use('/api/', limiter);
+
+// Middleware d'authentification JWT
+const authenticateToken = (req, res, next) => {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
+
+    if (!token) {
+        return res.sendStatus(401); // Unauthorized
+    }
+
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        if (err) return res.sendStatus(403); // Forbidden
+        req.user = user;
+        next(); // Continue vers la route suivante
+    });
+};
+
+// Route protégée avec validation
+app.get('/api/users', authenticateToken, async (req, res) => {
+    try {
+        // Logique métier avec gestion d'erreur
+        const users = await getUsersFromDatabase();
+        res.json({ success: true, data: users });
+    } catch (error) {
+        console.error('Erreur récupération utilisateurs:', error);
+        res.status(500).json({
+            success: false,
+            error: 'Internal server error',
+        });
+    }
+});
+
+module.exports = app;
+```
+
+</TabItem>
+<TabItem value="python" label="Python / Django">
+
+#### Syntaxe
+
+````markdown
+```python
+# models.py - Modèles Django avec sécurité renforcée
+from django.db import models
+
+# ... reste du code
+```
+````
+
+#### Exemple de code avec coloration syntaxique
+
+```python
+# models.py - Modèles Django avec sécurité renforcée
+from django.db import models
+from django.contrib.auth.models import AbstractUser
+from django.core.validators import RegexValidator
+from django.utils import timezone
+import uuid
+
+class CustomUser(AbstractUser):
+    """Modèle utilisateur personnalisé avec champs sécurisés"""
+
+    # Identifiant unique UUID pour éviter l'énumération
+    uuid = models.UUIDField(
+        default=uuid.uuid4,
+        editable=False,
+        unique=True,
+        help_text="Identifiant unique non-séquentiel"
+    )
+
+    # Validation du numéro de téléphone
+    phone_regex = RegexValidator(
+        regex=r'^\+?1?\d{9,15}$',
+        message="Format: '+999999999'. Maximum 15 chiffres."
+    )
+    phone_number = models.CharField(
+        validators=[phone_regex],
+        max_length=17,
+        blank=True,
+        help_text="Numéro de téléphone au format international"
+    )
+
+    # Champs d'audit automatiques
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    last_login_ip = models.GenericIPAddressField(null=True, blank=True)
+
+    # Flag de sécurité
+    is_verified = models.BooleanField(
+        default=False,
+        help_text="Compte vérifié par email/SMS"
+    )
+    failed_login_attempts = models.PositiveIntegerField(
+        default=0,
+        help_text="Nombre de tentatives de connexion échouées"
+    )
+
+    class Meta:
+        db_table = 'auth_custom_user'
+        indexes = [
+            models.Index(fields=['email']),
+            models.Index(fields=['uuid']),
+            models.Index(fields=['created_at']),
+        ]
+
+    def __str__(self):
+        return f"{self.username} ({self.uuid})"
+
+    def reset_failed_attempts(self):
+        """Remet à zéro le compteur de tentatives échouées"""
+        self.failed_login_attempts = 0
+        self.save(update_fields=['failed_login_attempts'])
+```
+
+</TabItem>
+<TabItem value="bash" label="Bash / DevOps">
+
+#### Syntaxe
+
+````markdown
+```bash
+#!/bin/bash
+# deploy.sh - Script de déploiement sécurisé avec vérifications
+
+set -euo pipefail  # Arrêt strict en cas d'erreur
+```
+````
+
+#### Exemple de code avec coloration syntaxique
+
+```bash
+#!/bin/bash
+# deploy.sh - Script de déploiement sécurisé avec vérifications
+
+set -euo pipefail  # Arrêt strict en cas d'erreur
+
+# Couleurs pour l'affichage
+readonly RED='\033[0;31m'
+readonly GREEN='\033[0;32m'
+readonly YELLOW='\033[1;33m'
+readonly NC='\033[0m' # No Color
+
+# Variables de configuration
+readonly APP_NAME="api-secure"
+readonly DEPLOY_ENV="${1:-staging}"  # staging par défaut
+readonly BACKUP_DIR="/backup/$(date +%Y%m%d_%H%M%S)"
+readonly LOG_FILE="/var/log/deploy-$(date +%Y%m%d).log"
+
+# Fonction de logging avec timestamp
+log() {
+    local level=$1
+    shift
+    echo -e "[$(date '+%Y-%m-%d %H:%M:%S')] [$level] $*" | tee -a "$LOG_FILE"
+}
+
+# Fonction d'erreur avec nettoyage
+error_exit() {
+    log "ERROR" "${RED}$1${NC}"
+    cleanup
+    exit 1
+}
+
+# Fonction de nettoyage en cas d'échec
+cleanup() {
+    log "INFO" "Nettoyage des fichiers temporaires..."
+    rm -rf /tmp/deploy-*
+}
+
+# Vérification des prérequis
+check_prerequisites() {
+    log "INFO" "Vérification des prérequis..."
+
+    # Vérifier si l'utilisateur a les droits nécessaires
+    if [[ $EUID -ne 0 ]] && [[ "$DEPLOY_ENV" == "production" ]]; then
+        error_exit "Le déploiement en production nécessite les droits root"
+    fi
+
+    # Vérifier la disponibilité des outils
+    local tools=("docker" "git" "curl" "jq")
+    for tool in "${tools[@]}"; do
+        if ! command -v "$tool" &> /dev/null; then
+            error_exit "Outil requis manquant: $tool"
+        fi
+    done
+
+    # Vérifier l'espace disque (minimum 1GB)
+    local available_space=$(df / | awk 'NR==2 {print $4}')
+    if [[ $available_space -lt 1048576 ]]; then
+        error_exit "Espace disque insuffisant (< 1GB disponible)"
+    fi
+
+    log "INFO" "${GREEN}Prérequis validés${NC}"
+}
+
+# Fonction de sauvegarde avant déploiement
+backup_current_version() {
+    log "INFO" "Sauvegarde de la version actuelle..."
+
+    if [[ -d "/var/www/$APP_NAME" ]]; then
+        mkdir -p "$BACKUP_DIR"
+        cp -r "/var/www/$APP_NAME" "$BACKUP_DIR/"
+
+        # Sauvegarde de la base de données
+        docker exec db-container pg_dump -U postgres api_db > "$BACKUP_DIR/database.sql"
+
+        log "INFO" "${GREEN}Sauvegarde créée: $BACKUP_DIR${NC}"
+    else
+        log "WARN" "${YELLOW}Aucune version existante à sauvegarder${NC}"
+    fi
+}
+
+# Déploiement principal
+deploy_application() {
+    log "INFO" "Début du déploiement de $APP_NAME en environnement $DEPLOY_ENV"
+
+    # Récupération du code source
+    cd /tmp
+    git clone --depth 1 https://github.com/company/$APP_NAME.git deploy-$APP_NAME
+    cd deploy-$APP_NAME
+
+    # Vérification de l'intégrité (checksums, signatures GPG)
+    if [[ -f "checksums.sha256" ]]; then
+        sha256sum -c checksums.sha256 || error_exit "Vérification d'intégrité échouée"
+    fi
+
+    # Construction de l'image Docker
+    docker build -t "$APP_NAME:latest" . || error_exit "Construction Docker échouée"
+
+    # Tests de sécurité (exemple avec Trivy)
+    if command -v trivy &> /dev/null; then
+        log "INFO" "Scan de sécurité de l'image..."
+        trivy image --severity HIGH,CRITICAL "$APP_NAME:latest" || error_exit "Vulnérabilités critiques détectées"
+    fi
+
+    # Arrêt gracieux de l'ancienne version
+    if docker ps | grep -q "$APP_NAME"; then
+        log "INFO" "Arrêt gracieux de l'ancienne version..."
+        docker stop "$APP_NAME" || true
+        docker rm "$APP_NAME" || true
+    fi
+
+    # Démarrage de la nouvelle version
+    docker run -d \
+        --name "$APP_NAME" \
+        --restart unless-stopped \
+        -p 3000:3000 \
+        -v /var/log/$APP_NAME:/app/logs \
+        -e NODE_ENV="$DEPLOY_ENV" \
+        "$APP_NAME:latest" || error_exit "Démarrage de l'application échoué"
+
+    # Vérification de santé
+    log "INFO" "Vérification de santé de l'application..."
+    local max_attempts=30
+    local attempt=1
+
+    while [[ $attempt -le $max_attempts ]]; do
+        if curl -f http://localhost:3000/health &> /dev/null; then
+            log "INFO" "${GREEN}Application déployée avec succès !${NC}"
+            return 0
+        fi
+
+        log "INFO" "Tentative $attempt/$max_attempts - En attente..."
+        sleep 10
+        ((attempt++))
+    done
+
+    error_exit "L'application ne répond pas après le déploiement"
+}
+
+# Point d'entrée principal
+main() {
+    log "INFO" "=== Début du déploiement ==="
+
+    check_prerequisites
+    backup_current_version
+    deploy_application
+
+    log "INFO" "${GREEN}=== Déploiement terminé avec succès ===${NC}"
+}
+
+# Gestion des signaux pour nettoyage
+trap cleanup INT TERM
+
+# Exécution
+main "$@"
+```
+
+</TabItem>
+</Tabs>
+
+### 2.3 Blocs Diff - Visualisation des Modifications <Badge niveau="Avancé" />
+
+Les blocs diff permettent de montrer clairement les modifications de code avec des couleurs.
+
+<Tabs>
+<TabItem value="syntaxe" label="Syntaxe des Blocs Diff">
+
+#### Syntaxe
+
+````markdown
+```diff
+// Amélioration de la sécurité d'authentification
+function authenticateUser(username, password) {
+-   // Ancienne méthode non sécurisée
+-   if (password === user.password) {
+-       return { success: true, user: user };
+-   }
++   // Nouvelle méthode avec hachage bcrypt
++   const isValid = await bcrypt.compare(password, user.hashedPassword);
++   if (isValid) {
++       return {
++           success: true,
++           user: { id: user.id, username: user.username } // Pas de données sensibles
++       };
++   }
+
+    return { success: false, error: 'Invalid credentials' };
+}
+
+// Configuration de session sécurisée
+const sessionConfig = {
+-   secret: 'simple-secret',
+-   secure: false,
++   secret: process.env.SESSION_SECRET, // Secret depuis variable d'environnement
++   secure: process.env.NODE_ENV === 'production', // HTTPS en production
++   httpOnly: true, // Protection XSS
++   sameSite: 'strict' // Protection CSRF
+};
+```
+````
+
+#### Exemple de code avec coloration syntaxique
+
+:::danger ATTENTION
+Sur docusaurus, ce bout de code n'est pas intréprété ainsi, il faudrait l'utiliser sur GitHub pour le voir en action.
+
+:::
+
+```diff
+// Amélioration de la sécurité d'authentification
+function authenticateUser(username, password) {
+-   // Ancienne méthode non sécurisée
+-   if (password === user.password) {
+-       return { success: true, user: user };
+-   }
++   // Nouvelle méthode avec hachage bcrypt
++   const isValid = await bcrypt.compare(password, user.hashedPassword);
++   if (isValid) {
++       return {
++           success: true,
++           user: { id: user.id, username: user.username } // Pas de données sensibles
++       };
++   }
+
+    return { success: false, error: 'Invalid credentials' };
+}
+
+// Configuration de session sécurisée
+const sessionConfig = {
+-   secret: 'simple-secret',
+-   secure: false,
++   secret: process.env.SESSION_SECRET, // Secret depuis variable d'environnement
++   secure: process.env.NODE_ENV === 'production', // HTTPS en production
++   httpOnly: true, // Protection XSS
++   sameSite: 'strict' // Protection CSRF
+};
+```
+
+**Convention des couleurs :**
+
+-   Lignes avec `+` : **🟢 Vert** (ajouts/améliorations)
+-   Lignes avec `-` : **🔴 Rouge** (suppressions/obsolète)
+-   Lignes normales : **⚪ Blanc** (contexte inchangé)
+
+</TabItem>
+<TabItem value="config" label="Modifications de Configuration">
+
+````markdown
+```diff
+# docker-compose.yml - Sécurisation des services
+version: '3.8'
+
+services:
+  api:
+    image: node:18-alpine
+-   ports:
+-     - "3000:3000"  # Port exposé publiquement
++   expose:
++     - "3000"  # Port interne uniquement
+    environment:
+-     - NODE_ENV=development
++     - NODE_ENV=production
++     - RATE_LIMIT=100
+    volumes:
+-     - .:/app  # Mount complet du code source
++     - ./dist:/app  # Uniquement les fichiers buildés
++   user: "node"  # Utilisateur non-root
++   read_only: true  # Système de fichiers en lecture seule
++   tmpfs:
++     - /tmp
+
+  database:
+    image: postgres:15-alpine
+    environment:
+-     POSTGRES_PASSWORD: password123
++     POSTGRES_PASSWORD_FILE: /run/secrets/db_password
++   secrets:
++     - db_password
+    volumes:
+      - db_data:/var/lib/postgresql/data
++   networks:
++     - backend  # Réseau interne isolé
+
++ proxy:
++   image: nginx:alpine
++   ports:
++     - "80:80"
++     - "443:443"
++   volumes:
++     - ./nginx.conf:/etc/nginx/nginx.conf:ro
++     - ./ssl:/etc/ssl/certs:ro
++   depends_on:
++     - api
+
++networks:
++  backend:
++    driver: bridge
++    internal: true
+
++secrets:
++  db_password:
++    file: ./secrets/db_password.txt
+```
+````
+
+</TabItem>
+<TabItem value="pipeline" label="Pipeline CI/CD">
+
+````markdown
+```diff
+# .github/workflows/deploy.yml - Ajout des contrôles de sécurité
+name: Deploy Application
+
+on:
+  push:
+    branches: [ main ]
++   paths-ignore:
++     - '**.md'
++     - 'docs/**'
+
+jobs:
+  security-scan:
++   runs-on: ubuntu-latest
++   steps:
++     - uses: actions/checkout@v3
++
++     # Scan des secrets dans le code
++     - name: Secret Scan
++       uses: trufflesecurity/trufflehog@main
++       with:
++         path: ./
++
++     # Analyse des dépendances
++     - name: Dependency Scan
++       run: |
++         npm audit --audit-level high
++         npm audit fix
+
+  test:
+    runs-on: ubuntu-latest
++   needs: security-scan
+    steps:
+      - uses: actions/checkout@v3
++       with:
++         fetch-depth: 0  # Historique complet pour SonarQube
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
++         cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
++
++     # Tests de sécurité
++     - name: Security Tests
++       run: |
++         npm run test:security
++         npm run test:integration
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
++   if: github.ref == 'refs/heads/main'
+    environment: production
+    steps:
+-     - name: Deploy to server
+-       run: scp -r ./ user@server:/app/
++     - name: Deploy with Docker
++       run: |
++         docker build -t app:${{ github.sha }} .
++         docker tag app:${{ github.sha }} registry.company.com/app:latest
++         docker push registry.company.com/app:latest
++
++     # Vérification post-déploiement
++     - name: Health Check
++       run: |
++         sleep 30
++         curl -f https://api.company.com/health || exit 1
+```
+````
+
+</TabItem>
+</Tabs>
+
+## 3. Extensions GitHub Flavored Markdown <Badge niveau="Avancé" />
+
+### 3.1 Mentions et Références Collaboratives
+
+GitHub Flavored Markdown (GFM) ajoute des fonctionnalités spécifiques à la collaboration d'équipe.
+
+:::danger Fonctionnalité disponible uniquement avec GitHub payant
+
+L'utilisation des mentions d'**équipes** comme `@security-team`, `@devops-team`, ou `@qa-team` nécessite une **organisation GitHub** avec une **formule payante** (GitHub Team ou Enterprise).
+
+Sans cela :
+
+-   Les équipes ne peuvent **pas être mentionnées** dans les issues ou pull requests.
+-   Aucun membre ne recevra de notification via `@nom-de-l-équipe`.
+-   L'autocomplétion `@` n’affichera que des **utilisateurs individuels**.
+
+**Vérifie la disponibilité des équipes** dans ton dépôt en tapant `@` dans une issue ou une PR : si l’équipe n'apparaît pas, elle n’est pas reconnue.
+
+:::
+
+<Tabs>
+<TabItem value="mentions" label="Mentions Utilisateurs et Équipes">
+
+```markdown
+## Review de Code
+
+**Développeur principal :** @john-doe  
+**Équipe responsable :** @frontend-team  
+**Reviewer sécurité :** @security-team
+
+### Assignations
+
+-   **Frontend :** @alice-dev @bob-dev
+-   **Backend :** @charlie-api @david-db
+-   **DevOps :** @eve-ops @frank-infra
+
+### Notifications Automatiques
+
+Les mentions `@username` génèrent des notifications automatiques.
+Les équipes `@team-name` notifient tous les membres de l'équipe.
+```
+
+#### Utilisation Professionnelle
+
+**Dans les Pull Requests :**
+
+-   `@reviewer-lead` pour demander une review prioritaire
+-   `@security-team` pour les modifications sensibles
+-   `@devops-team` pour les changements d'infrastructure
+
+**Dans les Issues :**
+
+-   `@product-owner` pour validation fonctionnelle
+-   `@qa-team` pour définir les critères de test
+
+</TabItem>
+<TabItem value="references" label="Références Issues et PR">
+
+```markdown
+## Références Automatiques
+
+### Issues
+
+-   Correction du bug #123
+-   Amélioration demandée dans #456
+-   Feature request #789 implémentée
+
+### Pull Requests
+
+-   Review de la PR #42
+-   Merger après validation de PR #56
+-   Conflicts résolus dans PR #78
+
+### Cross-Repository
+
+-   Issue liée: user/other-repo#25
+-   Documentation: company/docs#12
+-   Template utilisé: company/templates#5
+
+### Mots-clés de Fermeture
+
+-   Closes #123
+-   Fixes #456
+-   Resolves #789
+```
+
+#### Mots-clés Automatiques
+
+| Mot-clé         | Action          | Exemple                            |
+| --------------- | --------------- | ---------------------------------- |
+| `closes #123`   | Ferme l'issue   | `Closes #123` dans commit/PR       |
+| `fixes #123`    | Corrige l'issue | `Fixes #123: Bug authentification` |
+| `resolves #123` | Résout l'issue  | `Resolves #123 with new algorithm` |
+
+</TabItem>
+</Tabs>
+
+### 3.2 Émojis et Communication Moderne
+
+<Tabs>
+<TabItem value="emoji-syntaxe" label="Syntaxe des Émojis">
+
+```markdown
+## Status du Projet
+
+### Développement
+
+-   :white_check_mark: Authentification terminée
+-   :construction: API en cours de développement
+-   :warning: Base de données nécessite optimisation
+-   :x: Tests d'intégration échoués
+
+### Environnements
+
+-   **Production :** :green_heart: Stable
+-   **Staging :** :yellow_heart: Tests en cours
+-   **Development :** :heart: Active
+
+### Équipe
+
+-   :rocket: Nouvelle fonctionnalité déployée
+-   :bug: Bug critique identifié
+-   :ambulance: Hotfix nécessaire
+-   :sparkles: Amélioration UI/UX
+```
+
+#### Résultat - Développement
+
+-   ✅ Authentification terminée
+-   🚧 API en cours de développement
+-   ⚠️ Base de données nécessite optimisation
+-   ❌ Tests d'intégration échoués
+
+#### Résultat - Environnements
+
+-   **Production :** 💚 Stable
+-   **Staging :** 💛 Tests en cours
+-   **Development :** ❤️ Active
+
+#### Résultat - Équipe
+
+-   :rocket: Nouvelle fonctionnalité déployée
+-   :bug: Bug critique identifié
+-   :ambulance: Hotfix nécessaire
+-   :sparkles: Amélioration UI/UX
+
+</TabItem>
+<TabItem value="emoji-categories" label="Catégories d'Émojis Professionnels">
+
+```markdown
+## Guide des Émojis DevSecOps
+
+### 🔧 Développement
+
+-   :wrench: Configuration/Setup
+-   :gear: Paramètres système
+-   :hammer: Outil de développement
+-   :nut_and_bolt: Composant technique
+
+### 🚀 Déploiement
+
+-   :rocket: Nouvelle release
+-   :package: Build/Package
+-   :ship: Mise en production
+-   :anchor: Version stable
+
+### 🔒 Sécurité
+
+-   :lock: Authentification
+-   :key: Gestion des clés
+-   :shield: Protection/Firewall
+-   :closed_lock_with_key: Chiffrement
+
+### 📊 Monitoring
+
+-   :chart_with_upwards_trend: Performance
+-   :bar_chart: Métriques
+-   :eyes: Surveillance
+-   :mag: Investigation
+
+### ⚠️ Alertes
+
+-   :warning: Attention requise
+-   :rotating_light: Incident critique
+-   :fire: Urgence maximale
+-   :sos: Aide nécessaire
+```
+
+#### Usage Recommandé
+
+**Dans les commits :**
+
+```bash
+git commit -m ":lock: Sécurisation des endpoints API"
+git commit -m ":bug: Correction du leak mémoire"
+git commit -m ":sparkles: Ajout authentification 2FA"
+```
+
+**Dans la documentation :**
+
+-   📚 Guide utilisateur
+-   🔧 Documentation technique
+-   🚀 Guide de déploiement
+-   🔒 Procédures de sécurité
+
+</TabItem>
+</Tabs>
+
+### 3.3 Fonctionnalités Collaboratives Avancées
+
+<Tabs>
+<TabItem value="suggestions" label="Suggestions de Code">
+
+````markdown
+## Review Suggestions
+
+Pour optimiser cette fonction, je suggère :
+
+```suggestion
+function validateInput(data) {
+  // Validation plus stricte avec Joi
+  const schema = Joi.object({
+    email: Joi.string().email().required(),
+    password: Joi.string().min(8).pattern(new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])')).required()
+  });
+
+  return schema.validate(data);
+}
+```
+````
+
+### Commentaires de Review
+
+> **Note:** Cette suggestion améliore la sécurité en appliquant une validation stricte des mots de passe.
+>
+> **Impact:** Réduction des risques de comptes compromis de 85%.
+
+````
+
+</TabItem>
+<TabItem value="templates" label="Templates de PR/Issues">
+
+```markdown
+## Template Pull Request
+
+### 📋 Description
+Brève description des modifications apportées.
+
+### 🔄 Type de changement
+- [ ] Bug fix (non-breaking change qui corrige un problème)
+- [ ] New feature (non-breaking change qui ajoute une fonctionnalité)
+- [ ] Breaking change (fix ou feature qui casserait la compatibilité)
+- [ ] Documentation update
+
+### 🧪 Tests
+- [ ] Tests unitaires ajoutés/modifiés
+- [ ] Tests d'intégration validés
+- [ ] Tests de sécurité passés
+- [ ] Tests manuels effectués
+
+### 🔒 Sécurité
+- [ ] Pas de données sensibles dans le code
+- [ ] Validation d'entrée implémentée
+- [ ] Audit des dépendances effectué
+- [ ] Review sécurité demandée (@security-team)
+
+### 📝 Checklist
+- [ ] Code auto-documenté ou commenté
+- [ ] Documentation mise à jour
+- [ ] CHANGELOG.md mis à jour
+- [ ] Version bumped si nécessaire
+
+### 🔗 Issues liées
+Closes #123
+Related to #456
+````
+
+</TabItem>
+</Tabs>
+
+## 4. Organisation et Workflow <Badge niveau="Avancé" />
+
+### 4.1 Conventions de Nommage Professionnelles
+
+<Tabs>
+<TabItem value="conventions" label="Standards par Contexte">
+
+| Élément              | Convention        | Exemple                                     | Justification              |
+| -------------------- | ----------------- | ------------------------------------------- | -------------------------- |
+| **Fichiers MD**      | kebab-case        | `api-documentation.md`                      | URL friendly, lisible      |
+| **Dossiers**         | kebab-case        | `user-guides/`                              | Cohérence système          |
+| **Images**           | descriptive-kebab | `architecture-microservices-2024.png`       | SEO, maintenance           |
+| **Ancres**           | lowercase-dash    | `#configuration-avancée`                    | URLs propres               |
+| **Constantes**       | UPPER_SNAKE_CASE  | `API_KEY`, `DB_HOST`                        | Variables d'environnement  |
+| **Variables Python** | snake_case        | `user_name`, `config_file`                  | Convention Python/SQL      |
+| **Variables JS**     | camelCase         | `userName`, `configFile`                    | Convention JavaScript      |
+| **Classes**          | PascalCase        | `UserService`, `ApiController`              | Convention POO universelle |
+| **Branches Git**     | feature/type      | `feature/auth-2fa`, `hotfix/security-patch` | Workflow GitFlow           |
+
+</TabItem>
+<TabItem value="exemples" label="Exemples Concrets">
+
+```markdown
+## Structure de Projet Documentation
+```
+
+📁 project-docs/
+├── 📄 README.md # Point d'entrée principal
+├── 📄 CONTRIBUTING.md # Guide contributeur
+├── 📄 SECURITY.md # Politique de sécurité
+├── 📄 CHANGELOG.md # Historique des versions
+│
+├── 📁 docs/
+│ ├── 📁 api-reference/ # Documentation API
+│ │ ├── 📄 authentication.md
+│ │ ├── 📄 endpoints-users.md
+│ │ └── 📄 rate-limiting.md
+│ │
+│ ├── 📁 user-guides/ # Guides utilisateur
+│ │ ├── 📄 getting-started.md
+│ │ ├── 📄 advanced-configuration.md
+│ │ └── 📄 troubleshooting.md
+│ │
+│ └── 📁 deployment/ # Documentation déploiement
+│ ├── 📄 docker-setup.md
+│ ├── 📄 kubernetes-config.md
+│ └── 📄 monitoring-setup.md
+│
+└── 📁 assets/
+├── 📁 images/
+│ ├── 🖼️ architecture-overview-2024.png
+│ ├── 🖼️ user-flow-authentication.svg
+│ └── 🖼️ dashboard-monitoring-example.jpg
+└── 📁 diagrams/
+├── 📄 system-architecture.mermaid
+└── 📄 database-schema.drawio
+
+````
+
+**Avantages de cette structure :**
+- ✅ Navigation intuitive par domaine
+- ✅ Nommage cohérent et prédictible
+- ✅ Scalabilité pour équipes multiples
+- ✅ Compatible avec générateurs statiques
+
+</TabItem>
+</Tabs>
+
+### 4.2 Intégration Git et Versioning
+
+<Tabs>
+<TabItem value="workflow" label="Workflow de Documentation">
+
+```markdown
+## Processus de Mise à Jour Documentation
+
+### 1. Préparation
+```bash
+# Créer une branche pour la documentation
+git checkout -b docs/update-api-reference
+
+# Vérifier les fichiers modifiés
+git status
+````
+
+### 2. Édition
+
+-   Modifier les fichiers Markdown concernés
+-   Ajouter/mettre à jour les images si nécessaire
+-   Vérifier les liens internes/externes
+
+### 3. Validation
+
+```bash
+# Validation des liens
+markdown-link-check docs/**/*.md
+
+# Vérification syntaxe
+markdownlint docs/
+
+# Tests de génération (si applicable)
+npm run docs:build
+```
+
+### 4. Commit et Review
+
+```bash
+# Commit avec message descriptif
+git add docs/
+git commit -m "docs: update API authentication section
+
+- Add 2FA configuration examples
+- Update rate limiting documentation
+- Fix broken links to external resources
+
+Closes #234"
+
+# Push et création PR
+git push origin docs/update-api-reference
+```
+
+### 5. Review Process
+
+-   [ ] **Review technique** par l'équipe
+-   [ ] **Review factuelle** par les experts métier
+-   [ ] **Tests de génération** sur preview
+-   [ ] **Validation accessibilité** (contrastes, alt text)
+
+````
+
+</TabItem>
+<TabItem value="hooks" label="Git Hooks pour Documentation">
+
+```bash
+#!/bin/bash
+# .git/hooks/pre-commit - Validation automatique
+# Valide la documentation avant chaque commit
+
+set -e
+
+echo "🔍 Validation de la documentation..."
+
+# Vérification des liens cassés
+if command -v markdown-link-check >/dev/null 2>&1; then
+    echo "📎 Vérification des liens..."
+    find docs/ -name "*.md" -exec markdown-link-check {} \;
+fi
+
+# Validation syntaxe Markdown
+if command -v markdownlint >/dev/null 2>&1; then
+    echo "📝 Validation syntaxe Markdown..."
+    markdownlint docs/**/*.md
+fi
+
+# Vérification des images manquantes
+echo "🖼️ Vérification des images..."
+missing_images=0
+for md_file in $(find docs/ -name "*.md"); do
+    # Extraction des références d'images
+    grep -oE '!\[.*\]\([^)]+\)' "$md_file" | while read -r img_ref; do
+        img_path=$(echo "$img_ref" | sed -n 's/.*(\([^)]*\)).*/\1/p')
+
+        # Vérifier si le fichier existe (chemins relatifs)
+        if [[ ! "$img_path" =~ ^https?:// ]] && [[ ! -f "docs/$img_path" ]] && [[ ! -f "$img_path" ]]; then
+            echo "❌ Image manquante: $img_path dans $md_file"
+            missing_images=$((missing_images + 1))
+        fi
+    done
+done
+
+# Vérification du front matter (si utilisé)
+echo "📋 Validation des métadonnées..."
+for md_file in $(find docs/ -name "*.md"); do
+    if head -n 1 "$md_file" | grep -q "^---$"; then
+        # Vérifier que le front matter est bien fermé
+        if ! sed -n '2,/^---$/p' "$md_file" | tail -n 1 | grep -q "^---$"; then
+            echo "❌ Front matter mal formé dans: $md_file"
+            exit 1
+        fi
+    fi
+done
+
+echo "✅ Validation terminée avec succès !"
+````
+
+</TabItem>
+</Tabs>
+
+### 4.3 Templates et Standards d'Équipe
+
+<Tabs>
+<TabItem value="template-guide" label="Template Guide Technique">
+
+````markdown
+---
+title: '[Nom du Guide]'
+description: 'Description concise du contenu'
+author: '[Nom Auteur]'
+date: 'YYYY-MM-DD'
+version: 'X.Y'
+tags: ['tag1', 'tag2', 'tag3']
+difficulty: 'Débutant|Intermédiaire|Avancé'
+estimated_time: 'XX minutes'
+---
+
+# [Titre du Guide]
+
+:::note Informations
+**⏱️ Temps estimé :** XX minutes  
+**📚 Niveau :** [Débutant/Intermédiaire/Avancé]  
+**🎯 Objectif :** [Objectif principal en une phrase]
+:::
+
+## 📋 Prérequis
+
+-   [ ] [Prérequis technique 1]
+-   [ ] [Prérequis technique 2]
+-   [ ] [Connaissances requises]
+
+## 🎯 Objectifs d'Apprentissage
+
+À la fin de ce guide, vous saurez :
+
+1. [Objectif spécifique 1]
+2. [Objectif spécifique 2]
+3. [Objectif spécifique 3]
+
+## 1. [Section Principale 1] <Badge niveau="[Niveau]" />
+
+### 1.1 [Sous-section avec Explication]
+
+[Contenu explicatif avec exemples]
+
+<Tabs>
+<TabItem value="exemple" label="Exemple Pratique">
+
+```[language]
+// Code d'exemple commenté
+[code snippet]
+```
+````
+
+</TabItem>
+<TabItem value="resultat" label="Résultat Attendu">
+
+[Description du résultat]
+
+</TabItem>
+</Tabs>
+
+:::tip Bonne Pratique
+[Conseil ou astuce pertinente]
+:::
+
+### 1.2 [Sous-section Suivante]
+
+[Suite du contenu...]
+
+## 2. [Section Principale 2] <Badge niveau="[Niveau]" />
+
+[Contenu de la section...]
+
+## 🏋️ Exercice Pratique
+
+:::note Énoncé
+[Description claire de l'exercice à réaliser]
+:::
+
+<Tabs>
+<TabItem value="exercice" label="📝 À Vous de Jouer">
+
+[Instructions détaillées]
+
+</TabItem>
+<TabItem value="solution" label="✅ Solution">
+
+```[language]
+// Solution commentée
+[code solution]
+```
+
+[Explication de la solution]
+
+</TabItem>
+<TabItem value="evaluation" label="📊 Critères d'Évaluation">
+
+**Points à vérifier :**
+
+-   [ ] [Critère 1]
+-   [ ] [Critère 2]
+-   [ ] [Critère 3]
+
+</TabItem>
+</Tabs>
+
+## 🔗 Ressources Complémentaires
+
+### Documentation Officielle
+
+-   [Lien 1](url) - Description
+-   [Lien 2](url) - Description
+
+### Outils Recommandés
+
+-   **[Nom Outil]** - [Description et usage]
+-   **[Nom Outil]** - [Description et usage]
+
+### Articles et Tutoriels
+
+-   [Article pertinent](url) - Résumé
+-   [Tutoriel avancé](url) - Résumé
+
+## ➡️ Prochaines Étapes
+
+1. **[Étape suivante recommandée]** - [lien vers guide]
+2. **[Approfondissement]** - [lien vers ressource]
+3. **[Cas d'usage avancé]** - [lien vers guide expert]
+
+---
+
+:::info Métadonnées
+
+-   **📝 Dernière mise à jour :** [Date]
+-   **👥 Contributeurs :** [Liste]
+-   **🔄 Version :** [Numéro version]
+-   **📋 Statut :** [Brouillon/Review/Publié]
+    :::
+
+```markdown
+---
+title: '[Nom API] Documentation'
+description: "Documentation complète de l'API [Nom]"
+version: 'v1.2.3'
+base_url: 'https://api.example.com/v1'
+date: '2025-06-20'
+---
+```
+
+# [Nom API] - Documentation
+
+:::note Informations API
+**🌐 URL de base :** `https://api.example.com/v1`
+**📊 Version :** v1.2.3
+**🔒 Authentification :** Bearer Token (JWT)
+**📋 Format :** JSON
+**⚡ Rate Limit :** 1000 req/hour
+:::
+
+## 🚀 Quick Start
+
+### Installation
+
+<Tabs>
+<TabItem value="curl" label="cURL">
+
+```bash
+# Test de base de l'API
+curl -H "Authorization: Bearer YOUR_TOKEN" \
+     https://api.example.com/v1/status
+```
+
+</TabItem>
+<TabItem value="javascript" label="JavaScript">
+
+```javascript
+// Configuration client API
+const API_BASE = 'https://api.example.com/v1';
+const headers = {
+    Authorization: 'Bearer YOUR_TOKEN',
+    'Content-Type': 'application/json',
+};
+
+// Test de connexion
+fetch(`${API_BASE}/status`, { headers })
+    .then((response) => response.json())
+    .then((data) => console.log(data));
+```
+
+</TabItem>
+<TabItem value="python" label="Python">
+
+```python
+import requests
+
+# Configuration
+API_BASE = "https://api.example.com/v1"
+headers = {
+    "Authorization": "Bearer YOUR_TOKEN",
+    "Content-Type": "application/json"
+}
+
+# Test de connexion
+response = requests.get(f"{API_BASE}/status", headers=headers)
+print(response.json())
+```
+
+</TabItem>
+</Tabs>
+
+## 🔐 Authentification
+
+### Obtenir un Token
+
+**Endpoint :** `POST /auth/login`
+
+**Paramètres :**
+
+| Paramètre     | Type    | Requis | Description                         |
+| ------------- | ------- | :----: | ----------------------------------- |
+| `email`       | string  |   ✅   | Email de l'utilisateur              |
+| `password`    | string  |   ✅   | Mot de passe                        |
+| `remember_me` | boolean |   ❌   | Session persistante (défaut: false) |
+
+**Exemple de requête :**
+
+```bash
+curl -X POST https://api.example.com/v1/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "user@example.com",
+    "password": "securepassword",
+    "remember_me": true
+  }'
+```
+
+**Réponse (200 OK) :**
+
+```json
+{
+    "status": "success",
+    "data": {
+        "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+        "token_type": "Bearer",
+        "expires_in": 3600,
+        "user": {
+            "id": 123,
+            "email": "user@example.com",
+            "role": "user"
+        }
+    }
+}
+```
+
+### Utilisation du Token
+
+Inclure le token dans l'header `Authorization` de toutes les requêtes :
+
+```
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+```
+
+## 📚 Endpoints
+
+### Utilisateurs
+
+#### GET /users - Lister les utilisateurs
+
+**Description :** Récupère la liste paginée des utilisateurs.
+
+**Paramètres de requête :**
+
+| Paramètre | Type    | Défaut | Description                               |
+| --------- | ------- | ------ | ----------------------------------------- |
+| `page`    | integer | 1      | Numéro de page                            |
+| `limit`   | integer | 20     | Nombre d'éléments par page (max: 100)     |
+| `role`    | string  | -      | Filtrer par rôle (user, admin, moderator) |
+| `search`  | string  | -      | Recherche par nom ou email                |
+
+**Exemple :**
+
+```bash
+curl -H "Authorization: Bearer YOUR_TOKEN" \
+  "https://api.example.com/v1/users?page=1&limit=10&role=user"
+```
+
+**Réponse (200 OK) :**
+
+```json
+{
+    "status": "success",
+    "data": {
+        "users": [
+            {
+                "id": 1,
+                "email": "john@example.com",
+                "name": "John Doe",
+                "role": "user",
+                "created_at": "2024-01-15T10:30:00Z",
+                "last_login": "2024-06-20T14:22:00Z"
+            }
+        ],
+        "pagination": {
+            "current_page": 1,
+            "total_pages": 5,
+            "total_items": 87,
+            "items_per_page": 20
+        }
+    }
+}
+```
+
+#### POST /users - Créer un utilisateur
+
+**Description :** Crée un nouvel utilisateur.
+
+**Body (JSON) :**
+
+```json
+{
+    "email": "newuser@example.com",
+    "name": "New User",
+    "password": "securepassword",
+    "role": "user"
+}
+```
+
+**Réponse (201 Created) :**
+
+```json
+{
+    "status": "success",
+    "data": {
+        "user": {
+            "id": 124,
+            "email": "newuser@example.com",
+            "name": "New User",
+            "role": "user",
+            "created_at": "2024-06-20T15:30:00Z"
+        }
+    }
+}
+```
+
+## ⚠️ Gestion des Erreurs
+
+### Codes d'Erreur Standards
+
+| Code | Statut                | Description                |
+| ---- | --------------------- | -------------------------- |
+| 400  | Bad Request           | Paramètres invalides       |
+| 401  | Unauthorized          | Token manquant ou invalide |
+| 403  | Forbidden             | Permissions insuffisantes  |
+| 404  | Not Found             | Ressource introuvable      |
+| 422  | Unprocessable Entity  | Erreurs de validation      |
+| 429  | Too Many Requests     | Rate limit dépassé         |
+| 500  | Internal Server Error | Erreur serveur             |
+
+### Format des Erreurs
+
+```json
+{
+    "status": "error",
+    "error": {
+        "code": "VALIDATION_ERROR",
+        "message": "Les données fournies sont invalides",
+        "details": {
+            "email": ["L'email est requis"],
+            "password": ["Le mot de passe doit contenir au moins 8 caractères"]
+        }
+    }
+}
+```
+
+## 📊 Rate Limiting
+
+-   **Limite :** 1000 requêtes par heure par token
+-   **Headers de réponse :**
+    -   `X-RateLimit-Limit`: Limite totale
+    -   `X-RateLimit-Remaining`: Requêtes restantes
+    -   `X-RateLimit-Reset`: Timestamp de reset
+
+**Exemple de headers :**
+
+```
+X-RateLimit-Limit: 1000
+X-RateLimit-Remaining: 987
+X-RateLimit-Reset: 1640995200
+```
+
+## 🧪 Environnements de Test
+
+### Sandbox
+
+**URL :** `https://api-sandbox.example.com/v1`  
+**Authentification :** Token de test fourni  
+**Données :** Dataset de test réinitialisé quotidiennement
+
+### Postman Collection
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/your-collection-id)
+
+## 📞 Support et Contact
+
+-   **📧 Support technique :** api-support@example.com
+-   **📚 Documentation :** https://docs.example.com
+-   **🐛 Bug reports :** https://github.com/company/api/issues
+-   **💬 Community :** https://discord.gg/company-api
+
+---
+
+:::info Informations Document
+
+-   **📝 Dernière mise à jour :** 20 juin 2025
+-   **👥 Maintenu par :** Équipe API
+-   **🔄 Version API :** v1.2.3
+-   **📋 Statut :** Production stable
+    :::
+
+````
+
+</TabItem>
+</Tabs>
+
+## 5. Cas Pratiques Intermédiaires <Badge niveau="Intermédiaire" />
+
+### Cas Pratique 1 : Documentation de Module DevSecOps
+
+:::note Énoncé
+Créez la documentation complète d'un module de **monitoring de sécurité** incluant :
+
+- **Table des matières** avec navigation
+- **Tableaux de configuration** avec alignements appropriés
+- **Blocs de code** pour différents langages (Bash, Python, YAML)
+- **Blocs diff** montrant les améliorations de sécurité
+- **Mentions d'équipes** et références d'issues
+- **Émojis** pour la communication claire
+:::
+
+<Tabs>
+<TabItem value="enonce" label="📝 Votre Mission">
+
+**Spécifications du module :**
+- **Nom :** SecurityMonitor
+- **Fonction :** Surveillance en temps réel des tentatives d'intrusion
+- **Technologies :** Python, Prometheus, Grafana, Docker
+- **Équipes :** @security-team, @devops-team, @monitoring-team
+
+**Structure demandée :**
+1. Introduction avec badges de statut
+2. Configuration (tableau des paramètres)
+3. Installation (étapes avec code)
+4. Améliorations récentes (blocs diff)
+5. Alertes et notifications (émojis + mentions)
+6. Dépannage (FAQ)
+
+</TabItem>
+<TabItem value="solution" label="✅ Solution Complète">
+
+```markdown
+# SecurityMonitor - Module de Surveillance Sécurisée
+
+[![Build Status](https://img.shields.io/github/workflow/status/company/security-monitor/CI)](https://github.com/company/security-monitor/actions)
+[![Security Rating](https://img.shields.io/badge/security-A+-green.svg)](https://sonarcloud.io/dashboard?id=security-monitor)
+[![Coverage](https://img.shields.io/codecov/c/github/company/security-monitor.svg)](https://codecov.io/gh/company/security-monitor)
+
+## 📋 Table des Matières
+
+1. [Vue d'ensemble](#vue-densemble)
+2. [Configuration](#configuration)
+3. [Installation](#installation)
+4. [Améliorations v2.1](#améliorations-v21)
+5. [Alertes et Notifications](#alertes-et-notifications)
+6. [Dépannage](#dépannage)
+
+## Vue d'ensemble
+
+Module Python de surveillance en temps réel des **tentatives d'intrusion** avec intégration Prometheus et alerting automatique.
+
+**Équipes responsables :**
+- **Développement :** @security-team
+- **Infrastructure :** @devops-team
+- **Monitoring :** @monitoring-team
+
+## Configuration
+
+### Paramètres Principaux
+
+| Paramètre | Type | Défaut | Description | Env Variable |
+|-----------|:----:|:------:|-------------|:------------:|
+| `log_level` | string | `INFO` | Niveau de logs | `LOG_LEVEL` |
+| `scan_interval` | integer | `30` | Intervalle scan (secondes) | `SCAN_INTERVAL` |
+| `max_attempts` | integer | `5` | Tentatives max avant ban | `MAX_ATTEMPTS` |
+| `ban_duration` | integer | `3600` | Durée ban (secondes) | `BAN_DURATION` |
+| `whitelist_ips` | array | `[]` | IPs exemptées | `WHITELIST_IPS` |
+| `alert_webhook` | string | - | URL webhook Slack/Teams | `ALERT_WEBHOOK` |
+
+### Sources de Données
+
+| Source | Format | Localisation | Poids |
+|--------|:------:|:------------:|:-----:|
+| **Logs Apache** | Combined | `/var/log/apache2/access.log` | 🟢 Élevé |
+| **Logs Nginx** | JSON | `/var/log/nginx/access.log` | 🟢 Élevé |
+| **Logs SSH** | Syslog | `/var/log/auth.log` | 🟡 Moyen |
+| **Fail2ban** | Custom | `/var/log/fail2ban.log` | 🔴 Critique |
+
+## Installation
+
+### Prérequis
+
+```bash
+# Installation des dépendances système
+sudo apt update && sudo apt install -y \
+  python3.9 \
+  python3-pip \
+  prometheus-node-exporter \
+  fail2ban
+
+# Vérification des versions
+python3 --version  # >= 3.9
+pip3 --version     # >= 21.0
+````
+
+### Installation du Module
+
+```bash
+# Clonage du repository
+git clone https://github.com/company/security-monitor.git
+cd security-monitor
+
+# Création environnement virtuel
+python3 -m venv venv
+source venv/bin/activate
+
+# Installation des dépendances Python
+pip install -r requirements.txt
+
+# Configuration
+cp config.example.yaml config.yaml
+# Éditer config.yaml selon vos besoins
+
+# Tests d'installation
+python -m pytest tests/ -v
+```
+
+### Configuration Docker
+
+```yaml
+# docker-compose.yml
+version: '3.8'
+
+services:
+    security-monitor:
+        image: company/security-monitor:latest
+        container_name: security-monitor
+        environment:
+            - LOG_LEVEL=INFO
+            - SCAN_INTERVAL=30
+            - MAX_ATTEMPTS=5
+        volumes:
+            - /var/log:/var/log:ro
+            - ./config.yaml:/app/config.yaml:ro
+        ports:
+            - '8080:8080' # Métriques Prometheus
+        depends_on:
+            - prometheus
+        restart: unless-stopped
+
+    prometheus:
+        image: prom/prometheus:latest
+        ports:
+            - '9090:9090'
+        volumes:
+            - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+```
+
+## Améliorations v2.1
+
+### Optimisation des Performances
+
+```diff
+# analyzer.py - Amélioration de l'analyse des patterns
+class ThreatAnalyzer:
+    def __init__(self):
+-       self.patterns = {}
+-       self.load_patterns_from_file()
++       self.patterns = PatternCache(ttl=3600)  # Cache avec TTL
++       self.ml_model = load_ml_detector()      # Détection IA
+
+    def analyze_log_entry(self, entry):
+-       # Analyse par regex simple
+-       for pattern in self.patterns:
+-           if re.match(pattern, entry):
+-               return True
++       # Analyse hybride : regex + machine learning
++       if self.quick_pattern_match(entry):
++           return self.ml_model.predict_threat_probability(entry) > 0.8
+        return False
+
++   def quick_pattern_match(self, entry):
++       """Pré-filtrage rapide avant analyse IA"""
++       return any(keyword in entry.lower() for keyword in self.threat_keywords)
+```
+
+### Sécurisation des Webhooks
+
+```diff
+# notifications.py - Sécurisation des webhooks
+import hmac
+import hashlib
+
+def send_alert(webhook_url, payload):
+-   # Envoi direct sans vérification
+-   response = requests.post(webhook_url, json=payload)
++   # Génération signature HMAC
++   secret = os.getenv('WEBHOOK_SECRET')
++   signature = hmac.new(
++       secret.encode(),
++       json.dumps(payload).encode(),
++       hashlib.sha256
++   ).hexdigest()
++
++   headers = {
++       'Content-Type': 'application/json',
++       'X-Signature': f'sha256={signature}',
++       'User-Agent': 'SecurityMonitor/2.1'
++   }
++
++   response = requests.post(webhook_url, json=payload, headers=headers, timeout=10)
+
+    if response.status_code != 200:
+        logger.error(f"Webhook failed: {response.status_code}")
+```
+
+### Configuration Rate Limiting
+
+```diff
+# config.yaml - Amélioration du rate limiting
+rate_limiting:
+-  enabled: false
++  enabled: true
++  rules:
++    - pattern: "login"
++      max_requests: 5
++      window: 300        # 5 minutes
++      action: "ban"
++    - pattern: "api"
++      max_requests: 100
++      window: 60         # 1 minute
++      action: "throttle"
++
++  actions:
++    ban:
++      duration: 3600     # 1 heure
++      notify: true
++    throttle:
++      delay: 1000        # 1 seconde
++      notify: false
+```
+
+## Alertes et Notifications
+
+### Types d'Alertes
+
+-   🚨 **Critique** : Tentative d'intrusion détectée (@security-team)
+-   ⚠️ **Avertissement** : Seuil de tentatives atteint (@devops-team)
+-   📊 **Information** : Rapport quotidien (@monitoring-team)
+-   🔒 **Sécurité** : Nouvelle règle appliquée (@security-team)
+
+### Configuration Slack
+
+```python
+# notifications/slack.py
+def send_security_alert(threat_level, details):
+    """Envoi d'alerte sécurité sur Slack avec mentions appropriées"""
+
+    # Définition des mentions par niveau
+    mentions = {
+        'critical': '@security-team @devops-team',
+        'warning': '@devops-team',
+        'info': '@monitoring-team'
+    }
+
+    # Émojis par niveau de menace
+    emojis = {
+        'critical': '🚨',
+        'warning': '⚠️',
+        'info': '📊'
+    }
+
+    message = f"""
+{emojis[threat_level]} **Alerte Sécurité - {threat_level.upper()}**
+
+**Source IP :** `{details['source_ip']}`
+**Type d'attaque :** {details['attack_type']}
+**Nombre de tentatives :** {details['attempts']}
+**Timestamp :** {details['timestamp']}
+
+**Action automatique :** {details['action_taken']}
+
+{mentions[threat_level]} - Investigation requise
+
+**Logs :** Voir Dashboard Grafana [ici](https://grafana.company.com/d/security)
+"""
+
+    return send_slack_message(message)
+```
+
+### Issues de Suivi
+
+**Issues liées à cette version :**
+
+-   Amélioration performances : Closes #156
+-   Détection IA : Implements #142
+-   Webhooks sécurisés : Fixes #189
+-   Rate limiting : Resolves #201
+
+**Pull Requests en cours :**
+
+-   Intégration Elasticsearch : PR #67 (@alice-security)
+-   Dashboard amélioré : PR #68 (@bob-frontend)
+
+## Dépannage
+
+### Problèmes Courants
+
+#### 🔍 Module ne démarre pas
+
+**Symptômes :** Erreur `ModuleNotFoundError`
+
+**Solution :**
+
+```bash
+# Vérifier l'environnement virtuel
+source venv/bin/activate
+pip list | grep -E "(prometheus|yaml|requests)"
+
+# Réinstaller si nécessaire
+pip install --upgrade -r requirements.txt
+```
+
+#### ⚠️ Faux positifs détectés
+
+**Symptômes :** Bans d'IPs légitimes
+
+**Solution :**
+
+1. Ajouter l'IP à la whitelist
+2. Ajuster les seuils dans `config.yaml`
+3. Vérifier les patterns de détection
+
+```bash
+# Débannir une IP
+sudo fail2ban-client set security-monitor unbanip 192.168.1.100
+
+# Vérifier les règles actives
+sudo fail2ban-client status security-monitor
+```
+
+#### 📊 Métriques Prometheus manquantes
+
+**Vérification :**
+
+```bash
+# Test endpoint métriques
+curl http://localhost:8080/metrics | grep security_
+
+# Vérifier configuration Prometheus
+prometheus_config_reloader --config.file=/etc/prometheus/prometheus.yml --dry-run
+```
+
+### Support et Escalade
+
+**Niveaux de support :**
+
+1. **L1 - Monitoring** (@monitoring-team) - Issues opérationnelles
+2. **L2 - DevOps** (@devops-team) - Problèmes d'infrastructure
+3. **L3 - Security** (@security-team) - Incidents de sécurité
+
+**Contacts d'urgence :**
+
+-   🔴 **Incident critique** : #security-incidents + @security-lead
+-   🟡 **Problème système** : #devops-alerts + @devops-lead
+-   🟢 **Question générale** : #security-monitor-support
+
+---
+
+**Issues de référence :**
+
+-   Configuration : Voir #123
+-   Performance : Tracking #156
+-   Documentation : Update #234
+
+```
+
+</TabItem>
+<TabItem value="evaluation" label="📊 Évaluation Détaillée">
+
+**Points forts de cette solution :**
+
+✅ **Structure professionnelle** avec navigation complète
+✅ **Tableaux complexes** avec alignements et formatage approprié
+✅ **Code multi-langages** (Bash, Python, YAML) bien commenté
+✅ **Blocs diff pertinents** montrant des améliorations réelles
+✅ **Mentions d'équipes** contextuelles et appropriées
+✅ **Émojis professionnels** pour la communication claire
+✅ **Références issues/PR** intégrées naturellement
+✅ **Templates réutilisables** pour d'autres modules
+
+**Score :** 19/20
+
+**Axes d'amélioration mineurs :**
+- Ajouter diagramme d'architecture (Mermaid)
+- Inclure métriques de performance quantifiées
+
+**Utilisation professionnelle :**
+Cette documentation peut servir de **template** pour tous les modules de sécurité de l'équipe.
+
+</TabItem>
+</Tabs>
+
+---
+
+## 🎯 Points Clés à Retenir
+
+:::tip Récapitulatif Niveau Intermédiaire
+**Nouvelles compétences acquises :**
+
+- ✅ **Tableaux professionnels** avec alignements et données complexes
+- ✅ **Blocs de code avancés** avec coloration et commentaires détaillés
+- ✅ **Blocs diff** pour visualiser les modifications (+/-)
+- ✅ **Extensions GFM** : mentions, références, émojis professionnels
+- ✅ **Organisation projet** : conventions, workflow Git, templates
+- ✅ **Documentation technique** complète et structurée
+:::
+
+## ➡️ Prochaine Étape
+
+Excellent travail ! Vous maîtrisez maintenant le **niveau intermédiaire**.
+
+Direction le **[niveau avancé](03-avance.md)** pour explorer :
+- **MDX et composants React** pour l'interactivité
+- **Diagrammes Mermaid** complexes et architectures
+- **Automatisation** de la documentation (CI/CD, validation)
+- **Sécurité avancée** et bonnes pratiques DevSecOps
+- **Métadonnées et SEO** pour la documentation professionnelle
+
+---
+
+:::info Métadonnées du Document
+- **📝 Version :** 1.0
+- **📅 Dernière mise à jour :** Juin 2025
+- **👥 Niveau :** <Badge niveau="Intermédiaire" />
+- **⏱️ Durée :** 45 minutes
+- **📚 Prérequis :** [Fondamentaux Markdown](01-fondamentaux.md)
+- **🎯 Objectif :** Utilisation professionnelle avancée
+:::
+```

@@ -46,6 +46,7 @@ const config: Config = {
         locales: ['en', 'fr'],
     },
 
+    // https://prismjs.com/#supported-languages
     presets: [
         [
             'classic',
@@ -60,21 +61,24 @@ const config: Config = {
                     editUrl:
                         'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
                 },
-                // blog: {
-                //     showReadingTime: true,
-                //     feedOptions: {
-                //         type: ['rss', 'atom'],
-                //         xslt: false,
-                //     },
-                //     // Please change this to your repo.
-                //     // Remove this to remove the "edit this page" links.
-                //     editUrl:
-                //         'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-                //     // Useful options to enforce blogging best practices
-                //     onInlineTags: 'warn',
-                //     onInlineAuthors: 'warn',
-                //     onUntruncatedBlogPosts: 'warn',
-                // },
+                blog: {
+                    showReadingTime: true,
+                    postsPerPage: 5,
+                    blogSidebarCount: 'ALL',
+                    blogSidebarTitle: 'All posts',
+                    feedOptions: {
+                        type: ['rss', 'atom'],
+                        xslt: false,
+                    },
+                    // Please change this to your repo.
+                    // Remove this to remove the "edit this page" links.
+                    editUrl:
+                        'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+                    // Useful options to enforce blogging best practices
+                    onInlineTags: 'warn',
+                    onInlineAuthors: 'warn',
+                    onUntruncatedBlogPosts: 'warn',
+                },
                 theme: {
                     customCss: './src/css/custom.css',
                 },
@@ -174,6 +178,7 @@ const config: Config = {
                 srcDark: 'img/logo-omnyforge-dark.svg',
             },
             items: [
+                { to: '/blog', label: 'Blog', position: 'left' },
                 {
                     type: 'docSidebar',
                     sidebarId: 'basesSidebar',
@@ -238,7 +243,6 @@ const config: Config = {
                     position: 'right',
                     label: 'OmnyLearn',
                 },
-                // { to: '/blog', label: 'Blog', position: 'right' },
                 {
                     href: 'https://github.com/facebook/docusaurus',
                     label: 'GitHub',
@@ -294,6 +298,7 @@ const config: Config = {
         prism: {
             theme: prismThemes.nightOwl,
             darkTheme: prismThemes.nightOwlLight,
+            additionalLanguages: ['powershell', 'bash', 'markdown', 'git'],
         },
     } satisfies Preset.ThemeConfig,
 };

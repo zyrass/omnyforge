@@ -16,13 +16,40 @@ function HomepageHeader() {
                 <Heading as="h1" className="hero__title">
                     {siteConfig.title}
                 </Heading>
-                <p className="hero__subtitle">{siteConfig.tagline}</p>
-                <div className={styles.buttons}>
+                <p className="hero__subtitle">
+                    {siteConfig.tagline}
+
+                    <hr />
+
+                    <small>
+                        <em>
+                            Cette documentation est rédigée intégralement en{' '}
+                            <strong>français</strong> pour renforcer l’
+                            <strong>accessibilité</strong>,
+                            <br /> la <strong>souveraineté numérique</strong> et
+                            la pédagogie auprès des{' '}
+                            <strong>publics non anglophones</strong>.
+                        </em>
+                    </small>
+
+                    <hr />
+                </p>
+                <br />
+                <div
+                    className={styles.buttons}
+                    style={{ display: 'flex', gap: '40px' }}
+                >
                     <Link
                         className="button button--secondary button--lg"
                         to="/docs/intro"
                     >
-                        Docusaurus Tutorial - 5min ⏱️
+                        Découvrez les bases fondamentales de l'informatique
+                    </Link>
+                    <Link
+                        className="button button--secondary button--lg"
+                        to="/docs/intro"
+                    >
+                        Découvrez le glossaire informatique
                     </Link>
                 </div>
             </div>

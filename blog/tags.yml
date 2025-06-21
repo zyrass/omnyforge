@@ -1,19 +1,69 @@
-facebook:
-  label: Facebook
-  permalink: /facebook
-  description: Facebook tag description
+documentation:
+  label: Documentation
+  permalink: /documentation
+  description: Tag lié à de la documentation
 
-hello:
-  label: Hello
-  permalink: /hello
-  description: Hello tag description
+markdown:
+  label: Markdown
+  permalink: /markdown
+  description: Tag lié au bloc de code Markdown où à la syntaxe markdown
 
-docusaurus:
-  label: Docusaurus
-  permalink: /docusaurus
-  description: Docusaurus tag description
+glossaire:
+  label: Glossaire
+  permalink: /glossaire
+  description: Tag lié au glossaire
 
-hola:
-  label: Hola
-  permalink: /hola
-  description: Hola tag description
+francophone:
+  label: Francophone
+  permalink: /francophone
+  description: Tag qui fait référence à de la ressource francophone
+
+cybersécurité:
+  label: Cybersécurité
+  permalink: /cybersecurite
+  description: Tag qui fait référence au milieu de la cybersécurité
+
+devsecops:
+  label: DevSecOps
+  permalink: /devsecops
+  description: Tag qui fait référence au milieu du DevOps et plus partiiculièrement la sécurité soit le DevSecOps
+
+devops:
+  label: DevOps
+  permalink: /devops
+  description: Tag qui fait référence au milieu du DevOps
+
+développement:
+  label: Développement
+  permalink: /développement
+  description: Tag qui fait référence au milieu du Développement
+
+carrière:
+  label: Carrière
+  permalink: /carrière
+  description: Tag en lien avec la carrière personnelle d'une personne.
+
+soft-skills:
+  label: Soft Skills
+  permalink: /soft-skills
+  description: Tag en lien avec les compétences personnelle d'une personne.
+
+mentorat:
+  label: Mentorat
+  permalink: /mentorat
+  description: Tag en lien avec le principe de manager une personne ou un groupe de personne.
+
+IA:
+  label: IA
+  permalink: /IA
+  description: Tag en lien avec l'intelligence artificiel.
+
+sécurité:
+  label: Sécurité
+  permalink: /sécurité
+  description: Tag en lien avec la sécurité quelle qu'elle soit.
+
+recrutement:
+  label: Recrutement
+  permalink: /Recrutement
+  description: Tag en lien avec la capacité à recruter du personnel.

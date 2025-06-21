@@ -1,11 +1,36 @@
 .features {
-  display: flex;
-  align-items: center;
-  padding: 2rem 0;
-  width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 2rem 0;
+    width: 100%;
 }
 
 .featureSvg {
-  height: 200px;
-  width: 200px;
+    height: 200px;
+    width: 200px;
+}
+
+.docLink {
+    color: var(--ifm-color-primary);
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.docLink:hover {
+    color: var(--ifm-color-primary-dark);
+    text-decoration: underline;
+}
+
+.parrainage {
+    padding: 2rem;
+}
+
+.textDynamic {
+    background-color: var(--ifm-color-primary-dark);
+    color: #f5f5f5; /* défaut pour clair */
+}
+
+[data-theme='dark'] .textDynamic {
+    color: #181c22;
 }
