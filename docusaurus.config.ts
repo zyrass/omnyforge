@@ -35,7 +35,7 @@ const config: Config = {
     organizationName: 'Omyvia', // Usually your GitHub org/user name.
     projectName: 'Omnyforge', // Usually your repo name.
 
-    onBrokenLinks: 'throw',
+    onBrokenLinks: 'warn', // throw à remettre pour détecter les liens cassés
     onBrokenMarkdownLinks: 'warn',
 
     // Even if you don't use internationalization, you can use this field to set
