@@ -243,11 +243,11 @@ const config: Config = {
                     position: 'right',
                     label: 'OmnyLearn',
                 },
-                {
-                    href: 'https://github.com/facebook/docusaurus',
-                    label: 'GitHub',
-                    position: 'right',
-                },
+                // {
+                //     href: 'https://github.com/facebook/docusaurus',
+                //     label: 'GitHub',
+                //     position: 'right',
+                // },
             ],
         },
         footer: {
