@@ -119,6 +119,43 @@ function Feature({
 export default function HomepageFeatures(): ReactNode {
     return (
         <>
+            <section
+                style={{
+                    backgroundColor: 'var(--ifm-color-primary-lightest)',
+                }}
+            >
+                <div
+                    className="container"
+                    style={{
+                        height: '10rem',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }}
+                >
+                    <p
+                        style={{
+                            textAlign: 'justify',
+                            color: 'var(--docusaurus-highlighted-code-line-bg)',
+                            fontFamily: "'Segoe UI', Roboto, sans-serif",
+                            fontSize: '1.125rem',
+                            lineHeight: '1.8',
+                            maxWidth: '800px',
+                            margin: '4rem auto',
+                        }}
+                    >
+                        L’objectif n’est pas de faire de{' '}
+                        <strong>
+                            l’ombre aux nombreuses formations déjà disponibles
+                            en ligne
+                        </strong>
+                        , mais bien d’ouvrir la voie à toutes celles et ceux qui
+                        souhaitent découvrir, apprendre et poser leurs premiers
+                        jalons dans ce domaine passionnant qu’est
+                        l’informatique.
+                    </p>
+                </div>
+            </section>
             <section className={styles.features}>
                 <div className="container">
                     <h2
