@@ -4,25 +4,29 @@ import Badge from '../../../../src/components/Badge';
 
 :::note
 **Temps de lecture :** 30 minutes  
-**Objectif :** Comprendre Git et maîtriser les commandes essentielles pour débuter sereinement
+**Objectif :** Comprendre Git et maîtriser les commandes essentielles pour débuter en toute confiance
 :::
 
 ## 1 - Qu'est-ce que Git ? <Badge niveau="Débutant" />
 
 ### 1.1 - Définition et utilité
 
-Git est un **système de contrôle de version distribué** qui permet de suivre les modifications de fichiers et de coordonner le travail
-entre plusieurs personnes sur un projet.
+Git constitue **un système de gestion de versions décentralisé** permettant de surveiller l'évolution des fichiers
+( _création, modification ou suppression_ ) et de faciliter la collaboration entre différents contributeurs sur un même projet.
 
 :::tip Avantage Principal
-Il est tout à fait possible de revenir sur une version antérieure alors qu'avant nous devions dupliquer les documents et si nous n'étions
-pas organisés, alors très vite nous nous perdions entre chacune des versions.
+Git permet de revenir à une version antérieure du projet, contrairement aux méthodes traditionnelles où nous devions dupliquer les documents.
+Sans organisation rigoureuse, ces duplications nous faisaient rapidement perdre le fil entre les différentes versions de nos projets/documents.
 
 :::
 
 #### Schéma pour comprendre Git
 
 ```mermaid
+---
+config:
+    theme: 'neutral'
+---
 graph LR
     A[Fichier v1] --> B[Fichier v2]
     B --> C[Fichier v3]
@@ -45,66 +49,123 @@ graph LR
 
 ## 2 - Concepts Clés
 
-### 2.1 - Repository - ( _Dépôt_ )
+Pour bien comprendre Git, il est essentiel de maîtriser comment les concepts clés s'articulent dans un workflow pratique :
 
-Un **repository** ( _ou souvent appelé "**repo**"_ ) est un dossier qui contient :
+### 2.1 - Introduction au Workflow Git
 
--   Vos fichiers de projet
--   L'historique complet des modifications
--   Les métadonnées Git
+Le **workflow Git** est une **méthodologie structurée** qui organise la façon dont vous utilisez Git pour gérer votre code et collaborer
+avec d'autres développeurs. En comprenant comment les modifications sont _suivies_, _sauvegardées_ et _partagées_, vous pourrez tirer
+pleinement parti des fonctionnalités de Git.
+
+**Un workflow bien défini aide à :**
+
+-   **Structurer** le processus de développement
+-   **Éviter les conflits** entre développeurs
+-   **Maintenir** un historique _clair_ et _compréhensible_
+
+:::note
+_Nous explorerons plus en détail différents types de workflows et leurs applications dans les sections suivantes._
+:::
+
+### 2.2 - Repository - ( _Dépôt_ )
+
+Un **repository** ( _ou souvent appelé « **repo** »_ ) est un dossier spécial qui sert d'environnement centralisé pour la gestion de votre
+code source. Il constitue l'élément fondamental de tout projet Git et contient :
+
+-   Vos fichiers de projet et leur contenu actuel.
+-   L'historique complet et chronologique de toutes les modifications apportées depuis la création du projet.
+-   Les métadonnées Git essentielles, comme les _informations de configuration_, les _références de branches_ et les _objets Git_.
 
 **Types de repository :**
 
--   **Local** : Sur votre ordinateur
--   **Remote** : Sur un serveur ( _GitHub, GitLab, Bitbucket_ )
+-   **Local** :<br />
+    _Réside directement sur votre ordinateur personnel, vous permettant de travailler même sans connexion internet._
 
-**Exemple de structure**
+-   **Remote** :<br />
+    _Hébergé sur un serveur distant accessible via internet ( GitHub, GitLab, Bitbucket ), facilitant la collaboration et servant de
+    sauvegarde centralisée._
 
-```
+**Exemple de structure minimliste**
+
+```git
 mon-projet/
-├── .git/           # Métadonnées Git (caché)
-├── index.html      # Un fichier personnel pour créer une page internet
-├── style.css       # Un fichier personnel pour styliser une page internet
-└── README.md       # Un fichier personnel pour documenter le projet
+├── .git/           # Métadonnées Git ( dossier caché )
+├── index.html      # Fichier pour créer une page web statique
+├── style.css       # Fichier pour styliser une page web
+└── README.md       # Fichier pour documenter le projet
 ```
 
-### 2.2 - Commit
+```mermaid
+---
+config:
+    theme: 'neutral'
+---
+flowchart LR
+    subgraph projet[monprojet]
+        Git[.Git/]
+        Index[index.html]
+        Style[style.css]
+        README[README.md]
+    end
+```
 
-Un **commit** est un instantané de votre projet à un moment donné.
+<small>_Schéma Représentatif de la structure minimaliste ci-dessus_</small>
+
+### 2.3 - Commit
+
+Un **commit** est un instantané complet et précis de votre projet à un moment spécifique dans son évolution.
+Il capture l'état exact de tous les fichiers trackés dans votre repository, permettant ainsi de documenter le développement
+progressif de votre code source.
 
 **Caractéristiques :**
 
--   Identifiant unique automatiquement créé ( _hash_ )
--   Message descriptif obligatoire
--   Auteur et date automatiquement associé au commit
--   Modifications incluses
+-   Identifiant unique automatiquement créé ( _hash_ ) qui sert de référence **immuable**\* pour retrouver cet état particulier du projet
+-   Message descriptif obligatoire expliquant clairement les modifications apportées et leur raison d'être
+-   Auteur et date automatiquement associé au commit pour maintenir une traçabilité complète des contributions
+-   Modifications incluses détaillant précisément chaque changement effectué dans les fichiers concernés
 
-**anatomie d'un commit :**
+:::info \***immuable**
+_Ce terme signifie "**qui ne peut pas être modifié**", garantissant ainsi qu'une fois créé, un élément comme un commit Git
+restera **toujours identique** et **inaltérable** dans le temps._
+
+:::
+
+**Découvrons l'anatomie d'un commit :**
 
 ```bash
 commit a1b2c3d4e5f6g7h8i9j0                 # Hash du commit
 Author: Jean Dupont <jean@exemple.com>      # Auteur du commit
 Date:   Mon Jun 20 15:30:45 2025 +0200      # Date du commit
 
-    Ajouter la page d'accueil               # Message (titre) du commit
+    Ajouter la page d\'accueil               # Message (titre) du commit
 
     - Création du fichier index.html        # Message (corps) du commit
     - Ajout du CSS de base                  # Message (corps suite et fin) du commit
 ```
 
-### 2.3 - Branch - ( _Branche_ )
+<small>
+    _Il s'agit des informations qui seront visible dans votre terminal_
+</small>
 
-Une **Branche** permet de développer des fonctionnalités en parallèle.
+### 2.4 - Branch - ( _Branche_ )
+
+Une **branche** est un mécanisme puissant qui permet de **développer des fonctionnalités en parallèle** sans perturber le code principal.
+Les branches constituent un élément essentiel du workflow Git moderne.
 
 :::tip Avantage
 
--   Isolation des modifications
--   Développement parallèle
--   Fusion contrôlée
+-   **Isolation des modifications** :<br />
+    _Chaque branche crée un environnement de travail indépendant et sécurisé._
+-   **Développement parallèle** :<br />
+    _Plusieurs développeurs peuvent travailler simultanément sur différentes fonctionnalités sans interférer avec ce dernier._
+-   **Fusion contrôlée** :<br />
+    _Les modifications peuvent être **vérifiées** et **intégrées** méthodiquement dans le projet principal._
 
 :::
 
-**Schéma représentatif du fonctionnement des Branches avec Git**
+<br />
+
+**Schéma illustrant le fonctionnement des branches Git**
 
 ```mermaid
 ---
@@ -127,115 +188,231 @@ gitGraph
     commit id: "Release"
 ```
 
+<small>_Représentation d'un graph Git_</small>
+
+### 2.5 - L'interaction entre les concepts
+
+**Le repository comme fondation**
+
+Comme expliqué en **2.2**, le repository est l'environnement qui contient votre projet et son historique complet.<br />
+C'est l'infrastructure qui permet à Git de fonctionner :
+
+-   Le repository local ( _**.git**_ ) stocke toutes les métadonnées et l'historique
+-   Le repository distant sert de point central pour la collaboration
+
+**Les commits comme points de sauvegarde**
+
+Comme vu en **2.3**, les commits sont les "**instantanés**" qui capturent l'état du projet à un moment précis :
+
+-   Chaque commit crée un point de référence auquel vous pouvez revenir
+-   La suite des commits forme une ligne temporelle de l'évolution du projet
+-   Les messages de commit documentent les changements et leur intention
+
+**Les branches comme flux de travail parallèles**
+
+Comme expliqué en **2.4**, les branches permettent de travailler sur différentes fonctionnalités sans affecter le code principal :
+
+-   La branche principale ( _**main**_ ) conserve le code stable
+-   Les branches de fonctionnalités isolent les nouvelles modifications
+-   La fusion ( _**merge**_ ) permet de réintégrer les changements une fois terminés
+
+**Le workflow complet**
+
+```mermaid
+---
+config:
+    theme: 'neutral'
+---
+flowchart TD
+    A[Repository] --> B[Branch principale]
+    A --> C[Branch fonctionnalité]
+    B --> D[initial commit]
+    C --> F[Commit A]
+    F --> G[Commit B]
+    G --> H{Merge}
+    D --> H
+    H --> I[Commit final]
+
+    style A fill:#e3f2fd
+    style B fill:#ffcccc
+    style C fill:#c8e6c9
+    style H fill:#ffecb3
+```
+
+_Cette structure permet de maintenir un historique clair, de travailler en parallèle et de revenir facilement
+à n'importe quel état précédent du projet si nécessaire._
+
 ## 3 - Installation et Configuration <Badge niveau="Débutant" />
+
+Cette section couvre l'**installation** et la **configuration** de Git sur différents systèmes d'exploitation. ( _**Windows**, **macOS** et
+**Linux**_ ) afin de préparer un environnement de travail utilisable immédiatement.
+
+Les **instructions détaillées** sont fournies pour chaque plateforme avec plusieurs options d'installation, suivies par
+une **commande de vérification** pour confirmer que l'installation s'est correctement déroulée. Nous terminerons par la **configuration de
+l'identité de l'utilisateur**, une étape _cruciale_ pour que Git puisse correctement attribuer les commits comme nous l'avons déjà vu.
+
+La **configuration complémentaire** aborde également des paramètres recommandés comme le **nom de la branche par défaut**,
+le **choix de l'éditeur** et la **stratégie de fusion** lors des opérations de pull, afin d'optimiser l'expérience utilisateur selon les
+bonnes pratiques actuelles.
 
 ### 3.1 - Windows
 
-**Option 1**
+Plusieurs méthodes pour installer Git sur Windows existes.<br />
+Choisissez celle qui correspond le mieux selon vos préférences.
 
-```bash
-# Télécharger l'exécutable depuis git-scm.com
-# https://git-scm.com/download/win
-```
-
-**Option 2**
-
-```bash
-# Avec Chocolatey (le gestionnaire de dépendance de windows qui doit être installé en amont)
-choco install git
-```
-
-**Option 3**
-
-```bash
-# Avec Winget
-winget install Git.Git
-```
-
-**Vérification si l'installation à réussi**
-
-```bash
-# Affiche le numéro de version de Git.
-git --version
-```
-
-### 3.2 - MacOS
-
-**Option 1 : Avec Homebrew**
+**Option n°1 - Installateur officiel**
 
 :::info Recommandé
 
 ```bash
-# Avec Homebrew
-brew install git
+# Visitz le site officiel
+https://git-scm.com/download/win
+
+# Suivez les instructions d'installation
+# ✓ Acceptez les options par défaut pour une installation standard
 ```
 
 :::
 
-**Option 2 : Avec Xcode**
+**Option 2 - Gestionnaires de paquets ( _Chocolatey_ ou _WinGet_ )**
+
+Si sur Windows, vous utilisez déjà le gestionnare de paquet **Chocolatey**, alors ce choix serait plus adapté dans votre situation.
+
+:::warning
+Il faut bien avoir déjà ce gestionnaire **installé** et **configuré** sur votre système afin d'utiliser
+les commandes liées à **Chocolatey**.
+:::
+
+:::note
+Si besoin : _**[Lien officiel vers Chocolatey](https://chocolatey.org/ 'Lien vers la page officiel de Chocolatey')**_
+:::
 
 ```bash
-# Avec Xcode Command Line Tools
+# Exécutez dans un terminal administrateur
+choco install git -y
+```
+
+**Mais**, sur Windows 10/11, **Winget** est un gestionnaire de paquets **intégré nativement** qui reste souvent méconnu de la communauté.
+
+:::note
+Si besoin : _**[Lien officiel vers WinGet](https://learn.microsoft.com/fr-fr/windows/package-manager/winget/ 'Lien vers la page officiel de WinGet')**_
+:::
+
+```powershell
+# Simple et rapide
+winget install Git.Git
+```
+
+**Option 3 - Via GitHub Desktop**
+
+Si vous ne vous sentez pas à l'aise avec un terminal, il existe également une solution avec une interface graphique.
+
+```bash
+# Téléchargez GitHub Desktop qui inclut Git
+https://desktop.github.com/
+```
+
+### 3.2 - MacOS
+
+**MacOS** offre plusieurs méthodes d'installation simples et efficaces.<br />
+Choisissez celle qui correspond le mieux à votre configuration :
+
+**Option 1 : - Via Homebrew**
+
+Si vous utilisez déjà **Homebrew**, cette méthode est la plus simple et **maintient Git automatiquement à jour** :
+
+:::info Recommandé
+
+```bash
+# Installation rapide avec Homebrew
+brew install git
+
+# Pour les mises à jour futures
+brew upgrade git
+```
+
+:::
+
+**Option 2 : Via Xcode Command Line Tools**
+
+Solution **native Apple** qui installe également d'autres outils de développement utiles :
+
+```bash
+# Installation des outils de développement Apple
 xcode-select --install
+
+# Un dialogue graphique apparaîtra pour confirmer l'installation
 ```
 
-**Option 3**
+**Option 3 - Installateur officiel**
+
+Pour une installation manuelle depuis la source officielle :
 
 ```bash
-# Télécharger l'exécutable depuis git-scm.com
-# https://git-scm.com/download/mac
-```
+# Téléchargez l'installateur depuis le site officiel
+https://git-scm.com/download/mac
 
-**Vérification si l'installation à réussi**
-
-```bash
-# Affiche le numéro de version de Git.
-git --version
+# Suivez les instructions d'installation à l'écran
 ```
 
 ### 3.3 - Linux
 
-**Distribution : Ubuntu/Debian**
+:::warning
+L'installation de Git sur Linux **varie selon la distribution utilisée**. Voici les commandes pour les distributions les plus courantes.
+
+:::
+
+-   **Distribution : Ubuntu/Debian**
+
+    ```bash
+    # Mettre à jour les dépôts
+    sudo apt update -y
+
+    # Installation de Git avec le gestionnaire de paquet APT
+    sudo apt install git
+    ```
+
+-   **Distribution : CentOS/RHEL/Fedora**
+
+    ```bash
+    # Installation de Git avec le gestionnaire de paquet YUM
+    sudo yum install git
+    ```
+
+    Ou bien
+
+    ```bash
+    # Installation de Git avec le gestionnaire de paquet DNF
+    sudo dnf install git
+    ```
+
+-   **Distribution : Arch Linux et dérivés**
+
+    ```bash
+    # Installation de Git avec le gestionnaire de paquet PACMAN
+    sudo pacman -S git
+    ```
+
+**Vérification de l'installation**
+
+Quelque soit le système d'exploitation, la vérification et les commandes seront les mêmes. Ainsi donc, après l'installation,
+vérifiez que Git fonctionne correctement en saisissant dans votre terminal ( _PowerShell_, _Bash_, _Zsh_ ou*autre* ).
 
 ```bash
-# Mettre à jour les paquets
-sudo apt update -y
-
-# Installation avec le gestionnaire de paquet APT
-sudo apt install git
-```
-
-**Distribution : CentOS/RHEL/Fedora**
-
-```bash
-# Installation avec le gestionnaire de paquet YUM
-sudo yum install git
-
-# OU
-
-# Installation avec le gestionnaire de paquet DNF
-sudo dnf install git
-```
-
-**Distribution : Arch Linux**
-
-```bash
-# Installation avec le gestionnaire de paquet PACMAN
-sudo pacman -S git
-```
-
-**Vérification si l'installation à réussi**
-
-```bash
-# Affiche le numéro de version de Git.
+# Dans PowerShell, Bash, CMD ou tout autre terminal, exécutez
 git --version
+
+# Résultat attendu (la version peut varier)
+# git version 2.42.0.windows.1
 ```
+
+✅ **Lorsque la commande affiche correctement la version, Git est prêt à être utilisé sur votre système Windows.**
 
 ### 3.4 - Configuration Initiale
 
 :::note
-Quel que soit le système d’exploitation utilisé, **il est essentiel de configurer Git** afin qu’il puisse identifier précisément
-l’utilisateur avec lequel il interagit.
+Quel que soit le système d'exploitation utilisé, **il est essentiel de configurer Git** afin qu'il puisse identifier précisément
+l'utilisateur avec lequel il interagit.
 :::
 
 **Voici les commandes à saisir dans votre terminal**
@@ -257,8 +434,7 @@ git config --list
 Les identifiants utilisés dans les exemples ci-dessous sont fournis **à titre purement démonstratif**.
 Vous devrez impérativement les **remplacer par vos propres informations personnelles**.
 
-_Cela peut sembler relever du bon sens, certes, mais il me semblait indispensable de vous le rappeler, tant cet aspect est fondamental._
-
+_Cela peut sembler évident, mais il est essentiel de le souligner, tant cet aspect est fondamental.._
 :::
 
 **Configuration complémentaire** - ( _Non obligatoire_ )
@@ -274,18 +450,17 @@ git config --list
 ```
 
 -   **`init.defaultBranch main`**<br />
-    _Cette commande définit `main` **comme nom de branche par défaut** lors d’une initialisation avec la commande `git init`.
-    Cela permet d’éviter la création d’une branche `master` par défaut ( **nom hérité historiquement mais aujourd’hui remplacé par main
-    dans la plupart des projets modernes et plateformes comme GitHub** )._
+    _Cette commande définit `main` comme **nom de branche par défaut** lors d'une initialisation avec la commande `git init`.
+    Cela permet d'éviter la création d'une branche `master` par défaut ( **nom hérité historiquement mais aujourd'hui remplacé par main
+    dans la plupart des projets modernes et plateformes comme GitHub **)._
 
 -   **`core.editor "code --wait"`**<br />
     _Configure **Visual Studio Code comme éditeur par défaut** pour les messages de commit, les rebase interactifs,
-    les fusions conflictuelles, etc. L’option `--wait` est cruciale : elle indique à Git d’**attendre que VS Code soit fermé** avant de
+    les fusions conflictuelles, etc. L’option `--wait` **est cruciale** : elle indique à Git d’**attendre que VS Code soit fermé** avant de
     poursuivre l’exécution ( par exemple, après avoir saisi un message de commit dans l’éditeur )._
 
     :::note
-    Si tu n’utilises pas **VS Code**, adapte cette ligne à ton éditeur préféré ( _**nano**, **vim**, **notepad**, etc._ ).
-
+    _Si tu n’utilises pas **VS Code**, adapte cette ligne à ton éditeur préféré ( **nano**, **vim**, **notepad**, etc. )._
     :::
 
 -   **`pull.rebase false`**<br />
@@ -300,20 +475,30 @@ git config --list
 
 ## 4 - Commandes Esentielles <Badge niveau="Débutant" />
 
+Cette section présente les **commandes essentielles** de Git pour les débutants.
+Elle couvre les **opérations fondamentales** qui permettent de _comprendre_ et _utiliser_ Git efficacement dans un flux de travail quotidien.
+Vous y trouverez les commandes pour **créer** et **initialiser** des dépôts, **suivre** des modifications, **créer des instantanés**
+( _commits_ ) et **partager** votre travail. Ces connaissances constituent la _base_ pour toute personne souhaitant utiliser
+Git dans ses projets de développement.
+
 ### 4.1 - Création et Initilisation
 
 :::info Information utile
-La création d'un projet peut se faire de plusieurs façons.
+**La création d'un projet Git** peut se faire de _plusieurs façons différentes_, chacune adaptée à des situations spécifiques :
 
--   Création d'un tout nouveau projet à partir de rien
--   La possibilité de reprendre un projet déjà existant.
--   Mais aussi clonner un projet en ligne ( _on y reviendra juste après_ )
+-   **Création d'un tout nouveau projet** à partir de rien, idéal pour démarrer un développement propre
+-   **La possibilité de reprendre un projet déjà existant**, permettant d'intégrer Git à des projets en cours
+-   **Mais aussi clonner un projet en ligne** depuis des plateformes comme GitHub ou GitLab<br />
+    ( _on y reviendra juste après en détail_ )
 
 :::
 
 **Création d'un nouveau projet - ( _Repository Local_ )**
 
-Concentrons nous dans un premier temps sur la création d'un tout nouveau projet pour simplifier la compréhension des commandes.
+Concentrons nous dans un premier temps sur la **création d'un tout nouveau projet** pour simplifier la compréhension des commandes.
+Cette approche vous permettra de _comprendre les fondamentaux_ avant d'aborder des scénarios plus complexes.
+
+**Commandes Bash**
 
 ```bash
 # Modélisation d'un nouveau projet avec la création d'un répertoire de travail spécifique.
@@ -321,7 +506,11 @@ mkdir mon-projet-demo
 
 # Déplacement dans ce répertoire fraîchement créé
 cd mon-projet-demo
+```
 
+**Commandes Git**
+
+```git
 # Initialisation de git dans ce répertoire.
 git init
 
@@ -330,17 +519,23 @@ git status
 ```
 
 :::note
-Attention il est impératif de saisir les **mots-clés** en **anglais**, il n'existe pas de commande traduite en **français**.<br />
-_Pour en savoir d'avantage sur les commandes à saisir dans un terminal, une documentation est en cours de rédaction sur ce sujet._
+Attention il est **impératif** de saisir les **mots-clés** en **anglais**, il n'existe pas de commande traduite en **français**.
+Les commandes Git sont _standardisées_ et _universelles_, ce qui garantit leur fonctionnement sur tous les systèmes d'exploitation.
 
+_Pour en savoir d'avantage sur les commandes à saisir dans un terminal, une documentation est en cours de rédaction sur ce sujet.
+Celle-ci vous permettra d'approfondir vos connaissances des commandes de base du terminal._
 :::
 
-**Clonnage d'un projet - ( _Repository Distant_ )**
+**Clonage d'un projet - ( _Repository Distant_ )**
+
+Pour l'exemple il s'agit d'utiliser une **URL GitHub** mais c'est **sensiblement la même chose** avec **GitLab** ou **Bitbucket**.<br />
+Ces plateformes fonctionnent toutes avec le _même principe fondamental_ de gestion de versions distribuée.
 
 :::warning
-Pour l'exemple il s'agit d'utiliser une **URI GitHub** mais c'est senssiblement la même chose avec **GitLab** ou **Bitbucket**.<br />
-**Attention le nom d'utilisateur et le projet doivent existé, ici il s'agit d'un projet fictif, l'URI a pour vocation de montrer
-la syntaxe à saisir seulement.**
+Le nom d'utilisateur et le projet **doivent exister**, ici il s'agit d'un projet _fictif_, l'URL a pour vocation de **montrer la syntaxe à
+saisir seulement**. Dans un cas réel, vous devrez remplacer ces valeurs par celles correspondant à votre propre projet ou au projet que vous
+souhaitez cloner.
+
 :::
 
 ```bash
@@ -350,7 +545,7 @@ git clone https://github.com/utilisateur/projet-cloner.git
 # Se déplacer dans le dossier
 cd projet-cloner
 
-# Vérifier l'état
+# Vérifier l'état du projet
 git status
 ```
 
@@ -359,13 +554,42 @@ git status
 ```
 projet/
 ├── .git/           # Historique complet
-├── README.md       # Un des fichiers du projet (correspond à la documentation du projet)
-└── (autres fichiers éventuellement)
+├── README.md       # Un fichier (correspond à la documentation du projet)
+└── (éventuellement d'autres fichiers/dossiers)
 ```
+
+**Comprendre le clonage en profondeur**
+
+Le clonage d'un dépôt Git est une opération **fondamentale** qui permet de _télécharger l'intégralité_ d'un projet,
+y compris son **historique complet** et toutes ses **branches**. Contrairement à un simple téléchargement de fichiers,
+cette opération crée une _copie locale complète_ qui reste **connectée** au dépôt d'origine.
+
+:::tip Les Avantages du clonage incluent
+
+-   **Travail hors ligne**<br />
+    _Vous pouvez travailler sur le projet sans connexion internet._
+
+-   **Historique complet**<br />
+    _Accès à **tous les commits** et **toutes les branches** du projet._
+
+-   **Simplicité de synchronisation**<br />
+    _Facilité pour **récupérer** et **envoyer** des modifications._
+
+:::
 
 ### 4.2 - Cycle de base : Add, Commit, Push
 
-**Schéma pour comprendre ce qu'il se passe**
+**Le cycle de base** d'utilisation de Git consiste à naviguer entre **trois états principaux** :
+
+-   la **modification** des fichiers
+-   la **préparation** ( _staging area_ )
+-   la **validation** ( _commit_ ).
+
+Ce cycle est au **cœur de tout workflow Git** et permet de gérer efficacement les modifications apportées à votre code.
+Pour bien comprendre ce cycle, il est **essentiel d'assimiler** comment les fichiers passent d'un état à un autre et
+comment les **commandes principales** (_add_, _commit_, _push_) interagissent pour permettre le suivi des changements.
+
+**Visualisons** comment **les fichiers se déplacent** entre **les différents états** et **zones** dans Git avec le schéma suivant :
 
 ```mermaid
 ---
@@ -373,10 +597,21 @@ config:
     theme: 'neutral'
 ---
 flowchart TB
-    A[Répertoire de travail local] -.->|Ajoute des fichiers modifiés ou créés| B[Zone intermédiaire]
-    B -.->|Création de l'instantané| C[Répertoire local à jour]
-    B -.->|Création de l'instantané| D[Répertoire distant pas encore à jour]
-    D -.->|Envoie des modification en ligne| E[Répertoire distant à jour]
+    A["Répertoire de travail local<br/>( Working Directory )"]
+    B["Zone intermédiaire <br /> ( Staging Area )"]
+    C["Répertoire local à jour<br />( Local Repository )"]
+    D["Répertoire distant<br />pas encore à jour<br /> ( Remote Repository )"]
+    E["Répertoire distant à jour<br /> ( Remote Repository )"]
+
+    subgraph Compréhension
+        direction TB
+        A -.->|Ajoute des fichiers modifiés ou créés| B
+        A -.->|git add| B
+        B -.->|Création de l'instantané| C -.->|git status| D
+        B -.->|git commit| C
+        D -.->|"Envoie des modification<br />en ligne"| E
+        D -.->|git push| E
+    end
 
     style A fill:#ccccff
     style C fill:#ccffcc
@@ -384,60 +619,112 @@ flowchart TB
     style D fill:#ffcccc
 ```
 
+:::note
+_Les commandes sont partiellement dévoilées dans le schéma précédent.<br />
+**Notez tout de même qu'il manque les options pour plus de clarté.**._
+:::
+
 <br />
 
-**Schéma pour compprendre les termes techniques utilisés**
+**Découvrons les commandes fréquemment utilisées**
 
-```mermaid
----
-config:
-    theme: 'neutral'
----
-flowchart LR
-    A[1 - Working Directory<br/>Répertoire de travail] -.->|git add| B[2 - Staging Area<br />Zone intermédiaire]
-    B -.->|git commit| C[3 - Local Repository<br />Répertoire local]
-    C -.->|git push| D[4 - Remote Repository<br />Répertoire distant]
+-   **`git add`**
 
-    style A fill:#ccccff
-    style C fill:#ccffcc
-    style D fill:#ccffcc
-```
+    ```git
+    # Ajouter un fichier spécifique
+    git add index.html
 
-**Quels sont les commandes utilisés**
+    # Ajouter plusieurs fichiers
+    git add index.html style.css script.js
 
-```bash
-# Ajouter un fichier spécifique
-git add index.html
+    # Ajouter tous les fichiers modifiés
+    git add .
 
-# Ajouter plusieurs fichiers
-git add index.html style.css script.js
+    # Ajouter tous les fichiers d'un type en particulié ( javascript ici )
+    git add *.js
+    ```
 
-# Ajouter tous les fichiers modifiés
-git add .
+-   **`git status`**
 
-# Ajouter tous les fichiers d'un type en particulié ( javascript ici )
-git add *.js
+    ```git
+    # Voir ce qui est dans la zone d'attente ( Staging Area )
+    git status
+    ```
 
-# Voir ce qui est dans la zone d'attente ( Staging Area )
-git status
-```
+-   **`git commit`**<br />
+    _Un commit bien structuré est essentiel pour la maintenance et la collaboration._
 
-**Exemple par la pratique**
+    :::danger Note très importante
+    _Lorsque qu'on utilise la commande_ **`git commit -m "" -m ""`**, _il faut prendre en considération qu'il faut **impérativement
+    utiliser des guillemets doubles** ( **"** **"** ) et **non des apostrophes** ( **'** **'** ). En effet, les apostrophes,
+    bien que couramment utilisées dans certains langages de programmation, ne fonctionneront pas correctement avec **la signature** de la
+    commande<br />_ **`git commit`**.
 
-**Etape 1 - Création**
+    :::
 
-```bash
-# Créer un fichier comprenant un titre de niveau 1 (Titre principal)
-echo "<h1>Bonjour</h1>" > index.html
+    :::warning Couramment utilisé mais à éviter absolument
+    _Les messages courts et non descriptifs nuisent à la lisibilité de l'historique du projet._
 
-# L'ajouter au staging ( zone d'attente )
-git add index.html
+    ```git
+    # Messages trop courts et non informatifs
+    git commit -m "Ajouter la page d'accueil"
+    git commit -m "Fix"
+    git commit -m "Update"
+    ```
 
-# Vérifier le statut du projet
-git status
-```
+    :::
 
-**Affichera dans votre terminal**
+    :::tip Approche recommandée
+    Utilisez un titre concis suivi d'une description détaillée.
+
+    ```git
+    # Structure titre + description détaillée
+    git commit -m "Un titre ici" -m "Une description plus fournis permettant de décrire les changements"
+    ```
+
+    :::
+
+    :::info Autre approche - Celle du professionnel
+    _Pour structurer vos commits de façon standardisée, adoptez la convention **Conventional Commits** qui permet l'automatisation du
+    versionnement et des changelogs._
+
+    -   Format : `type(scope): description`
+    -   Exemple : `git commit -m "feat(auth): implémenter la connexion OAuth" -m "description complète."`
+
+    <br />
+    Pour plus d'informations, consultez CommitLint sur leur **[site officiel](https://commitlint.js.org/)**.
+
+    :::
+
+## 5 - Exemple par la pratique
+
+### 5.1 - Étape 1 - Création d'un fichier html
+
+-   **Commande `bash`** - _Création du fichier index.html_.
+
+    ```bash
+    # Créer un fichier comprenant un titre de niveau 1 (Titre principal)
+    echo "<h1>Bonjour</h1>" > index.html
+    ```
+
+-   **Commande `git`** - _Ajoute du fichier dans la staging area ( zone d'attente )_.
+
+    ```bash
+    # Ajout du fichier pour qu'il soit trackée
+    git add index.html
+    ```
+
+-   **Commande `git`** - _Contrôle le statut des fichiers trackés_.
+
+    ```bash
+    # Vérification du statut pour savoir si des éléments sont en attente ou non.
+    git status
+    ```
+
+:::note
+
+Si le fichier à bien été ajouté alors il ne manque plus qu'à saisir un **Commit** pour versionner celui-ci.<br />
+En attendant, **voici le message qui sera affiché à l'écran**. _Il est suceptible de changer selon la version utilisée_.
 
 ```git
 # Changes to be committed:
@@ -445,159 +732,93 @@ git status
 #         new file:   index.html
 ```
 
-**Etape n°2 - Commit - ( _Création de l'instantané_ )**
-
-:::warning Pas une bonne approche
-
-```git
-# Commit avec message court
-git commit -m "Ajouter la page d'accueil"
-```
-
 :::
 
-:::tip Bonne approche
+### 5.2 - Étape 2 - Création de l'instantané
 
-```git
-# Commit avec message détaillé
-git commit -m "Ajouter la page d'accueil" -m "- Création du fichier index.html
-- Structure HTML de base
-- Titre principal ajouté"
-```
+**L'instantané sera créé avec la bonne approche** **_sans utiliser la convention présentée en amont_**. **
+La volonté recherchée ici est de simplifier grandement l'approche de création** en évoquant les points complexes tout
+en pratiquant sur des notions _abordables à votre niveau_.
 
-:::
+-   **`git commit`** - _Création d'un instantané avec un titre et un message explicatif_.
 
-**Information utile**
+    ```git
+    # Création d'un premier commit ( instantané )
+    # Rappel de la bonne syntaxe : git commit -m "un titre" -m "une description"
+    git commit -m "Ajout de la page d'accueil" -m "Création du fichier index.html, structure, titre principal."
+    ```
 
-Si le commit en cours n'a pas encore été `push` vers la **banche distante** alors il est possible de modifier
-le dernier commit avec la commande suivante.
+    :::note
+    Il est tout à fait possible à ce stade de **continuer à travailler sur sa branche en locale seulement**, **c'est même couramment utilisé
+    dans ce sens**. En revanche, si vous souhaitez **envoyer vos changements sur le repository distant**, vous pouvez très bien le faire avec
+    la commande suivante.
 
-```git
-# Modifier le dernier commit (si pas encore pushé)
-git commit --amend -m "Nouveau message"
-```
+    **PS :** _Vous devrez bien évidemment disposer d'une URL associée au projet pour lier votre repository local à celui qui est en ligne._
+    :::
 
-**Consulter l'historique des commits**
+### 5.3 - Étape 3 - Envooie des modifications sur un repository distant.
 
-```
-# Voir l'historique
-git log --oneline
-```
+**L'envoie des modifications** sur un repository distant passe _indéniablement_ par la validation **précédemment d'un commit**.<br />
+Ainsi notre travail sera accessible à d'autres collaborateurs ou simplement **sauvegardé en** ligne.
 
-**Bonnes pratiques pour les messages**
+-   **`git push`** - _Pousser les changements sur le repository distant._
 
-:::tip Bon message
+    Premier push et **EXCLUSIVEMENT LE PREMIER**.
 
-````git
-# Descriptif et clair
-git commit -m "Corriger le bug d'affichage sur mobile"
+    ```git
+    # Le tout premier "Push" permet de créer la branche distante ( ici main )
+    git push -u origin main
+    ```
 
-# Avec détails
-git commit -m "Ajouter la validation du formulaire" -m "- Validation email
-- Validation mot de passe
-- Messages d'erreur en français"
+    Puis les autres **push** se feront simplement comme ceci.
 
-:::
+    ```git
+    # Puis tout les autres "Push" suivants
+    git push
+    ```
 
-:::danger Mauvais message
+    Dans un vrai projet, il est question de travailler sur une branche spécifique pour ne pas impacter le travail de ses collaborateurs.
 
-```git
-# Trop vague
-git commit -m "updates"
-git commit -m "fix"
-````
+    ```git
+    # Push sur une branche spécifique
+    git push origin ma-branche-speciale
+    ```
 
-:::
+    Parfois certains vous demanderont de **forcer** un **push**. **Ne le faites surtout pas hormis si vous avez l'aval d'un mentor par écrit**.
 
-**Pousser les changements sur le repository distant avec Push**
+    :::danger Non recommandée
+    En effet, cette approche est **non recommandée** car un **push forcé écrase l'historique distant** et **peut causer la perte de
+    modifications effectuées par d'autres collaborateurs**, compromettant ainsi l'intégrité du projet partagé.
 
-```git
-# Le tout premier "Push" permet de créer la branche distante ( ici main )
-git push -u origin main
+    ```git
+    # Push forcé (ATTENTION : dangereux)
+    git push --force
+    ```
 
-# Puis tout les autres "Push" suivants
-git push
-```
+    :::
 
-```git
-# Push d'une branche spécifique
-git push origin ma-branche
-```
+## 6 - Vérification de l'état d'un projet
 
-:::danger Non recommandée
+### 6.1 - **`git status`**
 
-```git
-# Push forcé (ATTENTION : dangereux)
-git push --force
-```
+Nous avons déjà utilisé à plusieurs reprises la commande **`git status`** sans trop l'expliqué. Différent message peuvent-être associé à cette
+commande, ainsi dans cette partie nous vous proposons de comprendre chacun d'entre eux simplement.
 
-:::
+-   **`git status -s`** - Voir l'état actuel de façon simplifié
 
-4.3 - Séquence complète typique
+    ```git
+    # Version courte
+    git status -s
+    ```
 
-**Modification du fichier index.html**
+-   **`git status`** - Couramment utilisé
 
-```git
-# 1. Modifier du fichier index.html
-echo "Nouveau contenu" >> index.html
-```
+    ```git
+    # Voir l'état actuel
+    git status
+    ```
 
-**Contrôler les changements dans la zone d'attente**
-
-```git
-# 2. Voir les changements
-git status
-```
-
-:::info Découverte de la commante **`git diff`**
-Cette commande permet d'afficher les différences entre votre nouveau fichier et celui disponible dans la zone d'attente<br />
-( Staging Area ).
-
-```git
-# 2 bis. Compare le nouveau contenu à celui dans la zone de stagin
-git diff
-```
-
-:::
-
-**Ajoute des changements dans la zone d'attente**
-
-```git
-# 3. Ajouter au staging
-git add index.html
-```
-
-**Création de l'instantané**
-
-```git
-# 4. Créer le commit
-git commit -m "Mettre à jour le contenu de la page d'accueil" \
-           -m "J'ai apporté des modifications en structurant le projet avec une bonne sémentique."
-```
-
-**Envoie des modification sur le Repository disant**
-
-```git
-# 5. Envoyer vers le serveur ( ici il ne s'agit pas du premier push, donc syntaxe simplifié )
-git push
-```
-
-### 4.3 - Commandes de Consultation
-
-J'ai utilisé à plusieurs reprises la commande **`git status`** sans trop l'expliqué. En effet, différents message peuvent-être associé à cette
-commande, ainsi je vous propose de comprendre chacun d'entre eux simplement.
-
-**`git status` avec et sans options -s**
-
-```git
-# Version courte
-git status -s
-
-# Voir l'état actuel
-git status
-```
-
-**Interprétation des réponses retournées par la commande `git status` :**
+**Interprétation des réponses retournées par la commande `git status`**.
 
 :::tip En stagin ( _prêt à être commiter_ )
 
@@ -609,7 +830,7 @@ Changes to be committed:
 
 :::
 
-:::warning Modifié mais pas en staging
+:::warning Modifié mais pas encore dans le zone de " staging "
 
 ```git
 On branch main
@@ -629,82 +850,151 @@ Untracked files:
 
 :::
 
-**Contrôler les logs**
+### 6.2 - **`git commit --amend`**
+
+Parfois, il va vous **arriver** de faire un **`commit`** et d'oublier une étape importante, ainsi vous allez **penser** qu'il faut de nouveau
+faire un nouveau commit en expliquant le changement apporté. Sachez que Git **met** à disposition l'option **`--amend`** afin d'éditer le
+dernier commit.
+
+:::danger Attention !!!
+_**Il faut bien entendu que le dernier commit n'ait pas encore été push sur un repository distant, c'est FONDAMENTAL !!**_
+
+:::
+
+**Exemple de l'édition d'un commit pas encore push**
 
 ```git
-# Historique complet
-git log
-
-# Historique condensé ( chaque log tient sur une ligne )
-git log --oneline
-
-# Historique avec graphique
-git log --oneline --graph
-
-# Historique d'un fichier
-git log -- index.html
-
-# Derniers n commits ( n correspond au nombre de commits que l'on souhaite afficher )
-git log -3
+# Modification du dernier commit ( pas encore pushé )
+git commit --amend -m "Nouveau titre" -m "nouveau message détaillé"
 ```
+
+### 6.3 - **`git log`**
+
+**Il peut être utile** de consulter l'historique complet des commits sur un projet afin de déterminer _qui a effectué une modification
+particulière_, _quand elle a été faite_ et _avec quel message_. C'est **essentiel** pour comprendre l'évolution du code et pour déboguer
+correctement.
+
+-   **`git log`** - _Connaître l'historique complet._
+
+    ```git
+    # Historique complet
+    git log
+    ```
+
+-   **`git log --oneline`** - _Connaître l'historique complet, chaque log tiendra sur une ligne._
+
+    ```git
+    # Historique condensé ( chaque log tient sur une ligne )
+    git log --oneline
+    ```
+
+-   **`git log --oneline --graph`** - _Connaître l'historique complet, chaque log tiendra sur une ligne accompagné d'un graphique._
+
+    ```git
+    # Historique avec graphique
+    git log --oneline --graph
+    ```
+
+-   **`git log -- index.html`** - _Connaître l'historique d'un fichier spécifique ( ici index.html )._
+
+    ```git
+    # Historique d'un fichier
+    git log -- index.html
+    ```
+
+-   **`git log -n`** - _Afficher un certain nombre de log ( n correspond au nombre désiré )._
+
+    ```git
+    # Derniers n commits ( n correspond au nombre de commits que l'on souhaite afficher )
+    git log -3
+    ```
 
 **Exemple de sortie des logs**
 
-```git
-# Commande saisie
-git log --oneline
+-   **Commande saisie**
 
-# Résultat obtenue
-a1b2c3d (HEAD -> main, origin/main) Ajouter page contact
-d4e5f6g Corriger bug CSS
-g7h8i9j Page d'accueil initiale
-j1k2l3m Initial commit
-```
+    ```git
+    # Commande saisie
+    git log --oneline
+    ```
 
-**Découvrons la commande `git diff`**
+-   **sortie affiché dans le terminal**
 
-Elle a également été apperçu un peu en amont de cette documentation sans forcément expliquer son fonctionnement.
+    ```git
+    # Résultat obtenue
+    a1b2c3d (HEAD -> main, origin/main) Ajouter page contact
+    d4e5f6g Corriger bug CSS
+    g7h8i9j Page d'accueil initiale
+    j1k2l3m Initial commit
+    ```
 
-```git
-# Voir les modifications non stagées ( utile pour savoir si le fichier est prêt à être commité où non )
-git diff
+### 6.4 - **`git diff`**
 
-# Voir les modifications stagées ( Vérifie ce qui est prêt à être commit )
-git diff --staged
+La commande **`git diff`** permet de **visualiser précisément** les _modifications effectuées_ dans les fichiers,
+ce qui est **essentiel** pour vérifier les changements avant de les valider dans un commit.
 
-# Comparer deux commits ( Avec git log on récupère un hash qui peut être exploité ici )
-git diff a1b2c3d d4e5f6g
+-   **`git diff`** - _Découvrez les modifications qui ne sont pas encore "commit"._
 
-# Comparer un fichier spécifique
-git diff index.html
-```
+    ```git
+    # Voir les modifications non stagées ( utile pour savoir si le fichier est prêt à être commité où non )
+    git diff
+    ```
+
+-   **`git diff --staged`** - _._
+
+    ```git
+    # Voir les modifications stagées ( Vérifie ce qui est prêt à être commit )
+    git diff --staged
+    ```
+
+-   **`git diff index.html`** - _Comparer les différences sur un fichier spécifique._
+
+    ```git
+    # Comparer un fichier spécifique
+    git diff index.html
+    ```
+
+-   **`git diff a1b2c3d d4e5f6g`** - _Comparaison entre deux commit selon les hash passés en paramètres._
+
+    ```git
+    # Comparer deux commits ( Avec git log on récupère un hash qui peut être exploité ici )
+    git diff a1b2c3d d4e5f6g
+    ```
 
 **Lecture d'une réponse d'une commande `git diff`**
 
-```git
-diff --git a/index.html b/index.html
-index 1234567..abcdefg 100644
---- a/index.html
-+++ b/index.html
-@@ -1,4 +1,5 @@
- <html>
- <head>
--    <title>Ancien titre</title>
-+    <title>Nouveau titre</title>
-+    <meta charset="utf-8">
- </head>
-```
+-   **La commande saisie :**
 
-**Légende**
+    ```git
+    # Commande saisie pour comparer deux fichiers "index.html"
+    git diff --git a/index.html b/index.html
+    ```
 
-| Code couleur       | Couleur | Explication   |
-| ------------------ | :-----: | ------------- |
-| `--- a/index.html` |  Rouge  | Data supprimé |
-| `+++ b/index.html` |  Vert   | Data ajouté   |
+-   **Le résultat obtenu**
 
-## 5 - Gestion des Fichiers <Badge niveau="Débutant" />
+    ```git
+    index 1234567..abcdefg 100644
+    --- a/index.html
+    +++ b/index.html
+    @@ -1,4 +1,5 @@
+    <html>
+    <head>
+    -    <title>Ancien titre</title>
+    +    <title>Nouveau titre</title>
+    +    <meta charset="utf-8">
+    </head>
+    ```
 
-### 5.1 - États des Fichiers
+    **Légende**
+
+    | Code couleur       | Couleur | Explication   |
+    | ------------------ | :-----: | ------------- |
+    | `--- a/index.html` |  Rouge  | Data supprimé |
+    | `+++ b/index.html` |  Vert   | Data ajouté   |
+
+## 7 - Gestion des Fichiers <Badge niveau="Débutant" />
+
+### 7.1 - États des Fichiers
 
 ```mermaid
 stateDiagram-v2
@@ -713,45 +1003,43 @@ stateDiagram-v2
     Staged --> Committed : git commit
     Committed --> Modified : Édition
     Modified --> Staged : git add
-    Staged --> Modified : Édition
-    Modified --> Committed : git add + git commit
 ```
 
 **Les 4 États possible**
 
-**1 - Untracked**
+-   **1 - Untracked** - _Fichier pas encore suivi._
 
-```bash
-# 1. Untracked : Non suivi par Git
-echo "nouveau" > fichier.txt
-git status  # Untracked files: fichier.txt
-```
+    ```bash
+    # 1. Untracked : Non suivi par Git
+    echo "nouveau" > fichier.txt
+    git status  # Untracked files: fichier.txt
+    ```
 
-**2 - Staged**
+-   **2 - Staged** - _Fichier suivi_.
 
-```bash
-# 2. Staged : Prêt à être commité
-git add fichier.txt
-git status  # Changes to be committed: new file: fichier.txt
-```
+    ```bash
+    # 2. Staged : Prêt à être commité
+    git add fichier.txt
+    git status  # Changes to be committed: new file: fichier.txt
+    ```
 
-**3 - Committed**
+-   **3 - Committed** - _Fichier sauvegardé_.
 
-```bash
-# 3. Committed : Sauvegardé dans l'historique
-git commit -m "Ajouter fichier.txt"
-git status  # nothing to commit, working tree clean
-```
+    ```bash
+    # 3. Committed : Sauvegardé dans l'historique
+    git commit -m "Ajouter fichier.txt"
+    git status  # nothing to commit, working tree clean
+    ```
 
-**4 - Modified**
+-   **4 - Modified** - \_\_.
 
-```bash
-# 4. Modified : Modifié depuis le dernier commit
-echo "contenu modifié" >> fichier.txt
-git status  # Changes not staged for commit: modified: fichier.txt
-```
+    ```bash
+    # 4. Modified : Modifié depuis le dernier commit
+    echo "contenu modifié" >> fichier.txt
+    git status  # Changes not staged for commit: modified: fichier.txt
+    ```
 
-### 5.2 - Qu'est-ce que le fichier .gitignore
+### 7.2 - Qu'est-ce que le fichier .gitignore ?
 
 Le fichier **`.gitignore`** permet d'exclure certains fichiers du suivi Git. C'est très pratique pour alléger les repository distant.
 Chaque dépendences dans les projets sont tous de différentes tailles et tout envoyer en ligne serait dramatique pour les hébergeurs.
@@ -849,45 +1137,69 @@ temp/
 .parcel-cache/
 ```
 
-**Comment est appliquer le ficheir .gitignore**
+**Comment est appliquer le fichier `.gitignore` ?**
 
 ```bash
 # Ajouter le .gitignore au projet
 git add .gitignore
-git commit -m "Ajout du fichier .gitignore" -m "Implémentation du fichier .gitignore pour éviter untracted des éléments inutiles"
+git commit -m "Ajout du .gitignore" -m "Ajout du .gitignore pour éviter untracted des éléments inutiles"
 
 # Si fichiers déjà trackés, les retirer du suivi
-git rm --cached fichier-a-ignorer.txt
-git commit -m "Retirer fichier du suivi Git" -m "Retrait du fichier - fichier-a-ignorer.txt qui n'a plus lieu d'être ici"
+git rm --cached a-ignorer.txt
+git commit -m "Retirer a-ignorer du suivi Git" -m "Retrait du fichier 'a-ignorer.txt' du suivi."
 ```
 
-## 6 - Collaboration Basique <Badge niveau="Débutant" />
+## 8 - Collaboration Basique <Badge niveau="Débutant" />
 
-### 6.1 - Remote Repository
+:::info
+**Pour collaborer avec un repository distant, vous devez disposer d'un compte sur une plateforme Git **comme `GitHub`, `GitLab` ou `Bitbucket`.
+_Ces services hébergent vos projets en ligne et offrent des outils de collaboration supplémentaires comme la **gestion des issues**,
+les **pull requests** et les **actions d'intégration continue**._
 
-**Configuration Remote**
+-   **Les issues** : _C'est un espace pour échanger sur des bugs ou incompréhensions dans un projet._
+-   **Les pull requests** : _C'est permettre de proposer une modification ou changement majeur._
+-   **L'intégration continue** : _C'est permettre la mise en place d'un cycle automatisé._
 
-```bash
-# Voir les remotes configurés
-git remote -v
-```
+:::
 
-```bash
-# Ajouter un remote
-git remote add origin https://github.com/utilisateur/projet.git
-```
+### 8.1 - Remote Repository
 
-```bash
-# Modifier l'URL d'un remote
-git remote set-url origin https://github.com/utilisateur/nouveau-projet.git
-```
+**Les commandes git remote** permettent de _gérer les connexions avec des dépôts distants_, facilitant ainsi la **visualisation**,
+l'**ajout**, la **modification** ou la **suppression** de ces liens essentiels à la collaboration.
 
-```bash
-# Supprimer un remote
-git remote remove old-origin
-```
+-   **Découvrez les remotes configurés sur un projet**
 
-**Synchronisation**
+    ```bash
+    # Voir les remotes configurés
+    git remote -v
+    ```
+
+-   **Ajoutez une URL spécifique pour un projet**
+
+    ```bash
+    # Ajouter un remote
+    git remote add origin https://github.com/utilisateur/projet.git
+    ```
+
+-   **Modification d'une URL distante**
+
+    ```bash
+    # Modifier l'URL d'un remote
+    git remote set-url origin https://github.com/utilisateur/nouveau-projet.git
+    ```
+
+-   **Supprimez un remote d'un projet**
+
+    ```bash
+    # Supprimer un remote
+    git remote remove old-origin
+    ```
+
+### 8.2 - Synchronisation ( `git fetch` )
+
+**La synchronisation** permet d'_échanger des données entre repositories locaux et distants_ pour **maintenir la cohérence du projet** entre
+tous les collaborateurs. La commande `fetch` est particulièrement utile car elle permet de récupérer les modifications distantes _**sans les
+fusionner automatiquement**_, vous donnant ainsi la possibilité d'examiner les changements avant de les intégrer.
 
 ```bash
 # Récupérer les modifications distantes
@@ -897,16 +1209,6 @@ git fetch origin
 ```bash
 # Récupérer et fusionner
 git pull origin main
-```
-
-```bash
-# Envoyer ses modifications
-git push origin main
-```
-
-```bash
-# Premier push avec tracking
-git push -u origin main
 ```
 
 :::note Différence entre fetch VS pull
@@ -926,567 +1228,95 @@ git pull origin main
 
 :::
 
-### 6.2 - Workflow de Collaboration Simple
-
-**Diagramme de séquence permettant de comprendre plus simplement la collaboration simple**
-
-```mermaid
-sequenceDiagram
-    participant Dev1
-    participant GitHub
-    participant Dev2
-
-    Dev1->>GitHub: git push (commit A)
-    Dev2->>GitHub: git pull (récupère A)
-    Dev2->>GitHub: git push (commit B)
-    Dev1->>GitHub: git pull (récupère B)
-    Dev1->>GitHub: git push (commit C)
-```
-
-**Routine Quotidienne**
-
-```bash
-# === Début de journée ===
-# 1. Récupérer les dernières modifications
-git checkout main
-git pull origin main
-
-# 2. Créer sa branche de travail
-git checkout -b ma-fonctionnalite
-
-# === Pendant le développement ===
-# 3. Travailler et commiter régulièrement
-git add .
-git commit -m "Avancement sur la fonctionnalité" -m "Explication détaillés ici"
-
-# 4. Pousser régulièrement (sauvegarde)
-git push -u origin ma-fonctionnalite
-
-# === Fin de fonctionnalité ===
-# 5. Mettre à jour depuis main
-git checkout main
-git pull origin main
-git checkout ma-fonctionnalite
-git merge main  # ou git rebase main
-
-# 6. Push final et Pull Request
-git push origin ma-fonctionnalite
-# Créer PR sur GitHub/GitLab
-```
-
-**Résolution de Conflits**
-
-```bash
-# Quand un conflit survient lors d'un merge
-git merge autre-branche
-# Auto-merging fichier.txt
-# CONFLICT (content): Merge conflict in fichier.txt
-
-# 1. Voir les fichiers en conflit
-git status
-
-# 2. Éditer le fichier conflictuel
-# Le fichier contiendra :
-<<<<<<< HEAD # ( Modification actuelle )
-Votre version
-=======
-Version de l'autre branche
->>>>>>> autre-branche # ( Modification entrante )
-
-# 3. Résoudre manuellement, puis :
-git add fichier.txt
-git commit -m "Résoudre conflit dans fichier.txt" -m "Explication de la correction"
-```
-
-**Contenu typique d'un conflit :**
-
-```html
-<!DOCTYPE html>
-<html>
-    <head>
-        <<<<<<< HEAD
-        <title>Mon Site Web</title>
-        =======
-        <title>Site Web Génial</title>
-        >>>>>>> feature-nouveau-titre
-    </head>
-</html>
-```
-
-**Après résolution :**
-
-```html
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Mon Site Web Génial</title>
-    </head>
-</html>
-```
-
-## 7 - Commandes de Récupération <Badge niveau="Intermédiaire" />
-
-### Annuler des Modifications
-
-**Working Directory**
-
-```bash
-# Annuler les modifications d'un fichier (non stagé)
-git checkout -- fichier.txt
-# ou (Git 2.23+)
-git restore fichier.txt
-
-# Annuler toutes les modifications non stagées
-git checkout -- .
-# ou
-git restore .
-
-# Supprimer tous les fichiers non trackés ( -f = file & -d = directory )
-git clean -f
-git clean -fd  # Inclure les dossiers
-```
-
-**Staging Area**
-
-```bash
-# Retirer un fichier du staging
-git reset HEAD fichier.txt
-# ou (Git 2.23+)
-git restore --staged fichier.txt
-
-# Retirer tous les fichiers du staging
-git reset HEAD
-# ou
-git restore --staged .
-```
-
-**Commits**
-
-```bash
-# Annuler le dernier commit (garde les modifications)
-git reset --soft HEAD~1
-
-# Annuler le dernier commit (perd les modifications)
-git reset --hard HEAD~1
-
-# Annuler un commit spécifique (crée un nouveau commit)
-git revert abc1234
-
-# Modifier le dernier commit
-git commit --amend -m "Nouveau message"
-```
-
-**Différences entre reset et revert :**
-
-```bash
-# git reset : Efface l'historique (dangereux si pushé)
-A -> B -> C (HEAD)
-git reset --hard B
-A -> B (HEAD)  # C a disparu
-
-# git revert : Crée un commit qui annule (sûr)
-A -> B -> C (HEAD)
-git revert C
-A -> B -> C -> D (HEAD, annule C)
-```
-
-## 8 - Exercices Pratiques <Badge niveau="Débutant" />
-
-### Exercice 1 - Premier Projet Git
-
-:::note Énoncé
-Créez votre premier projet Git avec une page web simple incluant :
-
-Un fichier HTML avec structure de base
-Un fichier CSS pour le style
-Un README expliquant le projet
-Configuration Git appropriée
-
-:::
-
-**À Vous de Jouer**
-
-Étapes à suivre :
-
-1. Créer un nouveau dossier "mon-premier-site"
-2. Initialiser Git dans ce dossier
-3. Configurer votre identité Git
-4. Créer les fichiers HTML, CSS et README
-5. Faire votre premier commit
-6. Ajouter du contenu et faire un second commit
-7. Consulter l'historique
-
-**Solution Guidée**
-
-```bash
-# 1. Création et initialisation
-mkdir mon-premier-site
-cd mon-premier-site
-git init
-
-# 2. Configuration (si pas déjà fait)
-git config user.name "Votre Nom"
-git config user.email "votre.email@exemple.com"
-
-# 3. Créer index.html
-cat > index.html << EOF
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Premier Site</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <h1>Bienvenue sur mon site</h1>
-    <p>Ceci est mon premier projet avec Git !</p>
-</body>
-</html>
-EOF
-
-# 4. Créer style.css
-cat > style.css << EOF
-body {
-    font-family: Arial, sans-serif;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f5f5f5;
-}
-
-h1 {
-    color: #333;
-    text-align: center;
-}
-
-p {
-    line-height: 1.6;
-    color: #666;
-}
-EOF
-
-# 5. Créer README.md
-cat > README.md << EOF
-# Mon Premier Site
-
-Site web simple créé pour apprendre Git.
-
-## Contenu
-- Page d'accueil avec HTML5
-- Styles CSS basiques
-- Première expérience avec Git
-
-## Comment voir le site
-Ouvrir index.html dans un navigateur.
-EOF
-
-# 6. Premier commit
-git add .
-git status  # Vérifier ce qui va être commité
-git commit -m "Initial commit: structure de base du site"
-
-# 7. Ajouter du contenu
-echo "    <footer><p>© 2025 Mon Premier Site</p></footer>" >> index.html
-
-# 8. Second commit
-git add index.html
-git commit -m "Ajouter footer à la page d'accueil"
-
-# 9. Consulter l'historique
-git log --oneline
-git log --stat  # Voir les fichiers modifiés
-```
-
-**Opérations sur les Fichiers**
-
-```bash
-# Ajouter un fichier au suivi
-git add nouveau-fichier.txt
-
-# Supprimer un fichier
-git rm fichier-obsolete.txt
-git commit -m "Supprimer fichier obsolète" -m "Suppression du fichier qui n'a plus lieu d'être dans ce projet"
-
-# Renommer/déplacer un fichier
-git mv ancien-nom.txt nouveau-nom.txt
-git commit -m "Renommer le fichier" -m "Le fichier a été renommer pour répondre au besoin du projet"
-
-# Ignorer des modifications temporairement
-git stash
-git stash pop  # Récupérer les modifications
-
-# Annuler les modifications d'un fichier
-git checkout -- fichier.txt    # Avant Git 2.23
-git restore fichier.txt         # Git 2.23+
-```
-
-**Vérification**
-
-Commandes pour vérifier votre travail :
-
-```bash
-# Structure du projet
-ls -la
-# Doit afficher : .git/ index.html style.css README.md
-
-# Configuration Git
-git config user.name
-git config user.email
-
-# Historique
-git log --oneline
-# Doit montrer 2 commits
-
-# État actuel
-git status
-# Doit afficher : "nothing to commit, working tree clean"
-
-# Contenu du dernier commit
-git show HEAD
-```
-
-**Points à vérifier :**
-
--   ✅ Repository Git initialisé (.git présent)
--   ✅ Configuration utilisateur définie
--   ✅ 3 fichiers créés et commités
--   ✅ 2 commits dans l'historique
--   ✅ Working directory propre
-
-### Exercice 2 : Travail avec les Branches
-
-:::note Énoncé
-Améliorez votre site en utilisant les branches :
-
--   Créer une branche pour ajouter une page "À propos"
--   Créer une autre branche pour améliorer le CSS
--   Fusionner ces branches dans main
--   Nettoyer les branches devenues inutiles
-
-:::
-
-**Mission**
-
-Spécifications :
-
--   Branche "page-about" :
-
-    -   Créer about.html avec votre présentation
-    -   Ajouter un lien de navigation dans index.html
-
--   Branche "amelioration-css" :
-
-    -   Améliorer les couleurs du site
-    -   Ajouter des effets hover sur les liens
-    -   Améliorer la typographie
-
--   Objectifs d'apprentissage :
-
-    -   Maîtriser la création de branches
-    -   Comprendre le workflow Git avec branches
-    -   Apprendre à fusionner proprement
-
-**Solution Complète**
-
-```bash
-# 1. S'assurer d'être sur main à jour
-git checkout main
-git status
-
-# === BRANCHE PAGE ABOUT ===
-# 2. Créer branche pour page About
-git checkout -b page-about
-
-# 3. Créer about.html
-cat > about.html << EOF
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>À propos - Mon Premier Site</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <nav>
-        <a href="index.html">Accueil</a> |
-        <a href="about.html">À propos</a>
-    </nav>
-
-    <h1>À propos de moi</h1>
-    <p>Je suis en train d'apprendre Git et c'est passionnant !</p>
-    <p>Ce site est mon premier projet de versioning.</p>
-
-    <footer><p>© 2025 Mon Premier Site</p></footer>
-</body>
-</html>
-EOF
-
-# 4. Ajouter navigation dans index.html
-sed -i '/<body>/a\    <nav>\n        <a href="index.html">Accueil</a> |\n        <a href="about.html">À propos</a>\n    </nav>' index.html
-
-# 5. Commiter les changements
-git add .
-git commit -m "Ajouter page About avec navigation"
-
-# === BRANCHE CSS ===
-# 6. Revenir sur main et créer branche CSS
-git checkout main
-git checkout -b amelioration-css
-
-# 7. Améliorer le CSS
-cat > style.css << EOF
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 20px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: #333;
-    line-height: 1.6;
-}
-
-nav {
-    background: rgba(255, 255, 255, 0.9);
-    padding: 15px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    text-align: center;
-}
-
-nav a {
-    color: #333;
-    text-decoration: none;
-    margin: 0 10px;
-    padding: 8px 16px;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-}
-
-nav a:hover {
-    background-color: #667eea;
-    color: white;
-}
-
-h1 {
-    color: white;
-    text-align: center;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    margin-bottom: 30px;
-}
-
-p {
-    background: rgba(255, 255, 255, 0.9);
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-
-footer {
-    text-align: center;
-    margin-top: 40px;
-    color: white;
-    opacity: 0.8;
-}
-EOF
-
-# 8. Commiter les améliorations CSS
-git add style.css
-git commit -m "Améliorer le design avec gradient et effets"
-
-# === FUSION DES BRANCHES ===
-# 9. Revenir sur main
-git checkout main
-
-# 10. Fusionner page-about
-git merge page-about
-
-# 11. Fusionner amelioration-css
-git merge amelioration-css
-
-# 12. Voir l'historique
-git log --oneline --graph
-
-# === NETTOYAGE ===
-# 13. Supprimer les branches fusionnées
-git branch -d page-about
-git branch -d amelioration-css
-
-# 14. Vérifier les branches restantes
-git branch
-```
-
-**Résultat Attendu**
-
-Structure finale :
-
-```bash
-mon-premier-site/
-├── index.html      # Page d'accueil avec navigation
-├── about.html      # Page à propos
-├── style.css       # CSS amélioré avec gradient
-└── README.md       # Documentation
-```
-
-Historique Git :
-
-```bash
-$ git log --oneline --graph
-*   a1b2c3d (HEAD -> main) Merge branch 'amelioration-css'
-|\
-| * d4e5f6g Améliorer le design avec gradient et effets
-* |   g7h8i9j Merge branch 'page-about'
-|\ \
-| * | j1k2l3m Ajouter page About avec navigation
-|/ /
-* | m4n5o6p Ajouter footer à la page d'accueil
-|/
-* p7q8r9s Initial commit: structure de base du site
-```
-
-**Vérifications**
-
--   ✅ 2 pages HTML avec navigation
--   ✅ CSS moderne avec effets
--   ✅ Historique propre avec merges
--   ✅ Branches de travail supprimées
--   ✅ Working directory clean
-
-## Points Clés à Retenir
+### 8.3 - Workflow de Collaboration Simple
+
+-   **Diagramme de séquence permettant de comprendre plus simplement la collaboration simple**
+
+    **Le diagramme de séquence ci-dessous** illustre _visuellement_ le flux de travail **collaboratif** entre deux développeurs partageant
+    leurs modifications via GitHub, montrant _comment les commits sont synchronisés et intégrés chronologiquement_.
+
+    ```mermaid
+    ---
+    config:
+        theme: 'neutral'
+    ---
+    sequenceDiagram
+        participant Dev1
+        participant GitHub
+        participant Dev2
+
+        Dev1->>GitHub: git push (commit A)
+        Dev2->>GitHub: git pull (récupère A)
+        Dev2->>GitHub: git push (commit B)
+        Dev1->>GitHub: git pull (récupère B)
+        Dev1->>GitHub: git push (commit C)
+    ```
+
+-   **GitGraph des Commits**
+
+    Le **diagramme GitGraph** ci-dessous a un **lien direct** avec le _diagramme de séquence_ présenté plus haut. Alors que le _diagramme de
+    séquence_ montre les **interactions chronologiques** entre les développeurs et GitHub (le "_qui fait quoi quand_"), le **GitGraph**
+    visualise comment ces mêmes actions **impactent l'historique** des branches et des commits (le "_comment s'organise l'arbre de
+    développement_"). Les **deux se complètent** pour illustrer le même workflow collaboratif sous _deux angles différents_.
+
+    ```mermaid
+    ---
+    config:
+        theme: 'neutral'
+    ---
+    gitGraph
+        commit id: 'Initial commit'
+        branch Dev1
+        checkout Dev1
+        commit id: 'Commit A'
+        checkout main
+        merge Dev1
+        branch Dev2
+        checkout Dev2
+        commit id: 'Récupère A'
+        commit id: 'Commit B'
+        checkout main
+        merge Dev2
+        checkout Dev1
+        merge main
+        commit id: 'Récupère B'
+        commit id: 'ComMit C ... etc.'
+    ```
+
+**Comparaison des workflows**
+
+| **Type de branche** | **Objectif**                          | **Cycle de vie** | **Merge vers** | **Exemples de nommage**                                  |
+| :-----------------: | ------------------------------------- | ---------------- | -------------- | -------------------------------------------------------- |
+|   **main/master**   | _Code de production stable_           | Permanente       | N/A            | `main`<br /> `master`                                    |
+|     **develop**     | _Code en développement intégré_       | Permanente       | main           | `develop`<br /> `dev`                                    |
+|     **feature**     | _Nouvelles fonctionnalités_           | **Temporaire**   | develop        | `feature/login`<br /> `feature/cart-checkout`            |
+|     **release**     | _Préparation d'une version_           | **Temporaire**   | main + develop | `release/v1.2.0`<br /> `release/2023-Q2`                 |
+|     **hotfix**      | _Corrections urgentes en prod_        | **Temporaire**   | main + develop | `hotfix/login-security`<br /> `hotfix/api-crash`         |
+|     **bugfix**      | _Corrections de bugs non-urgents_     | **Temporaire**   | develop        | `bugfix/header-alignment`<br /> `bugfix/form-validation` |
+|     **support**     | _Maintenance de versions antérieures_ | Longue durée     | N/A            | `support/v1.x`<br /> `support/legacy`                    |
+|  **documentation**  | _Mise à jour de la documentation_     | **Temporaire**   | develop        | `docs/api-reference`<br /> `docs/readme-update`          |
+
+## Conclusion & Points Clés à Retenir
 
 :::tip Récapitulatif Fondamentaux Git
 Concepts maîtrisés :
 
-✅ Repository : Espace de travail avec historique complet
-✅ Commits : Instantanés de votre projet avec messages descriptifs
-✅ Branches : Développement parallèle et fusion contrôlée
-✅ Remote : Collaboration et sauvegarde distante
 ✅ Workflow : add → commit → push, cycle quotidien
-✅ Récupération : Annulation et correction d'erreurs
+✅ Commits : Instantanés de votre projet avec messages descriptifs
+✅ Repository : Espace de travail avec historique complet
+✅ Remote : Collaboration et sauvegarde distante
 
 :::
-
-## Prochaine Étape
-
-Bravo ! Vous maîtrisez maintenant les fondamentaux de Git.
-Direction le niveau intermédiaire pour découvrir :
-
--   Stratégies de branches avancées (Git Flow, GitHub Flow)
--   Rebase interactif pour nettoyer l'historique
--   Stash et worktrees pour la gestion avancée
--   Hooks Git pour l'automatisation
--   Résolution de conflits complexes
 
 ---
 
 :::info Métadonnées du Document
 
-Version : 1.0
-Dernière mise à jour : 22 Juin 2025
-Niveau : <Badge niveau="Débutant" />
-Durée : 30 minutes
-Prérequis : Aucun - première approche de Git
-Objectif : Autonomie complète sur les opérations Git de base
+-   Version : 1.1
+-   Dernière mise à jour : 24 Juin 2025
+-   Niveau : <Badge niveau="Débutant" />
+-   Durée : 30 minutes
+-   Prérequis : Aucun - première approche de Git
+-   Objectif : Autonomie complète sur les opérations Git de base
+
 :::
