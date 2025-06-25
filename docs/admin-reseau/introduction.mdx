@@ -2,51 +2,241 @@
 
 ## Administration Réseau
 
-🌍 Objectif : maîtriser les communications entre machines et les protocoles fondamentaux
+**Objectif** : maîtriser les communications entre machines et les protocoles fondamentaux
 
-> 💡 Indispensable pour comprendre la cybersécurité et le cloud
+Ces compétences réseau constituent le socle technique indispensable pour identifier les vulnérabilités,
+comprendre les vecteurs d'attaque, configurer des défenses efficaces et analyser les incidents de sécurité.
 
-**Concepts clés :**
+:::note
+_Indispensable pour comprendre la cybersécurité et le cloud_
+:::
 
--   Modèle OSI / TCP-IP
--   Protocoles : ICMP, DNS, DHCP, HTTP/S, FTP, SSH
--   Configuration IP, NAT, pare-feu (iptables, ufw, firewalld)
--   Outils d’analyse réseau : nmap, netstat, tcpdump, wireshark
--   VPN, VLAN, DMZ, Proxy, DNS Interne/Externe
+## Progression d'Apprentissage
+
+```mermaid
+---
+config:
+  theme: 'neutral'
+---
+graph TD
+    subgraph Fondamentaux
+      A1[Modèles &<br />Protocoles de base]
+      A2[IP &<br />Subnetting]
+      A3[Outils<br />essentiels]
+    end
+
+    subgraph Intermédiaire
+      B1[Routage & Commutation]
+      B3[Configuration pratique]
+      B2[Services réseau]
+    end
+
+    subgraph Avancé
+      C1[Sécurité réseau]
+      C2[Performance & QoS]
+      C3[Troubleshooting avancé]
+    end
+
+    Fondamentaux --> Intermédiaire --> Avancé
+```
 
 ---
 
-🌐 Administration réseau (95/100)
-Protocoles et modèles
+## Niveau Fondamental
 
-Modèle OSI/TCP-IP : couches détaillées, encapsulation
-Protocoles L2 : Ethernet, VLAN, STP, trunking
-Protocoles L3 : IP, ICMP, ARP, subnetting avancé, VLSM
-Protocoles L4 : TCP, UDP, port management
+### Modèles de référence
 
-Routage et commutation
+-   **Modèle OSI** : 7 couches, rôles et interactions
+-   **Modèle TCP/IP** : 4 couches, correspondance avec OSI
+-   **Encapsulation** : ajout d'en-têtes par couche
 
-Routage statique/dynamique : RIP, OSPF, BGP, métriques
-VLAN avancé : inter-VLAN routing, VTP, 802.1Q
-Spanning Tree : STP, RSTP, MSTP, PortFast
-Link aggregation : LACP, EtherChannel
+```mermaid
+---
+config:
+  theme: 'neutral'
+---
+graph LR
+    subgraph "Modèle OSI vs TCP/IP"
+      direction LR
+        subgraph OSI["OSI (7 couches)"]
+            O7[7 - Application]
+            O6[6 - Présentation]
+            O5[5 - Session]
+            O4[4 - Transport]
+            O3[3 - Réseau]
+            O2[2 - Liaison]
+            O1[1 - Physique]
+        end
 
-Services réseau
+        subgraph TCP[" TCP/IP (4 couches)"]
+            T4[Application]
+            T3[Transport]
+            T2[Internet]
+            T1[Accès réseau]
+        end
 
-DNS : zones, délégation, DNSSEC, load balancing
-DHCP : scopes, réservations, options, failover
-NAT/PAT : types, configuration, limitations
+        O7 --> T4
+        O6 --> T4
+        O5 --> T4
+        O4 --> T3
+        O3 --> T2
+        O2 --> T1
+        O1 --> T1
+    end
+```
 
-Sécurité réseau
+### Protocoles essentiels
 
-Firewalls : stateful, stateless, DMZ, rules optimization
-VPN : site-to-site, client-to-site, IPSec, SSL/TLS
-IDS/IPS : détection, prévention, signatures
-Segmentation : micro-segmentation, zero trust network
+-   **ICMP** : ping, traceroute, messages d'erreur
+-   **DNS** : résolution de noms, types d'enregistrements (A, AAAA, CNAME, MX)
+-   **DHCP** : attribution automatique d'adresses IP
+-   **HTTP/HTTPS** : navigation web, certificats SSL/TLS
 
-QoS et performance
+### Adressage IP
 
-Quality of Service : classification, marking, queuing, shaping
-Redondance : HSRP, VRRP, failover protocols
-Monitoring : SNMP, NetFlow, sFlow, bandwidth analysis
-Troubleshooting : Wireshark, ping avancé, traceroute, MTR
+-   **IPv4** : classes, masques de sous-réseau
+-   **Subnetting de base** : calcul de réseaux et d'hôtes
+-   **Adresses privées** : RFC 1918 (10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16)
+
+### Outils de base
+
+-   `ping` : test de connectivité
+-   `traceroute` : chemin réseau
+-   `nslookup`/`dig` : requêtes DNS
+-   `netstat` : connexions actives
+
+---
+
+## Niveau Intermédiaire
+
+### Protocoles par couche
+
+#### Couche 2 (Liaison)
+
+-   **Ethernet** : trames, adresses MAC
+-   **VLAN** : segmentation logique, tagging 802.1Q
+-   **STP** : prévention des boucles (Spanning Tree Protocol)
+
+#### Couche 3 (Réseau)
+
+-   **IP avancé** : fragmentation, TTL, ToS
+-   **ARP** : résolution adresse IP → MAC
+-   **ICMP avancé** : types de messages, Path MTU Discovery
+
+#### Couche 4 (Transport)
+
+-   **TCP** : fiabilité, fenêtres, états de connexion
+-   **UDP** : rapidité, applications temps réel
+-   **QUIC** : protocole moderne (HTTP/3), chiffrement intégré, réduction latence
+-   **Gestion des ports** : well-known, registered, dynamic
+
+### Routage et Commutation
+
+#### Routage
+
+-   **Statique** : routes manuelles, route par défaut
+-   **Dynamique** :
+    -   **RIP** : protocole à vecteur de distance
+    -   **OSPF** : protocole à état de liens
+    -   **BGP** : routage inter-domaines (basics)
+
+#### Commutation avancée
+
+-   **VLAN inter-routage** : router-on-a-stick, SVI
+-   **Trunking** : transport de multiples VLAN
+-   **Link Aggregation** : LACP, EtherChannel
+
+### Services réseau
+
+-   **DNS avancé** : hiérarchie, délégation de zones
+-   **DHCP avancé** : scopes, réservations, options
+-   **NAT/PAT** : traduction d'adresses, types de NAT
+
+---
+
+## Niveau Avancé
+
+### Sécurité réseau
+
+#### Contrôle d'accès
+
+-   **Firewalls** :
+    -   Stateful vs Stateless
+    -   DMZ et zones de sécurité
+    -   Optimisation des règles
+-   **Segmentation** : micro-segmentation, Zero Trust Network
+
+#### Chiffrement et VPN
+
+-   **VPN Site-to-Site** : IPSec, tunneling
+-   **VPN Client-to-Site** : SSL/TLS VPN
+-   **IDS/IPS** : détection et prévention d'intrusions
+
+### Performance et Qualité de Service
+
+#### QoS (Quality of Service)
+
+-   **Classification** : identification du trafic
+-   **Marking** : DSCP, CoS
+-   **Queuing** : mécanismes de file d'attente
+-   **Shaping** : contrôle du débit
+
+#### Haute disponibilité
+
+-   **Redondance** : HSRP, VRRP
+-   **Protocoles de failover**
+-   **Load balancing**
+
+### Monitoring et Troubleshooting
+
+#### Outils d'analyse
+
+-   **Wireshark** : analyse de paquets
+-   **SNMP** : monitoring équipements
+-   **NetFlow/sFlow** : analyse de flux
+-   **nmap** : découverte réseau et scanning
+
+#### Configuration système
+
+-   **Firewalls Linux** : iptables, ufw, firewalld
+-   **Proxy** : forward/reverse proxy
+-   **WAF** : Web Application Firewall
+
+```mermaid
+---
+config:
+  theme: 'neutral'
+---
+graph LR
+    subgraph "Architecture réseau type"
+        Internet[Internet] --> FW[Firewall]
+        FW --> DMZ[DMZ]
+        FW --> LAN[LAN interne]
+
+        subgraph DMZ
+            WEB[Serveur Web]
+            DNS[DNS public]
+        end
+
+        subgraph LAN
+            DC[Contrôleur domaine]
+            DHCP[Serveur DHCP]
+            FS[Serveur fichiers]
+        end
+
+        DMZ --> LAN
+    end
+```
+
+---
+
+## Parcours d'apprentissage recommandé
+
+1. **Étape 1** : Maîtriser les fondamentaux (modèles, IP, outils de base)
+2. **Étape 2** : Approfondir routage et commutation
+3. **Étape 3** : Implémenter la sécurité et la performance
+4. **Étape 4** : Spécialisation (cybersécurité, cloud, etc.)
+
+:::tip
+**Conseil pratique** : Utilisez des labs virtuels (GNS3, EVE-NG, Packet Tracer) pour mettre en pratique chaque concept avant de passer au niveau suivant.
+:::
