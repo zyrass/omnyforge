@@ -2,9 +2,9 @@ import React from 'react';
 import styles from './Badge.module.css';
 
 const NiveauCouleur = {
-    Débutant: 'beginner',
-    Intermédiaire: 'intermediate',
-    Avancé: 'advanced',
+    Débutant: 'débutant',
+    Intermédiaire: 'intermédiaire',
+    Avancé: 'avancé',
 };
 
 export default function Badge({ niveau = 'Débutant' }) {
