@@ -144,10 +144,10 @@ const config: Config = {
         [
             '@docusaurus/plugin-content-docs',
             {
-                id: 'omnylearn',
-                path: 'docs/omnylearn',
-                routeBasePath: 'omnylearn',
-                sidebarPath: './config/sidebars.omnylearn.ts',
+                id: 'homelabs',
+                path: 'docs/homelabs',
+                routeBasePath: 'homelabs',
+                sidebarPath: './config/sidebars.homelabs.ts',
             },
         ],
     ],
@@ -208,10 +208,10 @@ const config: Config = {
                 },
                 {
                     type: 'docSidebar',
-                    sidebarId: 'omnylearnSidebar',
-                    docsPluginId: 'omnylearn',
+                    sidebarId: 'homelabsSidebar',
+                    docsPluginId: 'homelabs',
                     position: 'right',
-                    label: 'OmnyLearn',
+                    label: 'HomeLabs',
                 },
                 // {
                 //     href: 'https://github.com/facebook/docusaurus',
