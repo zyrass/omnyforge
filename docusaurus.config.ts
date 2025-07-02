@@ -274,6 +274,7 @@ const config: Config = {
                 'markdown',
                 'git',
                 'php',
+                'perl',
             ],
         },
     } satisfies Preset.ThemeConfig,
