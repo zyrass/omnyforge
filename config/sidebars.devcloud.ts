@@ -28,6 +28,7 @@ const sidebars: SidebarsConfig = {
                             label: 'Apprentissage Progressif',
                             items: [
                                 'stacks/tall/apprentissage-progressif/feuille-de-route',
+                                'stacks/tall/apprentissage-progressif/fondations',
                             ],
                         },
                     ],
