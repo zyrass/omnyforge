@@ -13,7 +13,7 @@ import type { SidebarsConfig } from '@docusaurus/plugin-content-docs';
  */
 
 const sidebars: SidebarsConfig = {
-    omnylearnSidebar: ['introduction'],
+    homelabsSidebar: ['introduction'],
 };
 
 export default sidebars;
