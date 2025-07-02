@@ -268,7 +268,13 @@ const config: Config = {
         prism: {
             theme: prismThemes.nightOwl,
             darkTheme: prismThemes.nightOwlLight,
-            additionalLanguages: ['powershell', 'bash', 'markdown', 'git'],
+            additionalLanguages: [
+                'powershell',
+                'bash',
+                'markdown',
+                'git',
+                'php',
+            ],
         },
     } satisfies Preset.ThemeConfig,
 };
