@@ -15,64 +15,63 @@ import type { SidebarsConfig } from '@docusaurus/plugin-content-docs';
 const sidebars: SidebarsConfig = {
     devSidebar: [
         'introduction',
-        // {
-        //     type: 'category',
-        //     label: 'Languages',
-        //     items: [
-        //         {
-        //             type: 'category',
-        //             label: 'Balisage',
-        //             items: [
-        //                 'languages/balisage/markdown',
-        //                 'languages/balisage/html',
-        //                 'languages/balisage/xml',
-        //             ],
-        //         },
-        //         {
-        //             type: 'category',
-        //             label: 'Frontend',
-        //             items: [
-        //                 'languages/frontend/css',
-        //                 'languages/frontend/javascript',
-        //                 'languages/frontend/typescript',
-        //             ],
-        //         },
-        //         {
-        //             type: 'category',
-        //             label: 'Backend',
-        //             items: [
-        //                 'languages/backend/python',
-        //                 'languages/backend/php',
-        //                 'languages/backend/nodejs',
-        //                 'languages/backend/rust',
-        //                 'languages/backend/go',
-        //             ],
-        //         },
-        //         {
-        //             type: 'category',
-        //             label: 'Bases de données',
-        //             items: [
-        //                 {
-        //                     type: 'category',
-        //                     label: 'SQL',
-        //                     items: [
-        //                         'databases/sql/mysql-maria',
-        //                         'databases/sql/postgresql',
-        //                         'databases/sql/sqlite',
-        //                     ],
-        //                 },
-        //                 {
-        //                     type: 'category',
-        //                     label: 'NoSQL',
-        //                     items: [
-        //                         'databases/nosql/mongodb',
-        //                         'databases/nosql/redis',
-        //                     ],
-        //                 },
-        //             ],
-        //         },
-        //     ],
-        // },
+        {
+            type: 'category',
+            label: 'Languages',
+            items: [
+                {
+                    type: 'category',
+                    label: 'Balisage',
+                    items: [
+                        'languages/balisage/html',
+                        // 'languages/balisage/xml',
+                    ],
+                },
+                // {
+                //     type: 'category',
+                //     label: 'Frontend',
+                //     items: [
+                //         'languages/frontend/css',
+                //         'languages/frontend/javascript',
+                //         'languages/frontend/typescript',
+                //     ],
+                // },
+                // {
+                //     type: 'category',
+                //     label: 'Backend',
+                //     items: [
+                //         'languages/backend/python',
+                //         'languages/backend/php',
+                //         'languages/backend/nodejs',
+                //         'languages/backend/rust',
+                //         'languages/backend/go',
+                //     ],
+                // },
+                // {
+                //     type: 'category',
+                //     label: 'Bases de données',
+                //     items: [
+                //         {
+                //             type: 'category',
+                //             label: 'SQL',
+                //             items: [
+                //                 'databases/sql/mysql-maria',
+                //                 'databases/sql/postgresql',
+                //                 'databases/sql/sqlite',
+                //             ],
+                //         },
+                //         {
+                //             type: 'category',
+                //             label: 'NoSQL',
+                //             items: [
+                //                 'databases/nosql/mongodb',
+                //                 'databases/nosql/redis',
+                //             ],
+                //         },
+                //     ],
+                // },
+            ],
+        },
         // {
         //     type: 'category',
         //     label: 'Frameworks',

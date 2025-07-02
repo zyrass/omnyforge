@@ -90,19 +90,10 @@ const config: Config = {
         [
             '@docusaurus/plugin-content-docs',
             {
-                id: 'admin-sys',
-                path: 'docs/admin-sys',
-                routeBasePath: 'admin-sys',
-                sidebarPath: './config/sidebars.admin-sys.ts',
-            },
-        ],
-        [
-            '@docusaurus/plugin-content-docs',
-            {
-                id: 'admin-reseau',
-                path: 'docs/admin-reseau',
-                routeBasePath: 'admin-reseau',
-                sidebarPath: './config/sidebars.admin-reseau.ts',
+                id: 'infrastructure',
+                path: 'docs/infrastructure',
+                routeBasePath: 'infrastructure',
+                sidebarPath: './config/sidebars.infrastructure.ts',
             },
         ],
         [
@@ -188,45 +179,24 @@ const config: Config = {
                 },
                 {
                     type: 'docSidebar',
-                    sidebarId: 'adminSysSidebar',
-                    docsPluginId: 'admin-sys',
+                    sidebarId: 'infrastructureSidebar',
+                    docsPluginId: 'infrastructure',
                     position: 'left',
-                    label: 'Administration Système',
-                },
-                {
-                    type: 'docSidebar',
-                    sidebarId: 'adminReseauSidebar',
-                    docsPluginId: 'admin-reseau',
-                    position: 'left',
-                    label: 'Administration Réseau',
+                    label: 'Infrastructure (Système + Réseau + IaC)',
                 },
                 {
                     type: 'docSidebar',
                     sidebarId: 'devSidebar',
                     docsPluginId: 'developpements',
                     position: 'left',
-                    label: 'Développements',
-                },
-                {
-                    type: 'docSidebar',
-                    sidebarId: 'cloudSidebar',
-                    docsPluginId: 'cloud',
-                    position: 'left',
-                    label: 'Cloud',
-                },
-                {
-                    type: 'docSidebar',
-                    sidebarId: 'devsecopsSidebar',
-                    docsPluginId: 'devsecops',
-                    position: 'left',
-                    label: 'DevSecOps',
+                    label: 'Développements & Cloud (+ CI/CD)',
                 },
                 {
                     type: 'docSidebar',
                     sidebarId: 'cyberSidebar',
                     docsPluginId: 'cybersecurity',
                     position: 'left',
-                    label: 'Cybersécurité',
+                    label: 'Cybersécurité (+ DevSecOps)',
                 },
 
                 {
