@@ -99,10 +99,10 @@ const config: Config = {
         [
             '@docusaurus/plugin-content-docs',
             {
-                id: 'developpements',
-                path: 'docs/developpements',
-                routeBasePath: 'developpements',
-                sidebarPath: './config/sidebars.dev.ts',
+                id: 'devcloud',
+                path: 'docs/dev-cloud',
+                routeBasePath: 'devcloud',
+                sidebarPath: './config/sidebars.devcloud.ts',
             },
         ],
         [
@@ -186,8 +186,8 @@ const config: Config = {
                 },
                 {
                     type: 'docSidebar',
-                    sidebarId: 'devSidebar',
-                    docsPluginId: 'developpements',
+                    sidebarId: 'devCloudSidebar',
+                    docsPluginId: 'devcloud',
                     position: 'left',
                     label: 'Développements & Cloud (+ CI/CD)',
                 },
