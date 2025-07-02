@@ -15,14 +15,25 @@ import type { SidebarsConfig } from '@docusaurus/plugin-content-docs';
 const sidebars: SidebarsConfig = {
     devCloudSidebar: [
         'introduction',
-        // {
-        //     type: 'category',
-        //     label: 'Balisage',
-        //     items: [
-        //         'languages/balisage/html',
-        //         // 'languages/balisage/xml',
-        //     ],
-        // },
+        {
+            type: 'category',
+            label: 'Stacks',
+            items: [
+                {
+                    type: 'category',
+                    label: 'TALL',
+                    items: [
+                        {
+                            type: 'category',
+                            label: 'Apprentissage Progressif',
+                            items: [
+                                'stacks/tall/apprentissage-progressif/feuille-de-route',
+                            ],
+                        },
+                    ],
+                },
+            ],
+        },
     ],
 };
 
