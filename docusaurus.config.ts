@@ -108,28 +108,10 @@ const config: Config = {
         [
             '@docusaurus/plugin-content-docs',
             {
-                id: 'devsecops',
-                path: 'docs/devsecops',
-                routeBasePath: 'devsecops',
-                sidebarPath: './config/sidebars.devsecops.ts',
-            },
-        ],
-        [
-            '@docusaurus/plugin-content-docs',
-            {
-                id: 'cloud',
-                path: 'docs/cloud',
-                routeBasePath: 'cloud',
-                sidebarPath: './config/sidebars.cloud.ts',
-            },
-        ],
-        [
-            '@docusaurus/plugin-content-docs',
-            {
-                id: 'cybersecurity',
-                path: 'docs/cybersecurity',
-                routeBasePath: 'cybersecurity',
-                sidebarPath: './config/sidebars.cyber.ts',
+                id: 'cyber-devsecops',
+                path: 'docs/cybersecurity-devsecops',
+                routeBasePath: 'cyber-devsecops',
+                sidebarPath: './config/sidebars.cyber-devsecops.ts',
             },
         ],
         [
@@ -169,7 +151,6 @@ const config: Config = {
                 srcDark: 'img/logo-omnyforge-dark.svg',
             },
             items: [
-                { to: '/blog', label: 'Blog', position: 'left' },
                 {
                     type: 'docSidebar',
                     sidebarId: 'basesSidebar',
@@ -193,8 +174,8 @@ const config: Config = {
                 },
                 {
                     type: 'docSidebar',
-                    sidebarId: 'cyberSidebar',
-                    docsPluginId: 'cybersecurity',
+                    sidebarId: 'cyberDevSecOpsSidebar',
+                    docsPluginId: 'cyber-devsecops',
                     position: 'left',
                     label: 'Cybersécurité (+ DevSecOps)',
                 },
@@ -213,6 +194,7 @@ const config: Config = {
                     position: 'right',
                     label: 'HomeLabs',
                 },
+                { to: '/blog', label: 'Blog', position: 'right' },
                 // {
                 //     href: 'https://github.com/facebook/docusaurus',
                 //     label: 'GitHub',
