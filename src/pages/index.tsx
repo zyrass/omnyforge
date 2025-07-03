@@ -37,19 +37,25 @@ function HomepageHeader() {
                 <br />
                 <div
                     className={styles.buttons}
-                    style={{ display: 'flex', gap: '40px' }}
+                    style={{ display: 'flex', gap: '20px' }}
                 >
                     <Link
                         className="button button--secondary button--lg"
-                        to="/docs/intro"
+                        to="bases-fondamentales/preambule"
                     >
-                        Découvrez les bases fondamentales de l'informatique
+                        Savoir être
                     </Link>
                     <Link
                         className="button button--secondary button--lg"
-                        to="/docs/intro"
+                        to="/bases-fondamentales/introduction"
                     >
-                        Découvrez le glossaire informatique
+                        Fondamentaux indispensable
+                    </Link>
+                    <Link
+                        className="button button--secondary button--lg"
+                        to="/glossaire-it/introduction"
+                    >
+                        Glossaire IT
                     </Link>
                 </div>
             </div>

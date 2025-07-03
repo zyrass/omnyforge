@@ -10,13 +10,11 @@ type FeatureItem = {
     description: ReactNode;
     linkA: string;
     linkALabel: string;
-    linkB: string;
-    linkBLabel: string;
 };
 
 const FeatureList: FeatureItem[] = [
     {
-        title: 'Système & Réseau',
+        title: "Infra' ( Système & Réseau & IaC)",
         Svg: require('@site/static/img/accueil/sys-reseau.svg').default,
         description: (
             <>
@@ -26,10 +24,8 @@ const FeatureList: FeatureItem[] = [
                 une expertise professionnelle.
             </>
         ),
-        linkA: '/admin-sys/introduction',
-        linkALabel: 'Voir la doc Système',
-        linkB: '/admin-reseau/introduction',
-        linkBLabel: 'Voir la doc Réseau',
+        linkA: '/infrastructure/introduction',
+        linkALabel: 'Voir la doc générale',
     },
     {
         title: 'Développement & Cloud',
@@ -43,12 +39,10 @@ const FeatureList: FeatureItem[] = [
             </>
         ),
         linkA: '/developpements/introduction',
-        linkALabel: 'Voir la doc Développement',
-        linkB: '/cloud/introduction',
-        linkBLabel: 'Voir la doc Cloud',
+        linkALabel: 'Voir la doc générale',
     },
     {
-        title: 'DevSecOps & Cybersécurité',
+        title: 'Cybersécurité ( + DevSecOps ) ',
         Svg: require('@site/static/img/accueil/devsecops-cyber.svg').default,
         description: (
             <>
@@ -59,21 +53,11 @@ const FeatureList: FeatureItem[] = [
             </>
         ),
         linkA: '/devsecops/introduction',
-        linkALabel: 'Voir la doc DevSecOps',
-        linkB: '/cybersecurity/introduction',
-        linkBLabel: 'Voir la doc Cybersécurité',
+        linkALabel: 'Voir a doc générale',
     },
 ];
 
-function Feature({
-    title,
-    Svg,
-    description,
-    linkA,
-    linkALabel,
-    linkB,
-    linkBLabel,
-}: FeatureItem) {
+function Feature({ title, Svg, description, linkA, linkALabel }: FeatureItem) {
     return (
         <div
             className={clsx('col col--4')}
@@ -102,14 +86,6 @@ function Feature({
                     to={linkA}
                 >
                     {linkALabel}
-                </Link>
-                <Link
-                    className={
-                        (styles.docLink, 'button button--secondary button--md')
-                    }
-                    to={linkB}
-                >
-                    {linkBLabel}
                 </Link>
             </div>
         </div>
