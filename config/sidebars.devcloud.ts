@@ -29,6 +29,7 @@ const sidebars: SidebarsConfig = {
                             items: [
                                 'stacks/tall/apprentissage-progressif/feuille-de-route',
                                 'stacks/tall/apprentissage-progressif/fondations',
+                                'stacks/tall/apprentissage-progressif/interface-laravel-avec-vues',
                             ],
                         },
                     ],
