@@ -38,7 +38,7 @@ const FeatureList: FeatureItem[] = [
                 déployer et maintenir vos outils.
             </>
         ),
-        linkA: '/developpements/introduction',
+        linkA: '/dev-cloud/introduction',
         linkALabel: 'Voir la doc générale',
     },
     {

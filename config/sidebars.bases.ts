@@ -16,37 +16,6 @@ const sidebars: SidebarsConfig = {
     basesSidebar: [
         'preambule',
         'introduction',
-        // {
-        //     type: 'category',
-        //     label: 'Algorithmie',
-        //     items: [
-        //         'algorithmie/concepts',
-        //         'algorithmie/complexite-big-o',
-        //         'algorithmie/structures-donnees',
-        //         'algorithmie/algorithmes-tableaux-listes',
-        //         'algorithmie/algorithmes-graphes',
-        //     ],
-        // },
-        // {
-        //     type: 'category',
-        //     label: 'Programmation',
-        //     items: [
-        //         'programmation/paradigmes',
-        //         'programmation/concepts-fondamentaux',
-        //         'programmation/gestion-memoire',
-        //         'programmation/maitrise-langage',
-        //     ],
-        // },
-        // {
-        //     type: 'category',
-        //     label: 'Mathématiques',
-        //     items: [
-        //         'mathematiques/logique-booleenne',
-        //         'mathematiques/theorie-des-graphes',
-        //         'mathematiques/probabilites',
-        //         'mathematiques/mathematiques-discretes',
-        //     ],
-        // },
         {
             type: 'category',
             label: 'Outils de base',
@@ -58,10 +27,6 @@ const sidebars: SidebarsConfig = {
                         'outils/markdown/introduction',
                         'outils/markdown/fondamentaux',
                         'outils/markdown/intermediaire',
-                        // 'outils/markdown/avance',
-                        // 'outils/markdown/cas-usage',
-                        // 'outils/markdown/reference',
-                        // 'outils/markdown/templates',
                     ],
                 },
                 {
@@ -70,15 +35,8 @@ const sidebars: SidebarsConfig = {
                     items: [
                         'outils/git/introduction',
                         'outils/git/fondamentaux',
-                        // 'outils/git/intermediaire',
-                        // 'outils/markdown/avance',
-                        // 'outils/markdown/cas-usage',
-                        // 'outils/markdown/reference',
-                        // 'outils/markdown/templates',
                     ],
                 },
-                // 'outils/ide',
-                // 'outils/terminal',
             ],
         },
     ],
