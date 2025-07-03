@@ -1,4 +1,14 @@
-# Étape 3 : Ajout de Livewire
+# Étape 3 : Livewire Pur
+
+## Qu'est-ce que Livewire ?
+
+**Livewire** est un framework full-stack pour Laravel qui rend la création d'interfaces dynamiques simple sans écrire de JavaScript.<br />
+Voici ses principes clés :
+
+-   **Composants réactifs** : _Mise à jour automatique de l'interface._
+-   **Logique côté serveur** : _Toute la logique métier reste en PHP._
+-   **Pas de JavaScript** : _Livewire gère les interactions automatiquement._
+-   **Sécurité intégrée** : _Validation et autorisation côté serveur._
 
 ## Évolution Naturelle
 
@@ -9,16 +19,16 @@ config:
   theme: 'neutral'
 ---
 graph LR
-A[<b>Application actuelle</b>] -.-> |Challenge| B["Interface statique"]
-C[<b>Solution</b>] -.-> |Intégration|D[Composants Livewire] --> |Permet| E[Réactivité instantanée] -.-> |Offre| F[Expérience fluide]
+A[<b>Application Laravel</b>] -.-> |Challenge| B["Rechargements de page"]
+C[<b>Solution Livewire</b>] -.-> |Apporte|D[Réactivité serveur] --> |Permet| E[Interactions fluides] -.-> |Offre| F[Expérience moderne]
 
 style A fill:#e3e3f3
 style C fill:#e3e3f3
 style F fill:#e3f3e3
 ```
 
-_Maintenant que je comprends la structure de Laravel, je vais ajouter la magie Livewire pour éliminer les rechargements de page qui
-nuise très clairement à l'utilisation de cette application._
+_Maintenant que je maîtrise Laravel classique, je vais ajouter la magie Livewire pour éliminer les rechargements de page qui nuise
+très clairement à l'utilisation de cette application tout en gardant la logique côté serveur._
 
 ## Installation de Livewire
 
@@ -30,241 +40,172 @@ composer require livewire/livewire
 ## Mon Premier Composant Livewire
 
 ```bash
-# Création d'un nouveau composant Livewire pour la gestion des tâches
+# Création d'un composant Livewire dédié aux tâches
 php artisan make:livewire TaskManager
 ```
 
-:::note Emplacement Fichier
-Composant : **`app/Livewire/TaskManager.php`**
+:::note Fichiers créés
+
+-   Composant : **`app/Livewire/TaskManager.php`**
+-   Vue : **`resources/views/livewire/task-manager.blade.php`**
+
 :::
+
+## Composant Livewire Complet
+
+:::note Emplacement Fichier
+**`app/Livewire/TaskManager.php`**
+:::
+
+### Structure du fichier
+
+```php
+<?php
+
+namespace App\Livewire;
+
+use App\Models\Task;
+use Livewire\Component;
+
+class TaskManager extends Component
+{
+    // Tout le code qui suit doit être implémenté ici
+}
+```
 
 ### Attributs publiques
 
 ```php
-<?php
-
-namespace App\Livewire;
-
-use App\Models\Task;
-use Livewire\Component;
-
-class TaskManager extends Component
-{
-    // Propriétés publiques qui correspondent à l'état du composant
-    public $title = '';
-    public $description = '';
-    public $editingTask = null;
-}
+// Propriétés publiques automatiquement synchronisées avec la vue
+public $title = '';
+public $description = '';
+public $editingTask = null;
+public $search = '';
+public $filter = 'all'; // all, completed, pending
 ```
 
-### Règles de validation encapsulées
+:::info Premier & dernier rappel
+_C'est à implémenter dans le fichier **TaskManager** comme mentionné dans la structure du fichier._
+:::
+
+### Règles de validation
 
 ```php
-<?php
-
-namespace App\Livewire;
-
-use App\Models\Task;
-use Livewire\Component;
-
-class TaskManager extends Component
-{
-    // ... Le code précédent
-
-    // Règles de validation
-    protected $rules = [
-        'title' => 'required|min:3|max:255',
-        'description' => 'nullable|max:500'
-    ];
-}
+// Règles de validation
+protected $rules = [
+    'title' => 'required|min:3|max:255',
+    'description' => 'nullable|max:500'
+];
 ```
 
 ### Messages personnalisés
 
 ```php
-<?php
+// Messages personnalisés
+protected $messages = [
+    'title.required' => 'Le titre est obligatoire.',
+    'title.min' => 'Le titre doit contenir au moins 3 caractères.',
+    'title.max' => 'Le titre ne peut pas dépasser 255 caractères.',
+    'description.max' => 'La description ne peut pas dépasser 500 caractères.'
+];
+```
 
-namespace App\Livewire;
+### Validation en temps réel
 
-use App\Models\Task;
-use Livewire\Component;
-
-class TaskManager extends Component
+```php
+// Validation en temps réel
+public function updated($propertyName)
 {
-    // ... Le code précédent
-
-    // Messages personnalisés
-    protected $messages = [
-        'title.required' => 'Le titre est obligatoire.',
-        'title.min' => 'Le titre doit contenir au moins 3 caractères.',
-        // Etc...
-    ];
+    $this->validateOnly($propertyName);
 }
 ```
 
-### Méthodes `addTask()`
-
-:::info
-La méthode **`addTask`** est appelée dans l'interface par **`wire:submit`**.
-:::
+### Méthode `addTask()`
 
 ```php
-<?php
-
-namespace App\Livewire;
-
-use App\Models\Task;
-use Livewire\Component;
-
-class TaskManager extends Component
+// Ajouter une nouvelle tâche - Méthode appelée par wire:submit
+public function addTask()
 {
-    // ... Le code précédent
+    $this->validate();
 
-    // Méthode appelée par wire:submit
-    public function addTask()
-    {
-        $this->validate();
+    Task::create([
+        'title' => $this->title,
+        'description' => $this->description,
+    ]);
 
-        Task::create([
-            'title' => $this->title,
-            'description' => $this->description,
-        ]);
+    // Réinitialiser le formulaire
+    $this->reset(['title', 'description']);
 
-        // Réinitialisation du formulaire
-        $this->reset(['title', 'description']);
+    // Message de succès
+    session()->flash('message', 'Tâche ajoutée avec succès !');
+}
+```
 
-        // Dispatch d'un événement pour Alpine.js
-        $this->dispatch('task-added');
+### Méthode `toggleTask()`
 
-        // Message flash
-        session()->flash('message', 'Tâche ajoutée avec succès !');
+_Permet de faire basculer l'état d'une tâche vers l'état opposé à celui actuellement sélectionné._
+
+```php
+// Basculer l'état d'une tâche
+public function toggleTask($taskId)
+{
+    $task = Task::find($taskId);
+    if ($task) {
+        $task->update(['completed' => !$task->completed]);
+        session()->flash('message', 'Tâche mise à jour !');
     }
 }
 ```
 
-### Méthodes `toggleTask()`
+### Méthode `deleteTask()`
+
+_Permet de supprimer une tâche sélectionnée._
 
 ```php
-<?php
-
-namespace App\Livewire;
-
-use App\Models\Task;
-use Livewire\Component;
-
-class TaskManager extends Component
+// Supprimer une tâche
+public function deleteTask($taskId)
 {
-    // ... Le code précédent
-
-    // Basculer l'état d'une tâche
-    public function toggleTask($taskId)
-    {
-        $task = Task::find($taskId);
-        if ($task) {
-            $task->update(['completed' => !$task->completed]);
-        }
-    }
-}
-```
-
-### Méthodes `deleteTask()`
-
-```php
-<?php
-
-namespace App\Livewire;
-
-use App\Models\Task;
-use Livewire\Component;
-
-class TaskManager extends Component
-{
-    // ... Le code précédent
-
-    // Supprimer une tâche
-    public function deleteTask($taskId)
-    {
-        Task::find($taskId)?->delete();
+    $task = Task::find($taskId);
+    if ($task) {
+        $task->delete();
         session()->flash('message', 'Tâche supprimée !');
     }
 }
 ```
 
-### Méthodes `editTask()`
+### Méthode `editTask()`
+
+_Permet d'éditer une tâche sélectionnée._
 
 ```php
-<?php
-
-namespace App\Livewire;
-
-use App\Models\Task;
-use Livewire\Component;
-
-class TaskManager extends Component
+// Démarrer l'édition d'une tâche
+public function editTask($taskId)
 {
-    // ... Le code précédent
-
-    // Démarrer l'édition
-    public function editTask($taskId)
-    {
-        $task = Task::find($taskId);
-        if ($task) {
-            $this->editingTask = $task->id;
-            $this->title = $task->title;
-            $this->description = $task->description ?? '';
-        }
+    $task = Task::find($taskId);
+    if ($task) {
+        $this->editingTask = $task->id;
+        $this->title = $task->title;
+        $this->description = $task->description ?? '';
     }
 }
 ```
 
-### Méthodes `cancelEdit()`
+### Méthode `updateTask()`
+
+_Permet de mettre à jour une tâche sélectionnée._
 
 ```php
-<?php
-
-namespace App\Livewire;
-
-use App\Models\Task;
-use Livewire\Component;
-
-class TaskManager extends Component
+// Mettre à jour une tâche
+public function updateTask()
 {
-    // ... Le code précédent
+    $this->validate();
 
-    // Annuler l'édition
-    public function cancelEdit()
-    {
-        $this->reset(['title', 'description', 'editingTask']);
-    }
-}
-```
-
-### Méthodes `updateTask()`
-
-```php
-<?php
-
-namespace App\Livewire;
-
-use App\Models\Task;
-use Livewire\Component;
-
-class TaskManager extends Component
-{
-    // ... Le code précédent
-
-    // Sauvegarder les modifications
-    public function updateTask()
-    {
-        $this->validate();
-
-        $task = Task::find($this->editingTask);
-        if ($task) {
-            $task->update([
-                'title' => $this->title,
-                'description' => $this->description,
-            ]);
-        }
+    $task = Task::find($this->editingTask);
+    if ($task) {
+        $task->update([
+            'title' => $this->title,
+            'description' => $this->description,
+        ]);
 
         $this->cancelEdit();
         session()->flash('message', 'Tâche mise à jour !');
@@ -272,110 +213,200 @@ class TaskManager extends Component
 }
 ```
 
-### Méthodes `getTaskProperty()` & `getStatsProperty()`
+### Méthode `cancelEdit()`
+
+_Permet d'annuler l'édition d'une tâche sélectionnée._
 
 ```php
-<?php
-
-namespace App\Livewire;
-
-use App\Models\Task;
-use Livewire\Component;
-
-class TaskManager extends Component
+// Annuler l'édition
+public function cancelEdit()
 {
-    // ... Le code précédent
-
-    // Calculer les propriétés en temps réel
-    public function getTasksProperty()
-    {
-        return Task::latest()->get();
-    }
-
-    public function getStatsProperty()
-    {
-        $tasks = $this->tasks;
-
-        return [
-            'total' => $tasks->count(),
-            'completed' => $tasks->where('completed', true)->count(),
-            'pending' => $tasks->where('completed', false)->count(),
-            'completion_rate' => $tasks->count() > 0
-                ? round(($tasks->where('completed', true)->count() / $tasks->count()) * 100)
-                : 0
-        ];
-    }
+    $this->reset(['title', 'description', 'editingTask']);
 }
 ```
 
-### Méthodes `render()`
+### Méthode `resetFilters()`
+
+_Permet de réinitialiser les filtres._
 
 ```php
-<?php
-
-namespace App\Livewire;
-
-use App\Models\Task;
-use Livewire\Component;
-
-class TaskManager extends Component
+// Réinitialiser les filtres
+public function resetFilters()
 {
-    // ... Le code précédent
-
-    // Rendu du composant
-    public function render()
-    {
-        return view('livewire.task-manager');
-    }
+    $this->reset(['search', 'filter']);
 }
 ```
 
-## Vue Livewire Interactive
+### Qu'est-ce qu'une `Computed Property`
+
+:::warning Fondamentaux pour comprendre la suite
+Une **Computed Property** est une **propriété calculée dynamiquement** qui se comporte comme une variable normale,
+mais qui est en fait le résultat d'une méthode.
+
+#### Convention de nommage magique
+
+```php
+// Dans TaskManager.php
+public function getTasksProperty()  // ← Méthode avec "get" + "Tasks" + "Property"
+{
+    return Task::latest()->get();
+}
+
+// Cette méthode crée automatiquement une propriété $tasks
+// accessible via $this->tasks dans la vue ET dans le composant
+```
+
+#### Placement dans le code
+
+**TOUT se place dans le fichier `TaskManager.php`** - pas dans la vue **HTML** !
+
+:::
+
+:::danger Important
+La ligne de code **`return Task::latest()->get();`** sera à remplacée par la version avec la prise en compte des filtres.
+
+:::
+
+#### Ordre d'exécution
+
+1. `getTasksProperty()` → Récupère les tâches filtrées
+2. `getStatsProperty()` → Utilise `$this->tasks` (donc appelle getTasksProperty())
+
+### Méthode `getTasksProperty()`
+
+_Permet d'utiliser **Computed property** pour les filtres._
+
+```php
+// Computed property pour les tâches filtrées
+public function getTasksProperty()
+{
+    return Task::query()
+        ->when($this->search, fn($q) => $q->where('title', 'like', '%' . $this->search . '%'))
+        ->when($this->filter === 'completed', fn($q) => $q->where('completed', true))
+        ->when($this->filter === 'pending', fn($q) => $q->where('completed', false))
+        ->latest()
+        ->get();
+}
+```
+
+### Méthode `getStatsProperty()`
+
+_Permet d'utiliser **Computed property** pour les statistiques._
+
+```php
+// Computed property pour les statistiques
+public function getStatsProperty()
+{
+    $tasks = $this->tasks;
+
+    return [
+        'total' => $tasks->count(),
+        'completed' => $tasks->where('completed', true)->count(),
+        'pending' => $tasks->where('completed', false)->count(),
+        'completion_rate' => $tasks->count() > 0
+            ? round(($tasks->where('completed', true)->count() / $tasks->count()) * 100)
+            : 0
+    ];
+}
+```
+
+### Méthode `render()`
+
+_Permet de renvoyer la vue du composant._
+
+```php
+// Rendu du composant
+public function render()
+{
+    return view('livewire.task-manager');
+}
+```
+
+## Concepts Clés Livewire
+
+:::danger Urgent
+Il est important de comprendre cette partie afin de pouvoir implémenter ce concept au fichier html.
+:::
+
+### 1. Propriétés Publiques ( _TaskManager_ )
+
+```php
+public $title = '';  // Est automatiquement synchronisé avec la vue
+// etc...
+```
+
+### 2. Liaison de Données
+
+```html
+<!-- Mise à jour en temps réel -->
+wire:model.live="title"
+
+<!-- Mise à jour à la perte de focus -->
+wire:model.blur="title"
+```
+
+### 3. Actions
+
+```html
+<!-- Appel de méthode -->
+wire:click="addTask"
+
+<!-- Soumission de formulaire -->
+wire:submit="addTask"
+```
+
+### 4. États de Chargement
+
+```html
+<!-- Désactiver pendant le chargement -->
+wire:loading.attr="disabled"
+
+<!-- Masquer pendant le chargement -->
+wire:loading.remove
+
+<!-- Afficher pendant le chargement -->
+wire:loading
+```
+
+### 5. Computed Properties
+
+Cette section pourrait juste faire référence à l'explication précédente
+Voir la section "**[Qu'est-ce qu'une Computed Property (cliquable)](introduction-livewire#quest-ce-quune-computed-property)**" ci-dessus.
+
+## Vue Livewire Pure
 
 :::note Emplacement Fichier
-Vue : **`resources/views/livewire/task-manager.blade.php`**
+**`resources/views/livewire/task-manager.blade.php`**
 :::
 
 ```html
 <div class="max-w-4xl mx-auto px-6">
-    <!-- Section 1: Messages Flash - Affiche les notifications temporaires -->
-    <!-- Utilise Alpine.js pour l'animation et la disparition automatique -->
+    <!-- Messages Flash -->
     @if (session()->has('message'))
     <div
         class="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg"
-        x-data="{ show: true }"
-        x-show="show"
-        x-transition
-        x-init="setTimeout(() => show = false, 3000)"
     >
         {{ session('message') }}
-        <button
-            @click="show = false"
-            class="ml-2 text-green-500 hover:text-green-700"
-        >
-            &times;
-        </button>
     </div>
     @endif
 
-    <!-- Section 2: Bannière d'information Livewire -->
-    <!-- Indique aux utilisateurs que la page utilise Livewire pour des mises à jour en temps réel -->
-    <div class="mb-6 p-4 bg-blue-50 border-l-4 border-blue-400">
+    <!-- Bannière Livewire -->
+    <div class="mb-6 p-4 bg-purple-50 border-l-4 border-purple-400">
         <div class="flex items-center">
             <div class="flex-shrink-0">
-                <span class="text-blue-600">⚡</span>
+                <span class="text-purple-600">⚡</span>
             </div>
             <div class="ml-3">
-                <p class="text-sm text-blue-700">
+                <p class="text-sm text-purple-700">
                     <strong>Livewire en action :</strong> Toutes les
-                    interactions ci-dessous se font sans rechargement de page !
+                    interactions se font côté serveur, sans JavaScript
+                    personnalisé !
                 </p>
             </div>
         </div>
     </div>
 
-    <!-- Section 3: Tableau de bord statistique -->
-    <!-- Utilise les computed properties de Livewire pour des stats en temps réel -->
+    <!-- Tableau de bord statistique -->
     <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
         <div class="bg-white p-4 rounded-lg shadow text-center">
             <div class="text-2xl font-bold text-blue-600">
@@ -403,16 +434,60 @@ Vue : **`resources/views/livewire/task-manager.blade.php`**
         </div>
     </div>
 
-    <!-- Section 4: Formulaire d'ajout/édition -->
-    <!-- Formulaire dynamique qui change selon le mode (ajout ou édition) -->
+    <!-- Recherche et filtres -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <h2 class="text-xl font-semibold mb-4">🔍 Recherche et filtres</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- Recherche -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2"
+                    >Rechercher</label
+                >
+                <input
+                    type="text"
+                    wire:model.live="search"
+                    class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                    placeholder="Rechercher une tâche..."
+                />
+            </div>
+
+            <!-- Filtre -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2"
+                    >Filtrer</label
+                >
+                <select
+                    wire:model.live="filter"
+                    class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                >
+                    <option value="all">Toutes les tâches</option>
+                    <option value="pending">En cours</option>
+                    <option value="completed">Terminées</option>
+                </select>
+            </div>
+
+            <!-- Bouton reset -->
+            <div class="flex items-end">
+                <button
+                    wire:click="resetFilters"
+                    class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
+                >
+                    🔄 Réinitialiser
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Formulaire d'ajout/édition -->
     <div class="bg-white rounded-lg shadow-md p-6 mb-6">
         <h2 class="text-xl font-semibold mb-4">
             {{ $editingTask ? '✏️ Modifier la tâche' : '➕ Ajouter une tâche' }}
         </h2>
 
-        <!-- Formulaire avec validation en temps réel et gestion des erreurs -->
         <form wire:submit="{{ $editingTask ? 'updateTask' : 'addTask' }}">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Titre -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2"
                         >Titre *</label
@@ -428,6 +503,7 @@ Vue : **`resources/views/livewire/task-manager.blade.php`**
                     @enderror
                 </div>
 
+                <!-- Description -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2"
                         >Description</label
@@ -435,7 +511,7 @@ Vue : **`resources/views/livewire/task-manager.blade.php`**
                     <input
                         type="text"
                         wire:model.live="description"
-                        class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                        class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 @error('description') border-red-500 @enderror"
                         placeholder="Détails optionnels..."
                     />
                     @error('description')
@@ -444,7 +520,7 @@ Vue : **`resources/views/livewire/task-manager.blade.php`**
                 </div>
             </div>
 
-            <!-- Boutons d'action avec états de chargement -->
+            <!-- Boutons d'action -->
             <div class="mt-4 flex gap-2">
                 <button
                     type="submit"
@@ -470,8 +546,7 @@ Vue : **`resources/views/livewire/task-manager.blade.php`**
         </form>
     </div>
 
-    <!-- Section 5: Liste des tâches -->
-    <!-- Liste dynamique avec actions en temps réel -->
+    <!-- Liste des tâches -->
     <div class="bg-white rounded-lg shadow-md">
         <div class="p-4 border-b">
             <h2 class="text-xl font-semibold">
@@ -479,7 +554,6 @@ Vue : **`resources/views/livewire/task-manager.blade.php`**
             </h2>
         </div>
 
-        <!-- Boucle sur les tâches avec gestion du cas vide -->
         @forelse($this->tasks as $task)
         <div
             class="p-4 border-b last:border-b-0 hover:bg-gray-50 transition-colors"
@@ -505,9 +579,9 @@ Vue : **`resources/views/livewire/task-manager.blade.php`**
                     </p>
                 </div>
 
-                <!-- Actions sur la tâche avec états de chargement -->
+                <!-- Actions -->
                 <div class="flex items-center gap-2 ml-4">
-                    <!-- Bouton de basculement d'état -->
+                    <!-- Toggle -->
                     <button
                         wire:click="toggleTask({{ $task->id }})"
                         wire:loading.attr="disabled"
@@ -528,7 +602,7 @@ Vue : **`resources/views/livewire/task-manager.blade.php`**
                         </span>
                     </button>
 
-                    <!-- Bouton d'édition -->
+                    <!-- Édition -->
                     <button
                         wire:click="editTask({{ $task->id }})"
                         class="p-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors"
@@ -536,7 +610,7 @@ Vue : **`resources/views/livewire/task-manager.blade.php`**
                         ✏️
                     </button>
 
-                    <!-- Bouton de suppression avec confirmation -->
+                    <!-- Suppression -->
                     <button
                         wire:click="deleteTask({{ $task->id }})"
                         wire:confirm="Êtes-vous sûr de vouloir supprimer cette tâche ?"
@@ -559,50 +633,37 @@ Vue : **`resources/views/livewire/task-manager.blade.php`**
             </div>
         </div>
         @empty
-        <!-- Message affiché quand la liste est vide -->
         <div class="p-8 text-center text-gray-500">
             <div class="text-4xl mb-4">📝</div>
-            <p>
-                Aucune tâche pour le moment. Créez votre première tâche
-                ci-dessus !
-            </p>
+            <p>Aucune tâche trouvée.</p>
+            @if($search || $filter !== 'all')
+            <button
+                wire:click="resetFilters"
+                class="mt-2 text-blue-600 hover:text-blue-800"
+            >
+                Réinitialiser les filtres
+            </button>
+            @endif
         </div>
         @endforelse
     </div>
 
-    <!-- Section 6: Démo d'interaction Alpine.js + Livewire -->
-    <!-- Exemple de synchronisation entre Alpine.js et Livewire -->
-    <div
-        class="mt-6 p-4 bg-yellow-50 border-l-4 border-yellow-400"
-        x-data="{ taskCount: {{ $this->tasks->count() }} }"
-        x-on:task-added.window="taskCount++; $nextTick(() => {
-             window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-         })"
-    >
-        <p class="text-sm text-yellow-700">
-            <strong>🎯 Interaction Alpine.js + Livewire :</strong>
-            Compteur Alpine.js synchronisé :
-            <span x-text="taskCount" class="font-bold"></span> tâches
+    <!-- Démonstration du loading -->
+    <div class="mt-6 p-4 bg-blue-50 border-l-4 border-blue-400">
+        <p class="text-sm text-blue-700">
+            <strong>💡 Astuce Livewire :</strong>
+            Remarquez les indicateurs de chargement (🔄) qui apparaissent
+            pendant les actions !
         </p>
     </div>
 </div>
-
-<!-- Section 7: Notifications Toast -->
-<!-- Utilise Alpine.js pour les animations et la gestion d'état -->
-<div
-    x-data="{ show: false, message: '' }"
-    x-on:task-added.window="show = true; message = 'Tâche ajoutée !'; setTimeout(() => show = false, 3000)"
-    x-show="show"
-    x-transition:enter="transition ease-out duration-300"
-    x-transition:enter-start="opacity-0 transform translate-y-2"
-    x-transition:enter-end="opacity-100 transform translate-y-0"
-    class="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50"
->
-    <span x-text="message"></span>
-</div>
 ```
 
-## Mise à Jour du Layout Principal
+## Layout pour Livewire
+
+:::note Emplacement Fichier
+**`resources/views/layouts/app.blade.php`**
+:::
 
 ```html
 <!DOCTYPE html>
@@ -616,7 +677,7 @@ Vue : **`resources/views/livewire/task-manager.blade.php`**
     </head>
     <body class="bg-gray-100">
         <div class="min-h-screen">
-            <!-- Header avec indicateur de progression -->
+            <!-- Header -->
             <header class="bg-white shadow-sm border-b">
                 <div class="max-w-4xl mx-auto px-6 py-4">
                     <div class="flex items-center justify-between">
@@ -629,10 +690,6 @@ Vue : **`resources/views/livewire/task-manager.blade.php`**
                                 >Tailwind ✓</span
                             >
                             <span
-                                class="px-2 py-1 bg-green-100 text-green-800 rounded text-sm"
-                                >Alpine ✓</span
-                            >
-                            <span
                                 class="px-2 py-1 bg-red-100 text-red-800 rounded text-sm"
                                 >Laravel ✓</span
                             >
@@ -643,7 +700,7 @@ Vue : **`resources/views/livewire/task-manager.blade.php`**
                         </div>
                     </div>
                     <div class="mt-2 text-sm text-gray-600">
-                        Étape 4:
+                        Étape 3:
                         <span class="text-purple-600 font-medium"
                             >Réactivité Livewire ⚡</span
                         >
@@ -655,10 +712,6 @@ Vue : **`resources/views/livewire/task-manager.blade.php`**
             <main class="py-8">{{ $slot }}</main>
         </div>
 
-        <script
-            defer
-            src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
-        ></script>
         @livewireScripts
     </body>
 </html>
@@ -670,22 +723,6 @@ Vue : **`resources/views/livewire/task-manager.blade.php`**
 **`routes/web.php`**
 :::
 
-### Avant
-
-```php
-<?php
-
-use App\Http\Controllers\TaskController;
-use Illuminate\Support\Facades\Route;
-
-Route::get('/', [TaskController::class, 'index'])->name('tasks.index');
-Route::post('/tasks', [TaskController::class, 'store'])->name('tasks.store');
-Route::patch('/tasks/{task}/toggle', [TaskController::class, 'toggle'])->name('tasks.toggle');
-Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy');
-```
-
-### Après
-
 ```php
 <?php
 
@@ -694,7 +731,7 @@ use App\Livewire\TaskManager;
 Route::get('/', TaskManager::class);
 ```
 
-## Compréhension via un diagramme de séquence
+## Diagramme de Séquence Livewire
 
 ```mermaid
 ---
@@ -703,7 +740,6 @@ config:
 ---
 sequenceDiagram
     participant U as Utilisateur
-    participant A as Alpine.js
     participant L as Livewire
     participant S as Serveur Laravel
     participant DB as Base de données
@@ -716,30 +752,30 @@ sequenceDiagram
     S-->>L: HTML + état initial
     L-->>U: Page affichée
 
-    Note over U,DB: Interaction en temps réel
+    Note over U,DB: Interaction temps réel
     U->>L: Tape dans le formulaire
-    L->>L: wire:model.live
-    L-->>U: Validation temps réel
+    L->>S: wire:model.live
+    S-->>L: Validation côté serveur
+    L-->>U: Erreurs affichées
 
     U->>L: Clique "Ajouter"
     L->>S: wire:submit="addTask"
     S->>DB: INSERT nouvelle tâche
     DB-->>S: Succès
-    S->>L: État mis à jour
-    L->>A: dispatch('task-added')
-    A-->>U: Animation/notification
+    S-->>L: État mis à jour
     L-->>U: DOM mis à jour (sans rechargement)
-
-    U->>L: Toggle tâche
-    L->>S: wire:click="toggleTask"
-    S->>DB: UPDATE tâche
-    DB-->>S: Succès
-    S-->>L: Statistiques recalculées
-    L-->>U: Interface mise à jour instantanément
 ```
+
+## Avantages de Livewire
+
+-   ✅ **Simplicité** : _Pas besoin d'API ou de JavaScript complexe._
+-   ✅ **Sécurité** : _Validation et logique côté serveur._
+-   ✅ **Réactivité** : _Mises à jour automatiques de l'interface._
+-   ✅ **Performance** : _Seules les parties modifiées sont mises à jour._
+-   ✅ **Debugging** : _Outils Laravel habituels ( **dd**, **logs**, etc. )._
 
 <br />
 
 :::tip Résultat immédiat
-Interface entièrement réactive sans rechargement de page !
+Interface entièrement réactive avec Livewire pur !
 :::
