@@ -30,6 +30,7 @@ const sidebars: SidebarsConfig = {
                                 'stacks/tall/apprentissage-progressif/feuille-de-route',
                                 'stacks/tall/apprentissage-progressif/fondations',
                                 'stacks/tall/apprentissage-progressif/interface-laravel-avec-vues',
+                                'stacks/tall/apprentissage-progressif/introduction-livewire',
                             ],
                         },
                     ],
