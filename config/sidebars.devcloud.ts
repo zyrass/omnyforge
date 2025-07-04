@@ -32,6 +32,7 @@ const sidebars: SidebarsConfig = {
                                 'stacks/tall/apprentissage-progressif/interface-laravel-avec-vues',
                                 'stacks/tall/apprentissage-progressif/livewire-pur',
                                 'stacks/tall/apprentissage-progressif/alpinejs-pur',
+                                'stacks/tall/apprentissage-progressif/livewire-alpinejs',
                             ],
                         },
                     ],
