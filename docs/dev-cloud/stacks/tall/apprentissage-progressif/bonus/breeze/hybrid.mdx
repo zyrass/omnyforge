@@ -1,0 +1,319 @@
+en cours de rédaction...
+
+<div class="mt-6 p-4 bg-blue-50 border-l-4 border-blue-400">
+    <h3 class="font-medium text-blue-800 mb-2">
+        🔧 Fonctionnalités Breeze + Livewire démontrées :
+    </h3>
+    <ul class="text-sm text-blue-700 space-y-1">
+        <li>
+            • <strong>wire:model.live</strong> : Validation en temps réel
+        </li>
+        <li>
+            • <strong>wire:loading</strong> : Indicateurs de chargement
+        </li>
+        <li>
+            • <strong>Rate limiting</strong> : Protection contre les attaques
+        </li>
+        <li>
+            • <strong>UX améliorée</strong> : Messages et états visuels
+        </li>
+        <li>
+            • <strong>Sécurité</strong> : Sessions, CSRF, validation
+        </li>
+    </ul>
+</div>
+```
+
+## Composant Register - Inscription
+
+### Analyse du composant Register
+
+:::note Emplacement Fichier
+**`app/Livewire/Auth/Register.php`** _(version améliorée)_
+:::
+
+```php
+<?php
+
+namespace App\Livewire\Auth;
+
+use App\Models\User;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Livewire\Attributes\Layout;
+use Livewire\Attributes\Validate;
+use Livewire\Component;
+
+class Register extends Component
+{
+    #[Validate('required|string|max:255')]
+    public string $name = '';
+
+    #[Validate('required|string|email|max:255|unique:users')]
+    public string $email = '';
+
+    #[Validate('required|string|confirmed|min:8')]
+    public string $password = '';
+
+    #[Validate('required|string')]
+    public string $password_confirmation = '';
+
+    // Propriétés pour l'UX améliorée
+    public bool $isLoading = false;
+    public string $message = '';
+    public bool $termsAccepted = false;
+
+    // Validation en temps réel
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+
+        // Vérification de la force du mot de passe
+        if ($propertyName === 'password') {
+            $this->checkPasswordStrength();
+        }
+    }
+
+    public function register(): void
+    {
+        $this->isLoading = true;
+
+        // Validation des conditions d'utilisation
+        if (!$this->termsAccepted) {
+            $this->addError('termsAccepted', 'Vous devez accepter les conditions d\'utilisation.');
+            $this->isLoading = false;
+            return;
+        }
+
+        // Validation complète
+        $this->validate();
+
+        // Création de l'utilisateur
+        $user = User::create([
+            'name' => $this->name,
+            'email' => $this->email,
+            'password' => Hash::make($this->password),
+        ]);
+
+        // Événement d'inscription
+        event(new Registered($user));
+
+        // Connexion automatique
+        Auth::login($user);
+
+        // Log de l'activité
+        logger('User registered', [
+            'user_id' => $user->id,
+            'email' => $user->email,
+            'ip' => request()->ip()
+        ]);
+
+        // Message de succès
+        $this->message = 'Inscription réussie ! Redirection vers le tableau de bord...';
+
+        // Redirection
+        $this->js("setTimeout(() => window.location.href = '/dashboard', 1500)");
+    }
+
+    /**
+     * Vérification de la force du mot de passe
+     */
+    private function checkPasswordStrength(): void
+    {
+        if (strlen($this->password) < 8) return;
+
+        $strength = 0;
+        if (preg_match('/[a-z]/', $this->password)) $strength++;
+        if (preg_match('/[A-Z]/', $this->password)) $strength++;
+        if (preg_match('/[0-9]/', $this->password)) $strength++;
+        if (preg_match('/[^a-zA-Z0-9]/', $this->password)) $strength++;
+
+        // Dispatch d'un événement pour mettre à jour l'indicateur
+        $this->dispatch('password-strength-updated', strength: $strength);
+    }
+
+    #[Layout('layouts.guest')]
+    public function render()
+    {
+        return view('livewire.auth.register');
+    }
+}
+```
+
+### Vue Register avec indicateur de force de mot de passe
+
+:::note Emplacement Fichier
+**`resources/views/livewire/auth/register.blade.php`** _(version améliorée)_
+:::
+
+```html
+<div>
+    <!-- Message de succès -->
+    @if($message)
+    <div class="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+        {{ $message }}
+    </div>
+    @endif
+
+    <!-- Bannière Breeze + Livewire -->
+    <div class="mb-6 p-4 bg-purple-50 border-l-4 border-purple-400">
+        <div class="flex items-center">
+            <div class="flex-shrink-0">
+                <span class="text-purple-600">🔐⚡</span>
+            </div>
+            <div class="ml-3">
+                <p class="text-sm text-purple-700">
+                    <strong>Inscription Breeze + Livewire :</strong> Validation temps réel et sécurité avancée !
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <form wire:submit="register">
+        <!-- Name -->
+        <div>
+            <x-input-label for="name" :value="__('Name')" />
+            <x-text-input
+                wire:model.live="name"
+                id="name"
+                class="block mt-1 w-full @error('name') border-red-500 @enderror"
+                type="text"
+                name="name"
+                required
+                autofocus
+                autocomplete="name"
+                :disabled="$isLoading"
+            />
+            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+        </div>
+
+        <!-- Email Address -->
+        <div class="mt-4">
+            <x-input-label for="email" :value="__('Email')" />
+            <x-text-input
+                wire:model.live="email"
+                id="email"
+                class="block mt-1 w-full @error('email') border-red-500 @enderror"
+                type="email"
+                name="email"
+                required
+                autocomplete="username"
+                :disabled="$isLoading"
+            />
+            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+
+            <!-- Indicateur de disponibilité email (en temps réel) -->
+            @if(strlen($email) > 5 && !$errors->has('email'))
+            <p class="mt-1 text-sm text-green-600">✅ Format d'email valide</p>
+            @endif
+        </div>
+
+        <!-- Password avec indicateur de force -->
+        <div class="mt-4">
+            <x-input-label for="password" :value="__('Password')" />
+            <x-text-input
+                wire:model.live="password"
+                id="password"
+                class="block mt-1 w-full @error('password') border-red-500 @enderror"
+                type="password"
+                name="password"
+                required
+                autocomplete="new-password"
+                :disabled="$isLoading"
+            />
+
+            <!-- Indicateur de force du mot de passe -->
+            <div
+                x-data="{ strength: 0 }"
+                @password-strength-updated.window="strength = $event.detail.strength"
+                class="mt-2"
+            >
+                <div class="flex space-x-1">
+                    <div class="h-2 w-1/4 rounded" :class="strength >= 1 ? 'bg-red-500' : 'bg-gray-200'"></div>
+                    <div class="h-2 w-1/4 rounded" :class="strength >= 2 ? 'bg-yellow-500' : 'bg-gray-200'"></div>
+                    <div class="h-2 w-1/4 rounded" :class="strength >= 3 ? 'bg-blue-500' : 'bg-gray-200'"></div>
+                    <div class="h-2 w-1/4 rounded" :class="strength >= 4 ? 'bg-green-500' : 'bg-gray-200'"></div>
+                </div>
+                <p class="text-xs mt-1 text-gray-600" x-show="strength > 0">
+                    Force:
+                    <span x-show="strength === 1" class="text-red-500">Faible</span>
+                    <span x-show="strength === 2" class="text-yellow-500">Moyen</span>
+                    <span x-show="strength === 3" class="text-blue-500">Bon</span>
+                    <span x-show="strength === 4" class="text-green-500">Excellent</span>
+                </p>
+            </div>
+
+            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="mt-4">
+            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+            <x-text-input
+                wire:model.live="password_confirmation"
+                id="password_confirmation"
+                class="block mt-1 w-full @error('password_confirmation') border-red-500 @enderror"
+                type="password"
+                name="password_confirmation"
+                required
+                autocomplete="new-password"
+                :disabled="$isLoading"
+            />
+            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+
+            <!-- Indicateur de correspondance -->
+            @if(strlen($password_confirmation) > 0)
+                @if($password === $password_confirmation)
+                    <p class="mt-1 text-sm text-green-600">✅ Les mots de passe correspondent</p>
+                @else
+                    <p class="mt-1 text-sm text-red-600">❌ Les mots de passe ne correspondent pas</p>
+                @endif
+            @endif
+        </div>
+
+        <!-- Terms and Conditions -->
+        <div class="mt-4">
+            <label for="terms" class="inline-flex items-center">
+                <input
+                    wire:model="termsAccepted"
+                    id="terms"
+                    type="checkbox"
+                    class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500 @error('termsAccepted') border-red-500 @enderror"
+                    name="terms"
+                    :disabled="$isLoading"
+                >
+                <span class="ms-2 text-sm text-gray-600">
+                    J'accepte les
+                    <a href="#" class="underline text-indigo-600 hover:text-indigo-900">conditions d'utilisation</a>
+                    et la
+                    <a href="#" class="underline text-indigo-600 hover:text-indigo-900">politique de confidentialité</a>
+                </span>
+            </label>
+            <x-input-error :messages="$errors->get('termsAccepted')" class="mt-2" />
+        </div>
+
+        <div class="flex items-center justify-end mt-4">
+            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}" wire:navigate>
+                {{ __('Already registered?') }}
+            </a>
+
+            <x-primary-button
+                class="ms-4"
+                :disabled="$isLoading || !$termsAccepted"
+                wire:loading.attr="disabled"
+            >
+                <span wire:loading.remove>{{ __('Register') }}</span>
+                <span wire:loading>
+                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Inscription...
+                </span>
+            </x-primary-button>
+        </div>
+    </form>
+
+    <!-- Démonstration des fonctionnalités
+```
