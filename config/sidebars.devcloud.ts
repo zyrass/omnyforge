@@ -23,6 +23,7 @@ const sidebars: SidebarsConfig = {
                     type: 'category',
                     label: 'TALL',
                     items: [
+                        'stacks/tall/presentation',
                         {
                             type: 'category',
                             label: 'Apprentissage Progressif',
@@ -30,9 +31,50 @@ const sidebars: SidebarsConfig = {
                                 'stacks/tall/apprentissage-progressif/feuille-de-route',
                                 'stacks/tall/apprentissage-progressif/fondations',
                                 'stacks/tall/apprentissage-progressif/interface-laravel-avec-vues',
-                                'stacks/tall/apprentissage-progressif/livewire-pur',
-                                'stacks/tall/apprentissage-progressif/alpinejs-pur',
-                                'stacks/tall/apprentissage-progressif/livewire-alpinejs',
+                                {
+                                    type: 'category',
+                                    label: 'Étape 3 - Réactivité',
+                                    items: [
+                                        'stacks/tall/apprentissage-progressif/etape3/livewire-pur',
+                                        'stacks/tall/apprentissage-progressif/etape3/alpinejs-pur',
+                                        'stacks/tall/apprentissage-progressif/etape3/hybrid',
+                                    ],
+                                },
+                                'stacks/tall/apprentissage-progressif/production',
+                                // {
+                                //     type: 'category',
+                                //     label: 'Bonus - Authentification',
+                                //     items: [
+                                //         'stacks/tall/apprentissage-progressif/bonus/introduction',
+                                //         {
+                                //             type: 'category',
+                                //             label: 'Breeze',
+                                //             items: [
+                                //                 'stacks/tall/apprentissage-progressif/bonus/breeze/livewire',
+                                //                 'stacks/tall/apprentissage-progressif/bonus/breeze/alpinejs',
+                                //                 'stacks/tall/apprentissage-progressif/bonus/breeze/hybrid',
+                                //             ],
+                                //         },
+                                //         {
+                                //             type: 'category',
+                                //             label: 'Jetstream',
+                                //             items: [
+                                //                 'stacks/tall/apprentissage-progressif/bonus/jetstream/livewire',
+                                //                 'stacks/tall/apprentissage-progressif/bonus/jetstream/alpinejs',
+                                //                 'stacks/tall/apprentissage-progressif/bonus/jetstream/hybrid',
+                                //             ],
+                                //         },
+                                //         {
+                                //             type: 'category',
+                                //             label: 'Sanctum',
+                                //             items: [
+                                //                 'stacks/tall/apprentissage-progressif/bonus/sanctum/livewire',
+                                //                 'stacks/tall/apprentissage-progressif/bonus/sanctum/alpinejs',
+                                //                 'stacks/tall/apprentissage-progressif/bonus/sanctum/hybrid',
+                                //             ],
+                                //         },
+                                //     ],
+                                // },
                             ],
                         },
                     ],
