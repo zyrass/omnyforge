@@ -2,23 +2,22 @@ import MyImage from '@site/src/components/MyImage';
 
 # Présentation
 
-Cette documentation détaillée présente l'architecture **TALL** ( **Tailwind CSS**, **Alpine.js**, **Laravel**, **Livewire** ), qui
-n'est autre qu'une **alternative moderne** aux frameworks JavaScript traditionnels. _Par cette documentation, je vais tenter de créer
-un guide complet au fur et à mesure que je découvre cette Stack_, ainsi vous découvrirez pourquoi cette stack gagne en **popularité**,
-ses **avantages comparatifs**, et comment elle peut **optimiser** significativement vos projets de développement web.
+Cette documentation présente l'architecture **TALL** ( **Tailwind CSS**, **Alpine.js**, **Laravel**, **Livewire** ), une **alternative
+moderne** aux frameworks JavaScript traditionnels. _Cette ressource évoluera au fur et à mesure de mon apprentissage de la stack._
+Vous y découvrirez pourquoi TALL gagne en **popularité**, ses **avantages comparatifs**, et comment elle peut **optimiser** vos projets.
 
 :::note
 _Cette Stack s'adresse aux développeurs **PHP francophones** cherchant une approche plus intuitive et efficace pour créer
 des applications web interactives avec une courbe d'apprentissage réduite et des performances exceptionnelles._
 :::
 
-:::info Documentation exhaustive et précise
-Cette documentation est conçue pour être **complète et détaillée dans les moindres aspects**, permettant une compréhension
-approfondie de chaque concept.
+:::info Documentation évolutive et approfondie
+Cette documentation est conçue pour être **complète et détaillée**, évoluant progressivement pour couvrir tous les aspects
+de la stack TALL et permettre une compréhension approfondie de chaque concept.
 
-_Mon objectif est de vous offrir une ressource où **toutes vos questions trouvent réponse**, éliminant ainsi les incertitudes qui
+_Mon objectif est de construire avec vous une ressource où **vos questions trouveront réponse**, éliminant ainsi les incertitudes qui
 pourraient freiner votre progression. C'est, à mon sens, en fournissant des explications claires et exhaustives que nous bâtissons
-une base solide d'apprentissage, ce qui est au cœur de ma philosophie._
+ensemble une base solide d'apprentissage, ce qui est au cœur de cette démarche._
 :::
 
 ## Qu'est-ce que la Stack TALL ?
@@ -28,9 +27,40 @@ Il y a tout d'abord **Tailwind CSS** pour styliser l'interface de manière élé
 apporter de la **réactivité côté client**, ensuite nous avons **Livewire** pour la **réactivité** cette fois-ci _côté serveur_ et
 enfin **Laravel**, le **framework PHP n°1 dans le monde**, qui constitue la fondation solide de cette stack.
 
----
+### Des auteurs emblématique
 
-### **T** - Tailwind CSS
+Les technologies qui composent cette stack ont été créées par des **développeurs reconnus mondialement**. Le fait qu'ils se soient unis
+pour concevoir une stack technique cohérente comme celle présentée ici renforce considérablement son adoption.<br />
+
+Mais qui sont-ils réellement ?
+
+<div
+    style={{
+        display: 'grid',
+        gridTemplateColumns: '1fr 1fr 1fr',
+        gap: '20px',
+    }}
+>
+    <MyImage
+        name="Adam Wathan - Créateur de Tailwind CSS"
+        src="https://cdn.devdojo.com/images/august2022/adam-wathan.jpeg"
+        alt="Auteur de Tailwind CSS"
+    />
+    <MyImage
+        name="Caleb Porzio - Créateur d'Alpine.js & de Livewire"
+        src="https://cdn.devdojo.com/images/august2022/caleb.jpeg"
+        alt="Auteur de Livewire & d'Alpine.js"
+    />
+    <MyImage
+        name="Taylor Otwell - Créateur de Laravel"
+        src="https://cdn.devdojo.com/images/august2022/taylor1.jpeg"
+        alt="Auteur de Laravel"
+    />
+</div>
+
+### Plus de précision sur cette Stack
+
+#### **T** - Tailwind CSS
 
 <MyImage
     name="Logo officiel de Tailwind CSS"
@@ -69,15 +99,9 @@ _Tailwind CSS utilise donc une méthodologie "**utility-first**" permettant de c
 
 </dl>
 
-#### Auteur de Tailwind CSS
+---
 
-<MyImage
-    name="Adam Wathan - Créateur"
-    src="https://cdn.devdojo.com/images/august2022/adam-wathan.jpeg"
-    alt="Auteur de Tailwind CSS"
-/>
-
-### **A** - Alpine.js
+#### **A** - Alpine.js
 
 <MyImage
     name="Logo officiel d'Alpine.js"
@@ -107,15 +131,9 @@ lourds comme React ou Vue.js_
 
 </dl>
 
-#### Auteur d'Alpine.js
+---
 
-<MyImage
-    name="Caleb Porzio - Créateur d'Alpine.js & de Livewire"
-    src="https://cdn.devdojo.com/images/august2022/caleb.jpeg"
-    alt="Auteur de Livewire & d'Alpine.js"
-/>
-
-### **L** - Livewire
+#### **L** - Livewire
 
 <MyImage
     name="Logo officiel de Livewire"
@@ -147,19 +165,9 @@ _Cette couche magique permet de créer des interfaces interactives en temps rée
 
 </dl>
 
-#### Auteur de Livewire
+---
 
-:::note
-**Il ne s'agit pas d'une erreur**, il est bien le créateur de Livewire et d'Alpine.js présenté précédemment.
-:::
-
-<MyImage
-    name="Caleb Porzio - Créateur de Livewire & Alpine.js"
-    src="https://cdn.devdojo.com/images/august2022/caleb.jpeg"
-    alt="Auteur de Livewire & d'Alpine.js"
-/>
-
-### **L** - Laravel
+#### **L** - Laravel
 
 <MyImage
     name="Logo officiel de Laravel"
@@ -192,14 +200,6 @@ _Ce framework moderne offre une architecture MVC complète, une gestion élégan
 
 </dl>
 
-#### Auteur de Livewire
-
-<MyImage
-    name="Taylor Otwell - Créateur de Laravel"
-    src="https://cdn.devdojo.com/images/august2022/taylor1.jpeg"
-    alt="Auteur de Laravel"
-/>
-
 ## Prérequis indispensables
 
 :::info Information
@@ -208,15 +208,27 @@ permettre d'assimiler au mieux cette documentation sereinement.
 
 :::
 
-1. **HTML & CSS** : _Les bases indispensables pour toute construction web_
-2. **JavaScript** pour la partie AlpineJS : _Compréhension des fonctions, variables et événements_
-3. **Compréhension des événements** pour la partie liée à Livewire : _Gestion des interactions utilisateur et des mises à jour dynamiques_
-4. **Framework Tailwind CSS** : _Maîtrise des classes utilitaires et du concept "utility-first"_
-5. **PHP et Programmation Orientée Objet (POO)** : _Connaissances impératives pour bien aborder Laravel et son paradigme MVC_
+1. **HTML & CSS**<br />
+   _Les bases indispensables pour toute construction web._
+
+2. **JavaScript** pour la partie Alpine.js<br />
+   _Compréhension des fonctions, variables et événements._
+
+3. **Compréhension des événements** pour la partie liée à Livewire<br />
+   _Gestion des interactions utilisateur et des mises à jour dynamiques._
+
+4. **Framework Tailwind CSS**<br />
+   _Maîtrise des classes utilitaires et du concept "utility-first"._
+
+5. **PHP et Programmation Orientée Objet (POO)**<br />
+   _Connaissances impératives pour bien aborder Laravel et son paradigme MVC._
+
+6. **Manipulation d'un terminal**<br />
+   _Savoir naviguer, créer des répertoires et afficher du contenu est essentiel pour utiliser les outils Laravel._
 
 ## Architecture de la Stack TALL
 
-### Schéma de compréhension
+### Diagramme d'architecture
 
 ```mermaid
 ---
@@ -224,23 +236,26 @@ config:
   theme: 'neutral'
 ---
 graph TB
-  subgraph "Frontend (Navigateur)"
+  subgraph Frontend["Frontend (Navigateur)"]
   A[Tailwind CSS<br/>Styles et Design]
   B[Alpine.js<br/>Interactivité JavaScript]
   end
 
-  subgraph "Backend Laravel"
+  subgraph Backend["Backend Laravel"]
       C[Livewire<br/>Composants Dynamiques]
       D[Contrôleurs Laravel<br/>Logique Métier]
       E[Modèles Eloquent<br/>Données]
-      F[Base de Données<br/>SQLite/MySQL/MariaDB/PostgreSQL]
+      F[(Base de Données<br/>SQLite/MySQL/MariaDB/PostgreSQL)]
   end
 
-  A -.->|Style les composants| C
-  B -.->|Améliore l'UX| C
-  C <-->|Requêtes AJAX| D
-  D <-->|ORM| E
-  E <-->|SQL| F
+  A -.->|&nbsp;Style les composants&nbsp;| C
+  B -.->|&nbsp;Améliore l'UX&nbsp;| C
+  C <-->|&nbsp;Requêtes AJAX / HTTP&nbsp;| D
+  D <-->|&nbsp;ORM&nbsp;| E
+  E <-->|&nbsp;SQL&nbsp;| F
+
+  style Frontend fill:#e3f3e3
+  style Backend fill:#e3e3f3
 ```
 
 ### Approche Pédagogique
@@ -254,7 +269,6 @@ graph TB
         - Exemples concrets et cas d'usage réels
         - Explications détaillées du "comment" et du "pourquoi"
         - Supports visuels (schémas, diagrammes et captures d'écran annotées)
-        - Points de contrôle réguliers et exercices pratiques
 
 -   **Expertise Technique**<br />
     _Exploration approfondie de chaque technologie à travers :_
@@ -270,10 +284,10 @@ graph TB
 
 **La stack TALL : Une Alternative Moderne et Efficace**
 
-La stack TALL se distingue significativement des frameworks JavaScript traditionnels comme **React**, **Vue** ou **Angular**.
+Elle se distingue significativement des frameworks JavaScript traditionnels comme **React**, **Vue** ou **Angular**.
 _Cette stack innovante révolutionne l'approche du développement web moderne en privilégiant la **simplicité** et l'**efficacité**._
 
-:::tip Avantage
+:::tip Les avantages
 
 -   **Architecture Simplifiée**<br />
     _Approche plus légère et intuitive, évitant la complexité excessive généralement associée aux **Single Page Applications** ( SPA )_
@@ -330,34 +344,54 @@ _Cette stack innovante révolutionne l'approche du développement web moderne en
 
 ## Comparaison des courbes d'apprentissage
 
-Voici une analyse comparative de la difficulté d'apprentissage des différentes stacks de développement web :
+Voici une analyse comparative sur la difficulté d'apprentissage des différentes stacks de développement web, basée sur mon expérience
+dans les formations et la pratique de ces technologies.
 
-| **Stack** | **Temps Estimé** | **Niveau de Difficulté** | **Principaux Défis**                                                       |
-| :-------: | :--------------: | :----------------------: | -------------------------------------------------------------------------- |
-|  Vue.js   |     3-4 mois     |      Modéré à Élevé      | _Composition API, Vuex, écosystème en évolution._                          |
-|   React   |     4-6 mois     |          Élevé           | _Gestion d'état complexe, JSX, nombreux concepts avancés._                 |
-|  Angular  |     6-8 mois     |        Très Élevé        | _TypeScript obligatoire, architecture complexe, RxJS._                     |
-| **TALL**  |   **2-3 mois**   |        **Modéré**        | _**Comprendre l'écosystème Laravel, maîtriser les concepts de Livewire.**_ |
+:::note Perspective personnelle
+Il s'agit de **mon retour d'expérience qui ne reflète pas forcément votre vécu**.<br />
+Chacun avance à **son rythme** et **développe des affinités particulières** avec certaines technologies.
+:::
 
-:::warning Facteurs Influençant l'Apprentissage
+| **Stack** | **Temps Estimé** | **Niveau de Difficulté** | **Principaux Défis**                                                                                                                                    |
+| :-------: | :--------------: | :----------------------: | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|  Vue.js   |     3-4 mois     |      Modéré à Élevé      | _Composition API dans ses dernières versions, Pinia (ex-Vuex), écosystème en constante évolution._                                                      |
+|   React   |     4-6 mois     |          Élevé           | _Gestion d'état complexe, JSX, nombreux concepts avancés. Routeur modifié régulièrement, obligeant à réécrire le code à chaque version majeure._        |
+|  Angular  |     6-8 mois     |        Très Élevé        | _TypeScript obligatoire, architecture complexe, transition de RxJS vers les Signaux, migration des modules vers les standalone components._             |
+| **TALL**  |   **2-4 mois**   |        **Modéré**        | _**Comprendre l'écosystème Laravel, maîtriser les concepts de Livewire, l'intégration avec Alpine.js et la mise en place du style avec Tailwind CSS.**_ |
+
+:::note À savoir
+
+-   **Ressources d'Apprentissage abondantes pour React**<br />
+    _React possède la plus grande communauté et dispose de plus de ressources utilisables à travers le monde._
+
+-   **Complexité Conceptuelle pour Angular**<br />
+    _Angular a fait beaucoup de progrès avec la version 20, simplifiant son apprentissage, bien que certains concepts spécifiques
+    restent à maîtriser. Malgré tout, c'est un indispensable dans le milieu professionnel._
+
+:::
+
+:::info Facteurs Influençant l'Apprentissage de TALL
 
 -   **Expérience Préalable**<br />
-    _La connaissance de **PHP** accélère l'apprentissage de **TALL**, tandis que **JS** est nécessaire pour **React**/**Vue**/**Angular**_
+    _La connaissance de **PHP** et de **Laravel** accélère significativement l'apprentissage de la stack TALL_
 
--   **Documentation** :<br />
-    _**TALL** bénéficie d'une documentation claire et structurée, particulièrement en anglais._ **[Lien ici](https://tallstack.dev/)**
+-   **Documentation Accessible**<br />
+    _**TALL** bénéficie d'une documentation claire et structurée._ **[Documentation officielle](https://tallstack.dev/)**
 
--   **Ressources d'Apprentissage**<br />
-    _React possède la plus grande communauté et le plus de ressources disponibles_
+-   **Écosystème Laravel**<br />
+    _L'apprentissage est facilité par la richesse de l'écosystème Laravel existant (Laracasts, communauté francophone active)_
 
--   **Complexité Conceptuelle**<br />
-    _Angular a fait beaucoup de progrès avec la version 20, simplifiant son apprentissage, bien que certains concepts spécifiques restent à maîtriser_
+-   **Courbe d'Apprentissage Progressive**<br />
+    _Possibilité d'apprendre chaque technologie individuellement avant de les combiner_
 
 :::
 
 ### Comparaison TALL vs React & Vue
 
 #### Compteur simple - React
+
+> Ci-dessous il s'agit d'un code écrit en **React** permettant d'**incrémenter** ou de **réinitialiser** un compteur.<br />
+> Le hook **useState** est utilisé afin de rendre le composant fonctionnel réactif.
 
 ```js
 import React, { useState } from 'react';
@@ -389,7 +423,12 @@ function Counter() {
 export default Counter;
 ```
 
+---
+
 #### Compteur simple - Vue.js
+
+> Ci-dessous il s'agit maintenant d'un code écrit en **Vue.js 3** utilisant la **Composition API**.<br />
+> La fonction **ref()** permet de créer une référence réactive pour gérer l'état du compteur.
 
 ```html
 <template>
@@ -408,34 +447,53 @@ export default Counter;
     </div>
 </template>
 
-<script>
+<script setup>
     import { ref } from 'vue';
 
-    export default {
-        setup() {
-            const count = ref(0);
+    // Déclaration réactive
+    const count = ref(0);
 
-            const increment = () => {
-                count.value++;
-            };
+    // Fonctions
+    const increment = () => {
+        count.value++;
+    };
 
-            const reset = () => {
-                count.value = 0;
-            };
-
-            return {
-                count,
-                increment,
-                reset,
-            };
-        },
+    const reset = () => {
+        count.value = 0;
     };
 </script>
 ```
 
-#### Compteur simple - TALL Stack ( Livewire + Alpine.js )
+:::note
+C'est très court, très simple d'accès mais la **non séparation des concepts** me dérange personnellement. C'est **mon choix**,
+**ma vision** et encore une fois, **elle ne reflète pas forcément la vôtre** et **vous avez raison de maintenir votre opinion**.<br />
+Si vous vous sentez à l'aise avec celle-ci alors foncez !!
+:::
+
+---
+
+#### Compteur simple - TALL Stack ( Livewire pur )
+
+:::note Séparation des concepts
+C'est ce que je préfère, c'est ce que j'ai appris à mes débuts :<br />
+( _séparer la logique métier pour éviter de tout regrouper au même endroit._ )
+
+-   **Avec Angular** et l'abandon des modules pour les standalones components, cette approche remet en cause ce concept que j'adorais. Malgré tout cette technologie reste pour moi l'une des meilleures car elle dispose d'une écosystème très riche.
+
+-   **Avec VueJS** tout avoir au même endroit c'est pratique quand on débute dans un framework JavaScript, mais par la suite je me sens limité par cette approche.
+
+-   **Avec React**, la problématique pour moi reste un écosystème non maîtrisé et donc susceptible de contenir un nombre de faille
+    exponentiel. J'ai aussi du mal avec le fait de devoir réécrire le routing plusieurs fois avec des versions différentes, c'est
+    problématique et l'évolution du projet reste cloisonnée à une version spécifique... Les failles peuvent donc prendre du temps à être
+    corrigées, favorisant les vulnérabilités à long terme. **Il s'agit ici de ma vision, encore une fois.**
+
+:::
 
 **Composant Counter**
+
+> Ici il s'agit d'un fichier comportant la classe **Counter** qui hérite de la classe **Component** de Livewire.<br />
+> Nous disposons ainsi d'un composant qui sera exploité par la vue **`livewire.counter`**.<br />
+> Ce composant contient une logique métier simple qui comprend l'**incrémentation** et le **reset** du compteur.
 
 ```php
 <?php
@@ -446,18 +504,22 @@ use Livewire\Component;
 
 class Counter extends Component
 {
+    // Attribut public initialisé à 0
     public $count = 0;
 
+    // Méthode permettant d'incrémenter de 1
     public function increment()
     {
         $this->count++;
     }
 
+    // Méthode permettant de réinitialiser le compteur à 0
     public function reset()
     {
         $this->count = 0;
     }
 
+    // Méthode permettant de retourner la vue associée
     public function render()
     {
         return view('livewire.counter');
@@ -465,21 +527,23 @@ class Counter extends Component
 }
 ```
 
-**Vue Livewire ( Blade + Alpine.js )** - _Blade est le moteur de rendu de Laravel, j'y reviendrai plus tard._
+**Vue Livewire pur ( Blade sans Alpine.js )** - _Blade est le moteur de rendu de Laravel, nous y reviendrons plus tard._
 
 ```html
+<!-- Fichier : resources/views/livewire/counter.blade.php -->
 <div class="p-4 bg-gray-100 rounded">
     <h2 class="text-xl font-bold mb-4">Compteur TALL</h2>
     <p class="mb-4">Valeur : {{ $count }}</p>
 
+    <!-- Événement Livewire appelant la méthode pour incrémenter de 1 -->
     <button
         wire:click="increment"
-        class="bg-blue-500 text-white px-4 py-2 rounded mr-2 hover:bg-blue-600
-        transition-colors"
+        class="bg-blue-500 text-white px-4 py-2 rounded mr-2 hover:bg-blue-600 transition-colors"
     >
         Incrémenter
     </button>
 
+    <!-- Événement Livewire pour réinitialiser le compteur -->
     <button
         wire:click="reset"
         class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors"
@@ -488,8 +552,6 @@ class Counter extends Component
     </button>
 </div>
 ```
-
-> Ce que j'aime dans la stack TALL c'est la séparation des concepts
 
 ## Qui utilisent la stack TALL
 
@@ -501,12 +563,13 @@ environnement de production._
 
 :::
 
-### Entreprise Notables
+### Entreprises Notables
 
--   **Laravel Forge** : _La plateforme officielle de déploiement Laravel, utilisée par des milliers de développeurs_
--   **Laravel Vapor** : _Service d'hébergement serverless par Laravel, optimisé pour les performances_
--   **Stripe** : _Intégration dans leur Dashboard utilisateur pour une expérience fluide_
--   **GitHub** : _Certaines fonctionnalités interactives de leur plateforme_
+-   **Laravel Forge** : _Plateforme officielle de déploiement utilisée par plus de 500 000 développeurs_
+-   **Laravel Vapor** : _Service d'hébergement serverless par Laravel, optimisé pour les performances.
+    (gère des millions de requêtes par mois)_
+-   **Stripe** : _Dashboard utilisateur pour la gestion des paiements en temps réel ( expérience fluide )_
+-   **GitHub** : _Fonctionnalités interactives comme les notifications live et la collaboration._
 
 ### Types de Projets
 
@@ -538,3 +601,108 @@ _Son architecture innovante redéfinit les standards de performance web._
 
 _Cette synergie unique entre performances serveur et réactivité client fait de TALL une solution idéale pour les applications web
 modernes exigeant haute performance et scalabilité._
+
+## Une Stack d'Avenir : Timeline et Perspectives
+
+La stack TALL se distingue par sa **jeunesse et sa modernité** comparée aux stacks JavaScript traditionnelles.<br />
+Contrairement aux stacks **MEAN** ( _2010+_ ), **MERN** ( _2013+_ ) ou **MEVN** ( _2014+_ ), **TALL** est née de l'expérience acquise et
+des leçons apprises du développement web moderne.
+
+:::note
+_Cette approche récente lui permet d'intégrer nativement les meilleures pratiques actuelles et d'éviter les écueils des premières
+générations de frameworks._
+:::
+
+### Timeline d'évolution 1/2
+
+_Histoire de la Stack TALL - Partie 1/2_
+
+```mermaid
+---
+config:
+  theme: 'neutral'
+---
+timeline
+    2011 : Fondation
+            : Création de Laravel
+            : par Taylor Otwell
+
+    2017 : Tailwind CSS (Alpha)
+            : par Adam Wathan
+
+    2019 : Tailwind CSS v1.0
+            : Version stable
+            : Développement de Livewire
+            : par Caleb Porzio
+
+    2020 : Création d'Alpine.js
+            : par Caleb Porzio
+            : Formalisation TALL Stack
+            : Émergence du terme TALL
+```
+
+### Timeline d'évolution 2/2
+
+_Histoire de la Stack TALL - Partie 2/2_
+
+```mermaid
+---
+config:
+  theme: 'neutral'
+---
+timeline
+    2021 : Maturation
+            : Adoption croissante
+            : Écosystème en expansion
+
+    2023 : Livewire v3
+            : Refonte majeure
+
+    2024 : Consolidation
+            : TALL Stack établie
+            : Reconnaissance industrielle
+
+    2025 : Reconnaissance
+            : Écosystème mature
+            : Communauté active
+```
+
+### Points clés de cette évolution
+
+-   **Avantage temporel**<br />
+    _Née dans l'ère post-SPA, TALL intègre les enseignements des erreurs passées._
+
+-   **Innovation collaborative**<br />
+    _Caleb Porzio ( **Alpine.js + Livewire** ) et Adam Wathan ( **Tailwind** ) travaillent en synergie._
+
+-   **Adoption rapide**<br />
+    _**En moins de 5 ans**, TALL est passée d'**expérimentation** à **solution industrielle**._
+
+-   **Écosystème jeune mais dynamique**<br />
+    _Contrairement aux stacks plus anciennes, **TALL n'a pas de dette technique historique**._
+
+:::tip L'avenir de TALL
+Cette jeunesse constitue un **atout majeur** : la stack peut évoluer rapidement, intégrer les dernières innovations et rester en phase
+avec les besoins actuels du développement web sans porter le poids de décisions architecturales obsolètes.
+:::
+
+## Conclusion
+
+Au terme de cette présentation, la stack TALL s'impose comme une **alternative mature et réfléchie** aux frameworks JavaScript
+traditionnels. Sa philosophie de **simplicité**, sa **courbe d'apprentissage optimisée** et son **écosystème cohérent** en font un choix
+particulièrement pertinent pour les développeurs PHP cherchant à créer des applications web modernes et performantes.
+
+**Ce qui rend TALL unique :**
+
+-   **Une approche unifiée** : Quatre technologies pensées pour fonctionner ensemble
+-   **La puissance de Laravel** : Bénéficier de tout l'écosystème **PHP le plus mature**
+-   **La modernité sans complexité** : Réactivité avancée sans la surcharge JavaScript
+-   **Une vision d'avenir** : Stack récente intégrant les meilleures pratiques actuelles
+
+:::info Prochaines étapes
+Cette présentation n'est que le **début de notre voyage** dans l'univers TALL.<br />
+Les prochains chapitres de cette documentation approfondiront chaque technologie, leurs interactions, et vous guideront pas à pas dans la
+création d'applications complètes et professionnelles.
+
+_L'aventure TALL ne fait que commencer !_
+:::
