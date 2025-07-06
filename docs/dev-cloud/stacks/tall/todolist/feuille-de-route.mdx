@@ -2,14 +2,38 @@
 
 :::info Objectif
 **Créer** une **application moderne de gestion de tâche** tout en explorant pas à pas chaque composant de la stack TALL.<br />
-_À chaque étape, j'examinerais les résultats pour bien comprendre comment les différents éléments s'assemblent._
+_À chaque étape, nous examinerons les résultats pour bien comprendre comment les différents éléments s'assemblent._
 :::
 
-**Cette feuille de route détaillée** me guidera à travers chaque étape du développement d'une application moderne, en commençant par une
+**Cette feuille de route détaillée** nous guidera à travers chaque étape du développement d'une application moderne, en commençant par une
 démonstration interactive jusqu'au déploiement en production. _Le but étant de maîtriser progressivement les composants essentiels de la stack
 TALL._
 
-## Frise chronologique du projet
+## **Comprendre où nous en sommes**
+
+```mermaid
+---
+title: Statut actuel & Objectif à venir
+config:
+    theme: 'neutral'
+---
+graph TB
+    A[<b>Présentation de TALL</b>] -.-> |On sait à quoi correspond<br/>la stack Tall| B["Découverte<br />de comment l'installer"] -.->|On sait faire| Fonctionnel[Démo fonctionnel]
+    C[<b>Objectif</b>] -.->|choix du projet| D[Initialisation<br />d'un nouveau projet] --> |Installation<br />de la Todolist terminé| E[Configuration] -.->|Implémentation des sécurités| F[Migration] -.->|Développement du projet| G[Projet fonctionnel]
+
+    style A fill:#e3e3f3
+    style B fill:#e3e3f3
+    style Fonctionnel fill:#e3f3e3
+    style C fill:#e3e3f3
+    style G fill:#e3f3e3
+```
+
+## **Frise chronologique du projet**
+
+_Une visualisation nous semble assez logique pour comprendre ce que l'on va produire ensemble._
+
+:::note Étape 1 - Les fondations
+:::
 
 ```mermaid
 ---
@@ -17,18 +41,74 @@ config:
     theme: 'neutral'
 ---
 timeline
-    title Guide TALL Stack
-    section Apprentissage
-        Démo Visuelle : Introduction interactive
-        Fondations : Installation et configuration
-        Interface de Base : Tailwind et Alpine.js
-        Réactivité Simple : Introduction Livewire
-        Logique Métier : Fonctionnalités Laravel
-        Interactivité Avancée : Optimisation UX
-        Production : Déploiement
+    section Fondation
+        Création du projet  : Mise en place du projet
+                            : Installation du projet.
+        SQLite  : Choix d'un type de base de données
+                : Configuration de la base de données
+                : Sécurisation de la base de données
+        Création d'un model : Création du modèle Task
+                            : Explication des propriétés $fillable & $casts
+                            : Test avec Tinker
 ```
 
-_La frise chronologique ci-dessus illustre mon parcours d'apprentissage structuré :_
+:::note Étape 2 - Interface Laravel
+:::
+
+```mermaid
+---
+config:
+    theme: 'neutral'
+---
+timeline
+    section Interface Laravel
+        Création d'un controller  : Création de TaskController
+                            : Mise en garde
+        Implémentation des méthodes  : index()
+                : store()
+                : toggle()
+                : destroy()
+        Découverte des routes : Implémentation des routes
+        Utilisation du moteur de rendu Blade: Mise en place d'un Layout
+                            : Création de la vue principale.
+```
+
+:::note Étape 3 - Implémentation de la Réactivité
+:::
+
+```mermaid
+---
+config:
+    theme: 'neutral'
+---
+timeline
+    section Implémentation de la Réactivité
+        Alpine.js Pur   : Découverte de la réactivité côté client
+                    : Mise en place d'Alpine.js dans un projet pur.
+        Livewire Pur    : Découverte de la réactivité côté serveur
+                    : Mise en place Livewire dans un projet pur.
+        Hybride Livewire & alpine.js    : Implémentation des deux solutions en une.
+```
+
+:::note Étape 4 - Production
+:::
+
+```mermaid
+---
+config:
+    theme: 'neutral'
+---
+timeline
+    section Production
+        Optimisation : Découverte & mise en place de l'optimisation propulsé par Laravel
+        configuration serveur   : Configuration d'Nginx
+                                : Configuration de PHP-FPM
+        Déploiement     : script de déploiement
+        Monitoring      : Configuration des logs
+        sauvegarde & Récupération : Mise en place de plakar
+```
+
+_La frise chronologique ci-dessus illustre le parcours d'apprentissage structuré que l'on va suivre :_
 
 -   **Démo Visuelle :** Une introduction interactive pour visualiser concrètement ce que nous allons construire
 -   **Fondations :** Mise en place de l'environnement de développement et configuration initiale du projet
@@ -41,7 +121,7 @@ _La frise chronologique ci-dessus illustre mon parcours d'apprentissage structur
 Chaque étape s'appuie sur les précédentes, permettant une progression naturelle et une compréhension approfondie de chaque composant
 de la stack TALL.
 
-## Démo Visuelle
+## **Démo Visuelle**
 
 ### Aperçu de l'Application
 
@@ -66,7 +146,7 @@ graph LR
 
 ```bash
 # Installation rapide avec Laravel Sail
-composer create-project laravel/laravel tall-tasks
+composer create-project laravel/laravel tall-tasks-demo
 cd tall-tasks-demo
 ```
 
@@ -151,6 +231,8 @@ Je créer immédiatement quelque chose de visible pour comprendre la structure.
 
 #### Sans Tailwindcss et Sans AlpineJS
 
+> Création de la structure sans interaction avec Livewire et AlpineJS. Mais surtout il n'y a pas Tailwindcss
+
 ```html
 <!DOCTYPE html>
 <html lang="fr">
@@ -164,7 +246,7 @@ Je créer immédiatement quelque chose de visible pour comprendre la structure.
             <div>
                 <!-- En-tête avec badges technologiques -->
                 <header>
-                    <h1>Démonstraton de la TALL Stack</h1>
+                    <h1>Démonstration de la TALL Stack</h1>
                     <div>
                         <span>Tailwind CSS</span>
                         <span>Alpine.js</span>
@@ -179,7 +261,7 @@ Je créer immédiatement quelque chose de visible pour comprendre la structure.
 
                     <!-- Formulaire -->
                     <div>
-                        <input />
+                        <input type="text" />
                         <button>Ajouter</button>
                     </div>
 
@@ -197,9 +279,9 @@ Je créer immédiatement quelque chose de visible pour comprendre la structure.
                     <p>Total: <span></span> tâches</p>
                 </div>
 
-                <!-- Aperçu de ce que je vais construire -->
+                <!-- Aperçu de ce que nous allons construire -->
                 <div>
-                    <h3>Ce que je vais construire :</h3>
+                    <h3>Ce que nous allons construire :</h3>
                     <ul>
                         <li>
                             <span></span>
@@ -230,6 +312,8 @@ Je créer immédiatement quelque chose de visible pour comprendre la structure.
 
 #### Avec Tailwindcss et Sans AlpineJS
 
+> Reprise du même code avec implémentation de Tailwindcss, toujours sans AlpineJS.
+
 ```html
 <!DOCTYPE html>
 <html lang="fr">
@@ -245,7 +329,7 @@ Je créer immédiatement quelque chose de visible pour comprendre la structure.
                 <!-- En-tête avec badges technologiques -->
                 <header class="text-center mb-8">
                     <h1 class="text-4xl font-bold text-gray-800 mb-4">
-                        Démonstraton de la TALL Stack
+                        Démonstration de la TALL Stack
                     </h1>
                     <div class="flex justify-center gap-2 mb-6">
                         <span
@@ -308,12 +392,12 @@ Je créer immédiatement quelque chose de visible pour comprendre la structure.
                     </p>
                 </div>
 
-                <!-- Aperçu de ce que je vais construire -->
+                <!-- Aperçu de ce que nous allons construire -->
                 <div
                     class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-6"
                 >
                     <h3 class="text-lg font-semibold mb-3">
-                        Ce que je vais construire :
+                        Ce que nous allons construire :
                     </h3>
                     <ul class="space-y-2">
                         <li class="flex items-center gap-2">
@@ -353,6 +437,8 @@ Je créer immédiatement quelque chose de visible pour comprendre la structure.
 
 #### Avec Tailwindcss et AlpineJS
 
+> Implémentation d'AlpineJS.
+
 ```html
 <!DOCTYPE html>
 <html lang="fr">
@@ -372,7 +458,7 @@ Je créer immédiatement quelque chose de visible pour comprendre la structure.
                 <!-- En-tête avec badges technologiques -->
                 <header class="text-center mb-8">
                     <h1 class="text-4xl font-bold text-gray-800 mb-4">
-                        Démonstraton de la TALL Stack
+                        Démonstration de la TALL Stack
                     </h1>
                     <div class="flex justify-center gap-2 mb-6">
                         <span
@@ -398,14 +484,14 @@ Je créer immédiatement quelque chose de visible pour comprendre la structure.
                 <div
                     class="bg-white rounded-lg shadow-md p-6 mb-6"
                     x-data="{
-                      tasks: ['Apprendre TALL Stack', 'Créer une app géniale'],
-                      newTask: '',
-                      addTask() {
-                        if(this.newTask.trim()) {
-                          this.tasks.push(this.newTask);
-                          this.newTask = '';
+                        tasks: ['Apprendre TALL Stack', 'Créer une app géniale'],
+                        newTask: '',
+                        addTask() {
+                            if(this.newTask.trim()) {
+                                this.tasks.push(this.newTask);
+                                this.newTask = '';
+                            }
                         }
-                      }
                     }"
                 >
                     <h2 class="text-xl font-semibold mb-4">
@@ -457,12 +543,12 @@ Je créer immédiatement quelque chose de visible pour comprendre la structure.
                     </p>
                 </div>
 
-                <!-- Aperçu de ce que je vais construire -->
+                <!-- Aperçu de ce que nous allons construire -->
                 <div
                     class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-6"
                 >
                     <h3 class="text-lg font-semibold mb-3">
-                        🎯 Ce que je vais construire :
+                        Ce que nous allons construire :
                     </h3>
                     <ul class="space-y-2">
                         <li class="flex items-center gap-2">
@@ -512,13 +598,24 @@ Route::get('/', function () {
 });
 ```
 
+#### Lancement du serveur de développement
+
+```bash
+# Démarrer le serveur Laravel avec Sail
+sail artisan serve
+
+# Ou si l'alias n'est pas configuré
+./vendor/bin/sail artisan serve
+```
+
 :::tip Résultat immédiat
 Si je visite l'URL ( **`http://localhost:8000`** ) - Je peux voir une interface fonctionnelle !
 :::
 
-## Diagramme de séquence
+## **Diagramme de séquence explicatif**
 
-Ce diagramme de séquence me permet d'apporter une compréhension complémentaire sur le fonctionnement de ce qui a été créé jusqu'à maintenant.
+Ce diagramme de séquence permet d'apporter une compréhension complémentaire sur le fonctionnement de ce qui a été créé jusqu'à
+maintenant.
 
 :::warning
 Le détails est là mais les explications sur le fonctionnement n'est pas présent pour le moment.<br />
@@ -548,3 +645,43 @@ sequenceDiagram
     A->>A: Exécute addTask()
     A-->>B: Met à jour l'affichage
 ```
+
+## **Conclusion de la Feuille de Route**
+
+:::tip Félicitation
+Nous avons maintenant une **vision claire et complète** de notre parcours d'apprentissage de la stack TALL.
+:::
+
+### Ce que nous avons établi
+
+-   **Roadmap structurée** : Une progression logique en 4 étapes majeures, des fondations jusqu'à la production
+-   **Démo fonctionnelle** : Une interface interactive qui montre concrètement notre objectif final
+-   **Environnement prêt** : Laravel Sail configuré avec SQLite pour un développement simplifié
+-   **Méthode pédagogique** : Approche visuelle et progressive pour un apprentissage optimal
+
+### Évolution dans notre parcours
+
+-   [x] ~~**Démo réalisée** : Interface interactive avec Tailwind CSS et Alpine.js~~
+-   [ ] **Fondations** : Modèles, migrations et base de données (prochaine étape)
+-   [ ] **Interface Laravel** : Contrôleurs, routes et vues Blade
+-   [ ] **Réactivité** : Intégration complète de Livewire
+-   [ ] **Production** : Optimisation et déploiement
+
+### Direction vers les `fondations`
+
+:::info Prochaine étape
+Maintenant que nous savons **où nous allons** et **comment nous y rendre**, il est temps de poser les **fondations solides**
+de notre application.
+
+Dans l'**Étape 1**, nous allons :
+
+-   **Créer** un nouveau projet Laravel propre ( _On commence à être bien rodé_ )
+-   **Configurer** SQLite pour la simplicité
+-   **Développer** le modèle Task avec ses migrations ( _L'envoie en base de données_ )
+-   **Tester** notre structure avec Tinker
+
+_Ces fondations seront la base de tout ce que nous construirons ensuite._
+:::
+
+**Nous avons la carte, nous connaissons la destination** - il est temps de construire !<br />
+Allez c'est partie.
