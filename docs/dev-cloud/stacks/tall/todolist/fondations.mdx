@@ -14,7 +14,7 @@ config:
     theme: 'neutral'
 ---
 graph TB
-    A[<b>Application de démo</b>] -.-> |Prototype visuel| B["Application complète"] -.->|Visualisé et testée| Fonctionnel
+    A[<b>Application de démo</b>] -.-> |Prototype visuel| B["Application complète"] -.->|Visualisée et testée| Fonctionnel
     C[<b>Objectif</b>] -.->|Création du nouveau projet| D[Configuration du projet] --> |SQLite configuré| E[Création du modèle Task] -.->|Explication des propriétés<br />$fillable & $casts| F[Test avec Tinker] -.->|Validation| G[Objectif atteint]
 
     style A fill:#e3e3f3
@@ -53,7 +53,7 @@ complexifier la compréhension alors que le but est de comprendre la stack en ta
 
 ---
 
-:::note Remarque évidente
+:::note Remarque évidentes
 _Pour un projet en **production** avec plusieurs utilisateurs simultanés, nous opterons plutôt pour **MySQL**/**MariaDB** ou
 **PostgreSQL**._
 :::
@@ -236,7 +236,7 @@ structure de la base de données au fil du temps. Cette approche offre plusieurs
 
 ### Contenu du fichier modèle
 
-> Ce fichier permet de définir les propriétés qui seront manipulable ( _Une couche de sécurité qui est la bienvenue_ ).<br />
+> Ce fichier permet de définir les propriétés qui seront manipulables ( _Une couche de sécurité qui est la bienvenue_ ).<br />
 > Mais aussi, ce fichier nous permet de convertir efficacement de la donnée vers un type spécifique.
 
 :::note Emplacement Fichier
@@ -300,7 +300,7 @@ _C'est, **comprendre** quelles sont les **Propriétés Essentielles** du Modèle
 
 **`completed`** est **casté** en **boolean** : la valeur **0/1** de la base de données sera automatiquement convertie en **true/false**
 en PHP. Seuls **`title`**, **`description`** et **`completed`** peuvent être modifiés en masse, protégeant ainsi des champs comme
-**`id`** ou **`created_at`** d'une quelconque altération non désiré.
+**`id`** ou **`created_at`** d'une quelconque altération non désirée.
 
 _Cette structure forme la base sur laquelle nous pourrons construire des fonctionnalités plus avancées dans notre application Laravel._
 :::
