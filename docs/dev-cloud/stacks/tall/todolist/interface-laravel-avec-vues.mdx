@@ -1,6 +1,12 @@
 # Étape 2 : Interface Laravel
 
-## Progression Visuelle
+:::info Objectif
+**Créer** un **contrôleur** qui disposera de toutes les **méthodes** nécessaires pour permettre de répondre au besoin.<br />
+Nous allons également aborder la question du **routing** qui reste fondamental pour toute application web qui se respecte. Mais surtout,
+nous allons aborder la partie vue qui correspondra à l'interface que nous aurons à l'écran.
+:::
+
+## **Progression Visuelle**
 
 ```mermaid
 ---
@@ -8,22 +14,28 @@ title: Progression & Prochaines Étapes
 config:
   theme: 'neutral'
 ---
-graph LR
+graph TB
     A[<b>Base établie</b>] -.-> |Configuration BDD| B["Prêt à l'emploi"]
-    C[<b>Prochaine phase</b>] -.->|Développement|D[Contrôleurs & Logique] --> |Configuration| E[Routes Laravel] -.->|Création| F[Interface Blade] -.-> G[/Version statique/]
-    D <-.->|Interaction| H[<b>Modèle Task</b>]
+    C[<b>Prochaine phase</b>] -.->|Développement|D[Contrôleurs & Logique] --> |Configuration| E[Routes Laravel]
+    E[Routes Laravel] -.->|Création| F[Interface Blade] -.-> G[/Version statique/]
+    D <-.->|Interaction| H[<b>Modèle Task</b>] <-.->|Consommation| I[(Base De Données<br />SQLite)]
 
     style A fill:#e3e3f3
     style C fill:#e3e3f3
-    style G fill:#e3f3e3
+    style B fill:#e3f3e3
+    style G fill:#f3e3e3
+    style I fill:#e3f3e3
 ```
 
-_Je vais maintenant créer l'interface Laravel qui interagira avec la base de données._
+_Nous allons maintenant créer l'interface Laravel qui interagira avec la base de données qui a déjà été configurée._
 
-## Contrôleur Simple et Visible
+## **Contrôleur Simple et Visible**
+
+**La logique métier** est toujours située dans un **contrôleur**.<br />
+Il reste le coeur du paradigme **MVC** ( _*Modèle*, **Vue**, **Controller**_ ).
 
 ```bash
-# Création du contrôleur qui gèrera toute la logique métier des tâches
+# Création du contrôleur qui gérera toute la logique métier des tâches
 php artisan make:controller TaskController
 ```
 
@@ -32,7 +44,7 @@ php artisan make:controller TaskController
 :::
 
 Le **TaskController** est une classe PHP qui hérite de la classe **Controller** de Laravel. Il sert d'_intermédiaire essentiel_ entre le
-**modèle Task** et les **vues**, orchestrant toute la logique métier de l'application de gestion de tâches.
+**modèle Task** et les **vues**, orchestrant toute la logique métier de notre application de gestion de tâches.
 
 ### Contenu de `TaskController`
 
@@ -59,27 +71,18 @@ class TaskController extends Controller
 
 :::info SOLID
 Une documentation sur **S.O.L.I.D** est en pleine réflexion mais prévu dans les **Bases Fondamentales**.<br />
-_Le lien vers cette partie sera ajouté une fois rédigé_.
+_Le lien vers cette partie sera ajouté une fois que cette dernière sera rédigée_.
 :::
 
-## Très important
-
-:::danger Information très importante
-Dans les prochaines parties, j'explique chaque méthode que je vais utiliser.<br />
-**Pour ne pas perturber mon apprentissage**, j'affiche uniquement le code correspondant à la méthode en cours.<br />
-Les méthodes commentées sont remplacées par **`// ... Du code`**.
-
-Aussi, il faut prendre en considération que **pour comprendre chaque partie** et ne pas **switcher de fichier en fichier de peur de perdre
-le fil**, j'ai volontairement affiché toutes les méthodes à la suite les unes après les autres, puis je parle des routes et enfin des
-interfaces blade. **Donc avec du bon sens, si une méthode est utilisée, il faut allé va voir la route et l'interface correspondante**.
+:::danger **Information importante**
+Dans cette étape, nous allons créer **4 méthodes essentielles** dans notre contrôleur. Chaque méthode sera expliquée individuellement avec son
+rôle spécifique. Ensuite, nous configurerons les routes correspondantes et créerons d'abord les vues Blade **en HTML simple, puis avec
+Tailwind CSS**
 :::
 
-## Méthodes utilisées dans `TaskController`
+## **La base du code**
 
-### Première méthode : `index()`
-
-La méthode **`index()`** est une méthode très importante, elle permet **d’afficher les tâches récupérer depuis la base de données**.<br />
-( _la plus récente sera afficher en premier_ ).
+> _Voici le code qui sera utilisé. Afin de gagner en lisibilité seule la méthode concernée sera affichée._
 
 ```php
 <?php
@@ -91,103 +94,86 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    // Afficher toutes les tâches
-    public function index()
-    {
-        $tasks = Task::latest()->get(); // Plus récent en premier
-        return view('tasks.index', compact('tasks'));
-    }
+    // Les méthodes vont toutes ici les unes à la suite des autres
 }
 ```
 
-### Seconde méthode : `store()`
+## **Méthodes utilisées dans `TaskController`**
 
-_La méthode store() est simple, elle permet de créer une nouvelle tâche en fonction de ce qui est récupéré dans la **request**._
+### Première méthode : **`index()`**
+
+La méthode **`index()`** est une méthode très importante, elle permet **affichée les tâches récupérées depuis la base de données**.<br />
+( _la plus récente sera affichée en premier_ ).
 
 ```php
-<?php
-
-namespace App\Http\Controllers;
-
-use App\Models\Task;
-use Illuminate\Http\Request;
-
-class TaskController extends Controller
+// Afficher toutes les tâches
+public function index()
 {
-    // ... Du code
-
-    // Créer une nouvelle tâche
-    public function store(Request $request)
-    {
-        // Validation simple et claire
-        $validated = $request->validate([
-            'title' => 'required|min:3|max:255',
-            'description' => 'nullable|max:500'
-        ]);
-
-        Task::create($validated);
-
-        return redirect()->route('tasks.index')
-                         ->with('success', 'Tâche créée avec succès !');
-    }
+    $tasks = Task::latest()->get(); // Plus récent en premier
+    return view('tasks.index', compact('tasks'));
 }
 ```
 
-### Troisième méthode : `toggle()`
+### Seconde méthode : **`store()`**
 
-_La méthode **`toggle()`** prends en paramètre **Task $task** ce qui permet de basculer l'état de la tâche qui aura été ciblé._
+_La méthode **`store()`** est simple, elle permet de créer une nouvelle tâche en fonction de ce qui est récupéré dans la **request**._
 
 ```php
-<?php
-
-namespace App\Http\Controllers;
-
-use App\Models\Task;
-use Illuminate\Http\Request;
-
-class TaskController extends Controller
+// Créer une nouvelle tâche
+public function store(Request $request)
 {
-    // ... Du code
+    // Validation simple et claire
+    $validated = $request->validate([
+        'title' => 'required|min:3|max:255',
+        'description' => 'nullable|max:500'
+    ]);
 
-    // Basculer l'état d'une tâche
-    public function toggle(Task $task)
-    {
-        $task->update(['completed' => !$task->completed]);
+    Task::create($validated);
 
-        return redirect()->route('tasks.index')
-                         ->with('success', 'Tâche mise à jour !');
-    }
+    return redirect()->route('tasks.index')
+                        ->with('success', 'Tâche créée avec succès !');
 }
 ```
 
-### Quatrième méthode : `destroy()`
+:::info Qu'est-ce que la `Request`
+Pour faire simple, sachez que la **$request** contient le contenu de la requête HTTP.<br />
+Ainsi lorsqu'un formulaire est soumit, les éléments sont passés dans le protocole HTTP et ils sont utilisable à partir de la **`Request`**.
+:::
 
-_La méthode **`destroy()`** prends également un paramètre **Task $task** afin de cibler la bonne tâche qui sera supprimer de la liste._
+### Troisième méthode : **`toggle()`**
+
+_La méthode **`toggle()`** prends en paramètre le modèle **Task $task** qui correspond à la tâche qui aura été récupéré en base de données.
+Ainsi donc, cela nous permettra de basculer l'état de la tâche vers son opposé ( **0** / **1** vers **true** / **false** via la conversion
+avec **$casts** )._
 
 ```php
-<?php
-
-namespace App\Http\Controllers;
-
-use App\Models\Task;
-use Illuminate\Http\Request;
-
-class TaskController extends Controller
+// Basculer l'état d'une tâche
+public function toggle(Task $task)
 {
-    // ... Du code
+    $task->update(['completed' => !$task->completed]);
 
-    // Supprimer une tâche
-    public function destroy(Task $task)
-    {
-        $task->delete();
-
-        return redirect()->route('tasks.index')
-                         ->with('success', 'Tâche supprimée !');
-    }
+    return redirect()->route('tasks.index')
+                     ->with('success', 'Tâche mise à jour !');
 }
 ```
 
-## Routes Simples et Intuitives
+### Quatrième méthode : **`destroy()`**
+
+_La méthode **`destroy()`** prends également le même paramètre lié au modèle **Task $task** afin de cibler la bonne tâche qui sera supprimée
+de la liste._
+
+```php
+// Supprimer une tâche
+public function destroy(Task $task)
+{
+    $task->delete();
+
+    return redirect()->route('tasks.index')
+                     ->with('success', 'Tâche supprimée !');
+}
+```
+
+## **Routes Simples et Intuitives**
 
 :::note Emplacement Fichier
 **`routes/web.php`**
@@ -233,21 +219,162 @@ Route::patch('/tasks/{task}/toggle', [TaskController::class, 'toggle'])->name('t
 Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy');
 ```
 
-#### Explication détaillée des routes
+**Explications détaillées**
 
--   **GET /** : _Point d'entrée principal_ - Affiche l'interface de gestion des tâches avec la liste complète
--   **POST /tasks** : _Endpoint de création_ - Traite la soumission du formulaire pour créer une nouvelle tâche
--   **PATCH /tasks/\{task\}/toggle** : _Gestion de l'état_ - Permet de basculer dynamiquement entre tâche complétée et non-complétée
--   **DELETE /tasks/\{task\}** : _Suppression sécurisée_ - Gère la suppression permanente d'une tâche spécifique
+| Route                                 | Rôle principal             | Description                                                             |
+| ------------------------------------- | -------------------------- | ----------------------------------------------------------------------- |
+| **GET**<br />/                        | _Point d'entrée principal_ | Affiche l'interface de gestion des tâches avec la liste complète        |
+| **POST**<br />/tasks                  | _Endpoint de création_     | Traite la soumission du formulaire pour créer une nouvelle tâche        |
+| **PATCH**<br />/tasks/\{task\}/toggle | _Gestion de l'état_        | Permet de basculer dynamiquement entre tâche complétée et non-complétée |
+| **DELETE**<br />/tasks/\{task\}       | _Suppression sécurisée_    | Gère la suppression permanente d'une tâche spécifique                   |
 
-## Interface Blade Moderne
+## **Interface Blade Progressive**
 
-:::note Emplacement Dossier contenant les interfaces
-**`resources/views/tasks/`**
-_**tasks** est un dossier créé manuellement._
+:::info Approche Step by Step
+Nous allons créer l'interface en 4 étapes progressives :<br />
+
+```mermaid
+---
+config:
+    theme: 'neutral'
+---
+flowchart TB
+    HTML[1 - HTML Simple]
+    Layout[2 - Layout Blade] --> Vue[3 - Vue principale]
+    Tailwind[4 - Tailwind CSS] -.-> |Implémentation du style| Vue
+```
+
 :::
 
-### Layout : `app.blade.php`
+:::note Emplacement Dossier
+**`resources/views/tasks/`**<br />
+Le dossier tasks doit être créé manuellement.
+:::
+
+### HTML Simple et Fonctionnel
+
+_Commençons par créer une page HTML basique qui affiche nos données sans aucun style._
+
+**Vue de base :** **`index.blade.php`** ( _Version HTML simple_ )
+
+:::note Emplacement Fichier
+**`resources/views/tasks/index.blade.php`**
+:::
+
+```html
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>TALL Tasks - Gestion de tâches</title>
+    </head>
+    <body>
+        <h1>Gestion de Tâches</h1>
+        <p>Étape 2 : Interface Laravel</p>
+
+        <!-- Formulaire d'ajout -->
+        <h2>Ajouter une tâche</h2>
+        <form action="{{ route('tasks.store') }}" method="POST">
+            @csrf
+            <div>
+                <label>Titre *</label><br />
+                <input
+                    type="text"
+                    name="title"
+                    value="{{ old('title') }}"
+                    placeholder="Ex: Terminer le projet"
+                />
+                @error('title')
+                <p style="color: red;">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div>
+                <label>Description</label><br />
+                <input
+                    type="text"
+                    name="description"
+                    value="{{ old('description') }}"
+                    placeholder="Détails optionnels..."
+                />
+                @error('description')
+                <p style="color: red;">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <button type="submit">Enregistrer la tâche</button>
+        </form>
+
+        <!-- Statistiques simples -->
+        <h2>Statistiques</h2>
+        <p>Total : {{ $tasks->count() }}</p>
+        <p>Terminées : {{ $tasks->where('completed', true)->count() }}</p>
+        <p>En cours : {{ $tasks->where('completed', false)->count() }}</p>
+
+        <!-- Liste des tâches -->
+        <h2>Mes Tâches ({{ $tasks->count() }})</h2>
+
+        @forelse($tasks as $task)
+        <div
+            style="border: 1px solid #ccc; margin-bottom: 10px; padding: 10px;"
+        >
+            <h3
+                style="{{ $task->completed ? 'text-decoration: line-through; color: #999;' : '' }}"
+            >
+                {{ $task->title }}
+            </h3>
+
+            @if($task->description)
+            <p
+                style="{{ $task->completed ? 'text-decoration: line-through; color: #999;' : '' }}"
+            >
+                {{ $task->description }}
+            </p>
+            @endif
+
+            <p style="font-size: 12px; color: #666;">
+                Créée {{ $task->created_at->diffForHumans() }}
+            </p>
+
+            <!-- Actions -->
+            <form
+                action="{{ route('tasks.toggle', $task) }}"
+                method="POST"
+                style="display: inline;"
+            >
+                @csrf @method('PATCH')
+                <button type="submit">
+                    {{ $task->completed ? '✅ Terminée' : '⏳ En cours' }}
+                </button>
+            </form>
+
+            <form
+                action="{{ route('tasks.destroy', $task) }}"
+                method="POST"
+                style="display: inline;"
+                onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette tâche ?')"
+            >
+                @csrf @method('DELETE')
+                <button type="submit">🗑️ Supprimer</button>
+            </form>
+        </div>
+        @empty
+        <p>
+            Aucune tâche pour le moment. Créez votre première tâche ci-dessus !
+        </p>
+        @endforelse
+    </body>
+</html>
+```
+
+:::tip Test immédiat
+À ce stade, vous pouvez déjà tester votre application ! Elle est fonctionnelle mais sans style.
+:::
+
+### Création du **`Layout Blade`**
+
+Maintenant, séparons la structure avec un layout réutilisable.
 
 :::note Emplacement Fichier
 **`resources/views/layouts/app.blade.php`**
@@ -259,12 +386,171 @@ _**tasks** est un dossier créé manuellement._
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>TALL Tasks</title>
+        <title>@yield('title', 'TALL Tasks')</title>
+    </head>
+    <body>
+        <!-- Header simple -->
+        <header>
+            <h1>TALL Tasks</h1>
+            <p>Étape 2 : Interface Laravel ✓</p>
+        </header>
+
+        <!-- Contenu principal -->
+        <main>@yield('content')</main>
+
+        <!-- Footer simple -->
+        <footer>
+            <p>Application de gestion de tâches - Laravel</p>
+        </footer>
+    </body>
+</html>
+```
+
+### Vue principale : **`index.blade.php`**
+
+Maintenant, utilisons notre layout et simplifions la vue.
+
+:::note Emplacement Fichier
+**`resources/views/tasks/index.blade.php`**
+:::
+
+```html
+@extends('layouts.app') @section('title', 'Gestion des Tâches')
+@section('content')
+<!-- Formulaire d'ajout -->
+<section>
+    <h2>Ajouter une tâche</h2>
+    <form action="{{ route('tasks.store') }}" method="POST">
+        @csrf
+        <div>
+            <label>Titre *</label><br />
+            <input
+                type="text"
+                name="title"
+                value="{{ old('title') }}"
+                placeholder="Ex: Terminer le projet"
+            />
+            @error('title')
+            <p style="color: red;">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div>
+            <label>Description</label><br />
+            <input
+                type="text"
+                name="description"
+                value="{{ old('description') }}"
+                placeholder="Détails optionnels..."
+            />
+            @error('description')
+            <p style="color: red;">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <button type="submit">Enregistrer la tâche</button>
+    </form>
+</section>
+
+<!-- Statistiques -->
+<section>
+    <h2>Statistiques</h2>
+    <div>
+        <div>
+            <strong>{{ $tasks->count() }}</strong>
+            <span>Total</span>
+        </div>
+        <div>
+            <strong>{{ $tasks->where('completed', true)->count() }}</strong>
+            <span>Terminées</span>
+        </div>
+        <div>
+            <strong>{{ $tasks->where('completed', false)->count() }}</strong>
+            <span>En cours</span>
+        </div>
+    </div>
+</section>
+
+<!-- Liste des tâches -->
+<section>
+    <h2>Mes Tâches ({{ $tasks->count() }})</h2>
+
+    @forelse($tasks as $task)
+    <article>
+        <div>
+            <h3
+                style="{{ $task->completed ? 'text-decoration: line-through; color: #999;' : '' }}"
+            >
+                {{ $task->title }}
+            </h3>
+
+            @if($task->description)
+            <p
+                style="{{ $task->completed ? 'text-decoration: line-through; color: #999;' : '' }}"
+            >
+                {{ $task->description }}
+            </p>
+            @endif
+
+            <p style="font-size: 12px; color: #666;">
+                Créée {{ $task->created_at->diffForHumans() }}
+            </p>
+        </div>
+
+        <div>
+            <!-- Toggle completion -->
+            <form
+                action="{{ route('tasks.toggle', $task) }}"
+                method="POST"
+                style="display: inline;"
+            >
+                @csrf @method('PATCH')
+                <button type="submit">
+                    {{ $task->completed ? '✅' : '⏳' }}
+                </button>
+            </form>
+
+            <!-- Delete -->
+            <form
+                action="{{ route('tasks.destroy', $task) }}"
+                method="POST"
+                style="display: inline;"
+                onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette tâche ?')"
+            >
+                @csrf @method('DELETE')
+                <button type="submit">🗑️</button>
+            </form>
+        </div>
+    </article>
+    @empty
+    <p>Aucune tâche pour le moment. Créez votre première tâche ci-dessus !</p>
+    @endforelse
+</section>
+@endsection
+```
+
+:::tip Structure claire
+Maintenant nous avons une structure HTML sémantique avec sections et articles, prête pour le stylisme !
+:::
+
+### Stylisation avec **`Tailwind CSS`**
+
+Maintenant que notre structure est solide, ajoutons Tailwind CSS pour l'esthétique.
+
+#### Layout moderne : **`app.blade.php`** ( _Version Tailwind_ )
+
+:::note Emplacement Fichier
+**`resources/views/layouts/app.blade.php`**
+:::
+
+```html
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>@yield('title', 'TALL Tasks')</title>
         <script src="https://cdn.tailwindcss.com"></script>
-        <script
-            defer
-            src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
-        ></script>
     </head>
     <body class="bg-gray-100">
         <div class="min-h-screen">
@@ -276,7 +562,7 @@ _**tasks** est un dossier créé manuellement._
                             TALL Tasks
                         </h1>
                         <div class="text-sm text-gray-600">
-                            Étape 3:
+                            Étape 2:
                             <span class="text-green-600 font-medium"
                                 >Interface Laravel ✓</span
                             >
@@ -292,35 +578,18 @@ _**tasks** est un dossier créé manuellement._
 </html>
 ```
 
-### Vue principale : `index.blade.php`
+#### Vue finale : **`index.blade.php`** ( _Version Tailwind_ )
 
 :::note Emplacement Fichier
 **`resources/views/tasks/index.blade.php`**
 :::
 
 ```html
-@extends('layouts.app') @section('content')
+@extends('layouts.app') @section('title', 'Gestion des Tâches')
+@section('content')
 <div class="max-w-4xl mx-auto px-6">
-    <!-- Messages de succès -->
-    @if(session('success'))
-    <div
-        class="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg"
-        x-data="{ show: true }"
-        x-show="show"
-        x-transition
-    >
-        {{ session('success') }}
-        <button
-            @click="show = false"
-            class="ml-2 text-green-500 hover:text-green-700"
-        >
-            &times;
-        </button>
-    </div>
-    @endif
-
     <!-- Formulaire d'ajout -->
-    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+    <section class="bg-white rounded-lg shadow-md p-6 mb-6">
         <h2 class="text-xl font-semibold mb-4">➕ Ajouter une tâche</h2>
 
         <form action="{{ route('tasks.store') }}" method="POST">
@@ -363,13 +632,13 @@ _**tasks** est un dossier créé manuellement._
                 type="submit"
                 class="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
             >
-                💾 Enregistrer la tâche
+                Enregistrer la tâche
             </button>
         </form>
-    </div>
+    </section>
 
     <!-- Statistiques simples -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div class="bg-white p-4 rounded-lg shadow text-center">
             <div class="text-2xl font-bold text-blue-600">
                 {{ $tasks->count() }}
@@ -388,10 +657,10 @@ _**tasks** est un dossier créé manuellement._
             </div>
             <div class="text-gray-600">En cours</div>
         </div>
-    </div>
+    </section>
 
     <!-- Liste des tâches -->
-    <div class="bg-white rounded-lg shadow-md">
+    <section class="bg-white rounded-lg shadow-md">
         <div class="p-4 border-b">
             <h2 class="text-xl font-semibold">
                 📋 Mes Tâches ({{ $tasks->count() }})
@@ -399,7 +668,7 @@ _**tasks** est un dossier créé manuellement._
         </div>
 
         @forelse($tasks as $task)
-        <div
+        <article
             class="p-4 border-b last:border-b-0 hover:bg-gray-50 transition-colors"
         >
             <div class="flex items-center justify-between">
@@ -409,6 +678,7 @@ _**tasks** est un dossier créé manuellement._
                     >
                         {{ $task->title }}
                     </h3>
+
                     @if($task->description)
                     <p
                         class="text-sm text-gray-600 mt-1 {{ $task->completed ? 'line-through' : '' }}"
@@ -416,6 +686,7 @@ _**tasks** est un dossier créé manuellement._
                         {{ $task->description }}
                     </p>
                     @endif
+
                     <p class="text-xs text-gray-400 mt-2">
                         Créée {{ $task->created_at->diffForHumans() }}
                     </p>
@@ -454,7 +725,7 @@ _**tasks** est un dossier créé manuellement._
                     </form>
                 </div>
             </div>
-        </div>
+        </article>
         @empty
         <div class="p-8 text-center text-gray-500">
             <div class="text-4xl mb-4">📝</div>
@@ -464,12 +735,36 @@ _**tasks** est un dossier créé manuellement._
             </p>
         </div>
         @endforelse
-    </div>
+    </section>
 </div>
 @endsection
 ```
 
-## Compréhension via un diagramme de séquence
+### Récapitulatif de la Progression
+
+```mermaid
+---
+config:
+  theme: 'neutral'
+---
+graph LR
+    A[1 - HTML Simple] --> B[2 - Layout Blade]
+    B --> C[3 - Structure Sémantique]
+    C --> D[4 - Tailwind CSS]
+```
+
+:::tip Approche Step by Step réussie
+Nous avons créé notre interface en 4 étapes logiques :
+
+-   ✅ Fonctionnalité d'abord ( _HTML brut_ )
+-   ✅ Structure avec Layout Blade
+-   ✅ Sémantique HTML5 claire
+-   ✅ Style moderne avec Tailwind CSS
+
+Cette approche progressive permet de comprendre chaque couche avant d'ajouter la réactivité !
+:::
+
+## **Compréhension via un diagramme de séquence**
 
 _Pour bien comprendre ce qu'il se passe, voici un diagramme de séquence proposé afin d'analyser chaque étape et surtout permettre de comprendre
 ce qu'il se passe en arrière plan._
