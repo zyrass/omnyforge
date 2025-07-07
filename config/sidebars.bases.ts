@@ -16,6 +16,7 @@ const sidebars: SidebarsConfig = {
     basesSidebar: [
         'preambule',
         'introduction',
+        'principes-solid',
         {
             type: 'category',
             label: 'Outils de base',
