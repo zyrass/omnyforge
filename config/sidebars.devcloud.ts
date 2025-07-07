@@ -24,23 +24,24 @@ const sidebars: SidebarsConfig = {
                     label: 'TALL',
                     items: [
                         'stacks/tall/presentation',
+                        'stacks/tall/installation',
                         {
                             type: 'category',
-                            label: 'Apprentissage Progressif',
+                            label: 'TodoList',
                             items: [
-                                'stacks/tall/apprentissage-progressif/feuille-de-route',
-                                'stacks/tall/apprentissage-progressif/fondations',
-                                'stacks/tall/apprentissage-progressif/interface-laravel-avec-vues',
+                                'stacks/tall/todolist/feuille-de-route',
+                                'stacks/tall/todolist/fondations',
+                                'stacks/tall/todolist/interface-laravel-avec-vues',
                                 {
                                     type: 'category',
                                     label: 'Étape 3 - Réactivité',
                                     items: [
-                                        'stacks/tall/apprentissage-progressif/etape3/livewire-pur',
-                                        'stacks/tall/apprentissage-progressif/etape3/alpinejs-pur',
-                                        'stacks/tall/apprentissage-progressif/etape3/hybrid',
+                                        'stacks/tall/todolist/etape3/livewire-pur',
+                                        'stacks/tall/todolist/etape3/alpinejs-pur',
+                                        'stacks/tall/todolist/etape3/hybrid',
                                     ],
                                 },
-                                'stacks/tall/apprentissage-progressif/production',
+                                'stacks/tall/todolist/production',
                                 // {
                                 //     type: 'category',
                                 //     label: 'Bonus - Authentification',
