@@ -184,19 +184,24 @@ public function destroy(Task $task)
 ```mermaid
 ---
 config:
-  theme: 'neutral'
+    theme: 'neutral'
 ---
-graph LR
-    A["Client Web (Navigateur)"] --> B{Routes}
+graph TB
+    A["Client Web ( <em>Navigateur</em> )"] --> B{Routes}
     B -->|GET| C["TaskController@index"]
     B -->|POST| D["TaskController@store"]
     B -->|PATCH| E["TaskController@toggle"]
     B -->|DELETE| F["TaskController@destroy"]
 
-    C -->|Afficher| G["Vue tasks.index"]
-    D -->|Créer| H["Nouvelle Tâche"]
-    E -->|Basculer| I["État Tâche"]
-    F -->|Supprimer| J["Tâche"]
+    C -->|<em>Méthode</em>| INDEX["<strong>index()</strong>"]
+    D -->|<em>Méthode</em>| STORE["<strong>store()</strong>"]
+    E -->|<em>Méthode</em>| TOGGLE["<strong>toggle()</strong>"]
+    F -->|<em>Méthode</em>| DESTROY["<strong>destroy()</strong>"]
+
+    INDEX -->|Afficher| G["Vue tasks.index"]
+    STORE -->|Créer| H["Nouvelle Tâche"]
+    TOGGLE -->|Basculer| I["État Tâche"]
+    DESTROY -->|Supprimer| J["Tâche"]
 
     style B fill:#e3e3f3
     style G fill:#e3f3e3

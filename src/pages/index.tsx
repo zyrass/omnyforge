@@ -6,6 +6,8 @@ import Layout from '@theme/Layout';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import Heading from '@theme/Heading';
 
+import MyImage from '../components/MyImage';
+
 import styles from './index.module.css';
 
 function HomepageHeader() {
@@ -13,49 +15,60 @@ function HomepageHeader() {
     return (
         <header className={clsx('hero hero--primary', styles.heroBanner)}>
             <div className="container">
+                <MyImage
+                    src="img/logo-omnyforge-dark.svg"
+                    alt="logo Omnyforge"
+                />
                 <Heading as="h1" className="hero__title">
                     {siteConfig.title}
                 </Heading>
                 <p className="hero__subtitle">
                     {siteConfig.tagline}
 
-                    <hr />
-
-                    <small>
-                        <em>
-                            Cette documentation est rédigée intégralement en{' '}
-                            <strong>français</strong> pour renforcer l’
-                            <strong>accessibilité</strong>,
-                            <br /> la <strong>souveraineté numérique</strong> et
-                            la pédagogie auprès des{' '}
-                            <strong>publics non anglophones</strong>.
+                    <small
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'start',
+                            flexWrap: 'wrap',
+                            borderLeft: '5px solid grey',
+                            paddingLeft: '20px',
+                            margin: '40px 10px',
+                            color: 'lightgrey',
+                        }}
+                    >
+                        <em style={{ textAlign: 'left' }}>
+                            Documentation technique et pédagogique intégralement
+                            rédigée en&nbsp;<strong>français</strong> afin de
+                            démocratiser l'accès aux technologies avancées,
+                            renforcer l'écosystème francophone de l'innovation
+                            numérique et contribuer concrètement à la{' '}
+                            <strong>souveraineté numérique</strong> par
+                            l'inclusion des publics non anglophones.
                         </em>
                     </small>
-
-                    <hr />
                 </p>
                 <br />
                 <div
                     className={styles.buttons}
-                    style={{ display: 'flex', gap: '20px' }}
+                    style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}
                 >
                     <Link
                         className="button button--secondary button--lg"
                         to="bases-fondamentales/preambule"
                     >
-                        Savoir être
+                        Préambule
                     </Link>
                     <Link
                         className="button button--secondary button--lg"
                         to="/bases-fondamentales/introduction"
                     >
-                        Fondamentaux indispensable
+                        Fondamentaux techniques
                     </Link>
                     <Link
                         className="button button--secondary button--lg"
                         to="/glossaire-it/introduction"
                     >
-                        Glossaire IT
+                        Référentiel terminologique
                     </Link>
                 </div>
             </div>

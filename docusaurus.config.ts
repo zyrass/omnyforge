@@ -16,7 +16,7 @@ try {
 const config: Config = {
     title: 'OmnyForge',
     tagline:
-        'J’apprends sans relâche pour mieux transmettre. Ici, chaque ligne de savoir est une clé pour progresser.',
+        "Laboratoire d'expertise technique où l'apprentissage continu forge des solutions durables et innovantes.",
     favicon: 'img/favicon.ico',
 
     // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
@@ -163,21 +163,21 @@ const config: Config = {
                     sidebarId: 'infrastructureSidebar',
                     docsPluginId: 'infrastructure',
                     position: 'left',
-                    label: 'Infrastructure (Système + Réseau + IaC)',
+                    label: 'Infrastructure & Automatisation',
                 },
                 {
                     type: 'docSidebar',
                     sidebarId: 'devCloudSidebar',
                     docsPluginId: 'devcloud',
                     position: 'left',
-                    label: 'Développements & Cloud (+ CI/CD)',
+                    label: 'Développement & Écosystème Cloud',
                 },
                 {
                     type: 'docSidebar',
                     sidebarId: 'cyberDevSecOpsSidebar',
                     docsPluginId: 'cyber-devsecops',
                     position: 'left',
-                    label: 'Cybersécurité (+ DevSecOps)',
+                    label: 'Cybersécurité & DevSecOps',
                 },
 
                 {
