@@ -149,8 +149,8 @@ const Dyma = () => {
                                 c’est l’un de mes alliés incontournables
                             </strong>
                             dans mon parcours de développeur. Je m’y suis
-                            inscrit le <strong>2 juillet 2025</strong>, et
-                            depuis, j’y ai tellement appris que j’ai pu
+                            inscrit le <strong>12 août 2019</strong>, et depuis,
+                            j’y ai tellement appris que j’ai pu
                             <strong>
                                 obtenir ma certification de Développeur
                                 Fullstack avec les félicitations du jury
