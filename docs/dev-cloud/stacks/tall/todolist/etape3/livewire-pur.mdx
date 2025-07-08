@@ -1,26 +1,36 @@
-# Livewire Pur
+# 🟢 - Livewire pur
 
-:::danger A prendre en considération immédiatement
-**Parcours Livewire ( _Recommandé pour débuter_ 🟢 )** - Livewire = _Réactivité côté serveur_
+:::tip A prendre en considération immédiatement
+**Parcours Livewire ( _Recommandé pour débuter_ 🟢 )**<br />
+**Livewire** = _Réactivité côté serveur_
 :::
 
-## Qu'est-ce que Livewire ?
+## **Qu'est-ce que Livewire ?**
 
-**Livewire** est un framework full-stack pour Laravel qui rend la création d'interfaces dynamiques simple sans écrire de JavaScript.<br />
-Voici ses principes clés :
+**Livewire** est un **framework fullstack** pour Laravel.<br />
+Il rend la création d'interfaces dynamiques simple **sans écrire de JavaScript**.<br />
 
--   **Composants réactifs** : _Mise à jour automatique de l'interface._
--   **Logique côté serveur** : _Toute la logique métier reste en PHP._
--   **Pas de JavaScript** : _Livewire gère les interactions automatiquement._
--   **Sécurité intégrée** : _Validation et autorisation côté serveur._
+**Voici ses principes clés :**
 
-## Évolution Naturelle
+-   **Composants réactifs**<br />
+    _Mise à jour automatique de l'interface._
+
+-   **Logique côté serveur**<br />
+    _Toute la logique métier reste en PHP._
+
+-   **Pas de JavaScript**<br />
+    _Livewire gère les interactions automatiquement._
+
+-   **Sécurité intégrée**<br />
+    _Validation et autorisation côté serveur._
+
+## **Évolution Naturelle**
 
 ```mermaid
 ---
 title: Progression & Prochaines Étapes
 config:
-  theme: 'neutral'
+    theme: 'neutral'
 ---
 graph LR
 A[<b>Application Laravel</b>] -.-> |Challenge| B["Rechargements de page"]
@@ -31,37 +41,44 @@ style C fill:#e3e3f3
 style F fill:#e3f3e3
 ```
 
-_Maintenant que je maîtrise Laravel classique, je vais ajouter la magie Livewire pour éliminer les rechargements de page qui nuise
+_Maintenant que nous maîtrisons Laravel classique, nous allons ajouter la magie Livewire pour éliminer les rechargements de page qui nuise
 très clairement à l'utilisation de cette application tout en gardant la logique côté serveur._
 
-## Installation de Livewire
+## **Installation de Livewire**
+
+> Nous allons utiliser **Composer** pour récupérer la dépendance **livewire**.
 
 ```bash
 # Installation de Livewire via Composer
 composer require livewire/livewire
 ```
 
-## Mon Premier Composant Livewire
+## **Mon Premier Composant Livewire**
+
+> Nous allons ici utiliser notre compagnon d'avanture **Artisan** pour créer le composant **TaskManager** qui sera dédié aux tâches.
 
 ```bash
 # Création d'un composant Livewire dédié aux tâches
 php artisan make:livewire TaskManager
 ```
 
-:::note Fichiers créés
+:::note Fichiers créés automatiquement
 
 -   Composant : **`app/Livewire/TaskManager.php`**
 -   Vue : **`resources/views/livewire/task-manager.blade.php`**
 
 :::
 
-## Composant Livewire Complet
+### Découverte du composant **`TaskManager`**
 
 :::note Emplacement Fichier
 **`app/Livewire/TaskManager.php`**
 :::
 
-### Structure du fichier
+### Structure du fichier généré
+
+> Ci dessous nous avons le code généré, nous avons implémenté un commentaire pour expliquer où positionner toutes les méthodes
+> que l'on va créer.
 
 ```php
 <?php
@@ -77,7 +94,12 @@ class TaskManager extends Component
 }
 ```
 
+## **Implémentation des attributs & méthodes**
+
 ### Attributs publiques
+
+> Nous définissons les propriétés qui seront utilisées dans notre application. L'**encapsulation** est défini sur public permettant ainsi
+> d'être accessible en dehors de la classe.
 
 ```php
 // Propriétés publiques automatiquement synchronisées avec la vue
@@ -88,24 +110,28 @@ public $search = '';
 public $filter = 'all'; // all, completed, pending
 ```
 
-:::info Premier & dernier rappel
-_C'est à implémenter dans le fichier **TaskManager** comme mentionné dans la structure du fichier._
+:::warning Premier & dernier rappel
+_C'est à implémenter dans le fichier **TaskManager**, comme mentionné dans la structure du fichier._
 :::
 
 ### Règles de validation
 
+> Pour sécuriser notre application, nous allons définir des règles selon certaines propriétés.
+
 ```php
 // Règles de validation
 protected $rules = [
-    'title' => 'required|min:3|max:255',
-    'description' => 'nullable|max:500'
+    'title' => 'required|min:3|max:255', // Requis, minimum 3 caractères et maximum 255 caractères
+    'description' => 'nullable|max:500'  // Peut-être null et maximum 500 caractères
 ];
 ```
 
 ### Messages personnalisés
 
+> Après avoir définit des règles, il est impératif de franciser les messages d'erreur qui seront générés.
+
 ```php
-// Messages personnalisés
+// Messages personnalisés qui sera utilisé dans les messages flash
 protected $messages = [
     'title.required' => 'Le titre est obligatoire.',
     'title.min' => 'Le titre doit contenir au moins 3 caractères.',
@@ -113,6 +139,8 @@ protected $messages = [
     'description.max' => 'La description ne peut pas dépasser 500 caractères.'
 ];
 ```
+
+:::danger A Expliquer mieux que ça
 
 ### Validation en temps réel
 
@@ -124,7 +152,12 @@ public function updated($propertyName)
 }
 ```
 
+:::
+
 ### Méthode `addTask()`
+
+> Nous allons créer la méthode **`addTask()`** afin d'ajouter une nouvelle tâche.<br />
+> Celle-ci sera appelé par **`wire:submit`** au niveau du formulaire HTML.
 
 ```php
 // Ajouter une nouvelle tâche - Méthode appelée par wire:submit
@@ -145,15 +178,22 @@ public function addTask()
 }
 ```
 
+:::info à quoi correspond exactement Task::create ?
+Rappelez-vous, nous avons créé un **Modèle Task**, dans ce modèle nous avions parrallèlement un fichier de **migration** qui comportait deux
+méthodes, La méthode **`create()`** celle qui est utilisée ici et la méthode **down()**.<br />
+
+La méthode **`create()`** permet donc, d'enregistrer les données dans notre base de données.
+:::
+
 ### Méthode `toggleTask()`
 
-_Permet de faire basculer l'état d'une tâche vers l'état opposé à celui actuellement sélectionné._
+> Nous allons permettre de faire basculer l'état d'une tâche vers son état opposé à celui actuellement sélectionné.
 
 ```php
 // Basculer l'état d'une tâche
 public function toggleTask($taskId)
 {
-    $task = Task::find($taskId);
+    $task = Task::find($taskId); // Recherche dans la base de données si l'ID de la tâche existe.
     if ($task) {
         $task->update(['completed' => !$task->completed]);
         session()->flash('message', 'Tâche mise à jour !');
@@ -163,13 +203,13 @@ public function toggleTask($taskId)
 
 ### Méthode `deleteTask()`
 
-_Permet de supprimer une tâche sélectionnée._
+> Nous allons permettre maintenant de pouvoir supprimer une tâche sélectionnée.
 
 ```php
 // Supprimer une tâche
 public function deleteTask($taskId)
 {
-    $task = Task::find($taskId);
+    $task = Task::find($taskId); // Recherche dans la base de données si l'ID de la tâche existe.
     if ($task) {
         $task->delete();
         session()->flash('message', 'Tâche supprimée !');
@@ -179,24 +219,40 @@ public function deleteTask($taskId)
 
 ### Méthode `editTask()`
 
-_Permet d'éditer une tâche sélectionnée._
+> Nous allons permettre d'éditer une tâche sélectionnée.
 
 ```php
 // Démarrer l'édition d'une tâche
 public function editTask($taskId)
 {
-    $task = Task::find($taskId);
+    $task = Task::find($taskId);  // Recherche dans la base de données si l'ID de la tâche existe.
     if ($task) {
-        $this->editingTask = $task->id;
+        $this->editingTask = $task->id; // passe de null à l'identifiant de la tâche en cours.
         $this->title = $task->title;
         $this->description = $task->description ?? '';
     }
 }
 ```
 
+### Méthode `cancelEdit()`
+
+> Nous allons permettre d'annuler l'édition d'une tâche sélectionnée.
+
+```php
+// Annuler l'édition
+public function cancelEdit()
+{
+    $this->reset(['title', 'description', 'editingTask']);
+}
+```
+
+:::note
+_Cette méthode est créé en amont de la méthode **`updateTask()`** qui arrive juste après car celle-ci sera exploitée._
+:::
+
 ### Méthode `updateTask()`
 
-_Permet de mettre à jour une tâche sélectionnée._
+> Nous allons permettre de mettre à jour une tâche sélectionnée.
 
 ```php
 // Mettre à jour une tâche
@@ -204,7 +260,9 @@ public function updateTask()
 {
     $this->validate();
 
+    // Nous recherchons l'identifiant de la tâche spécifique qui a été stocké dans editingTask.
     $task = Task::find($this->editingTask);
+
     if ($task) {
         $task->update([
             'title' => $this->title,
@@ -217,21 +275,9 @@ public function updateTask()
 }
 ```
 
-### Méthode `cancelEdit()`
-
-_Permet d'annuler l'édition d'une tâche sélectionnée._
-
-```php
-// Annuler l'édition
-public function cancelEdit()
-{
-    $this->reset(['title', 'description', 'editingTask']);
-}
-```
-
 ### Méthode `resetFilters()`
 
-_Permet de réinitialiser les filtres._
+> Nous allons permettre de réinitialiser les filtres qui auront été utilisées.
 
 ```php
 // Réinitialiser les filtres
@@ -241,11 +287,26 @@ public function resetFilters()
 }
 ```
 
-### Qu'est-ce qu'une `Computed Property`
+### Méthode `render()`
 
-:::warning Fondamentaux pour comprendre la suite
-Une **Computed Property** est une **propriété calculée dynamiquement** qui se comporte comme une variable normale,
-mais qui est en fait le résultat d'une méthode.
+> Nous allons permettre de renvoyer la vue du composant.
+
+```php
+// Rendu du composant
+public function render()
+{
+    return view('livewire.task-manager');
+}
+```
+
+_Nous allons découvrir maintenant **les propriétés calculées.**_
+
+## **Qu'est-ce qu'une `Computed Property`**
+
+:::note Fondamentaux pour comprendre la suite
+_Une **Computed Property** est une **propriété calculée dynamiquement** qui se comporte comme une variable normale,
+mais qui est en fait le résultat d'une autre méthode._
+:::
 
 #### Convention de nommage magique
 
@@ -262,23 +323,16 @@ public function getTasksProperty()  // ← Méthode avec "get" + "Tasks" + "Prop
 
 #### Placement dans le code
 
-**TOUT se place dans le fichier `TaskManager.php`** - pas dans la vue **HTML** !
+**TOUT ce code se positionne dans le fichier `TaskManager.php`** à la suite des méthodes déjà créés. C'est simple et concret !
+
+:::danger Retenez ceci
+La ligne de code **`return Task::latest()->get();`** sera à remplacée par une version amélioré avec la prise en compte des filtres.
 
 :::
-
-:::danger Important
-La ligne de code **`return Task::latest()->get();`** sera à remplacée par la version avec la prise en compte des filtres.
-
-:::
-
-#### Ordre d'exécution
-
-1. `getTasksProperty()` → Récupère les tâches filtrées
-2. `getStatsProperty()` → Utilise `$this->tasks` (donc appelle getTasksProperty())
 
 ### Méthode `getTasksProperty()`
 
-_Permet d'utiliser **Computed property** pour les filtres._
+> Nous allons permettre d'utiliser les propriétés calculées **`Computed property`** sur les filtres.
 
 ```php
 // Computed property pour les tâches filtrées
@@ -295,7 +349,7 @@ public function getTasksProperty()
 
 ### Méthode `getStatsProperty()`
 
-_Permet d'utiliser **Computed property** pour les statistiques._
+> Nous allons permettre d'utiliser les propriétés calculées **`Computed property`** pour obtenir des statistiques dynamiques.
 
 ```php
 // Computed property pour les statistiques
@@ -314,19 +368,52 @@ public function getStatsProperty()
 }
 ```
 
-### Méthode `render()`
+### Ordre d'exécution
 
-_Permet de renvoyer la vue du composant._
+1. `getTasksProperty()` → Récupère les tâches filtrées
+2. `getStatsProperty()` → Utilise `$this->tasks` (donc appelle getTasksProperty())
+
+### Positionnement logiques des méthodes
+
+:::info Logique
+Nous avons traités les méthodes classique suivie des méthodes calculée.
+La dernière méthode classique correspond à la méthode qui retourne la vue à l'utilisateur soit la méthode **`render()`**.
+
+L'idéal serait que la méthode **`render()`** soit la toute dernière.
+:::
+
+**Ce qui serait logiquement attendu**
 
 ```php
-// Rendu du composant
-public function render()
+<?php
+
+namespace App\Livewire;
+
+use App\Models\Task;
+use Livewire\Component;
+
+class TaskManager extends Component
 {
-    return view('livewire.task-manager');
+    // ... Toutes les méthodes classique ici ...
+
+    public function getTasksProperty()
+    {
+        // Le contenu de la méthode calculée.
+    }
+
+    public function getStatsProperty()
+    {
+        // Le contenu de la méthode calculée.
+    }
+
+    // Enfin nous terminerons par la méthode render
+    public function render() {
+        // le code permettant de retourner la vue.
+    }
 }
 ```
 
-## Concepts Clés Livewire
+## **Les fondamentaux de Livewire**
 
 :::danger Urgent
 Il est important de comprendre cette partie afin de pouvoir implémenter ce concept au fichier html.
@@ -334,12 +421,16 @@ Il est important de comprendre cette partie afin de pouvoir implémenter ce conc
 
 ### 1. Propriétés Publiques ( _TaskManager_ )
 
+> Déjà évoqué au début, l'encapsulation ici permet aux propriétés **public** d'être synchronisé avec la vue HTML.
+
 ```php
 public $title = '';  // Est automatiquement synchronisé avec la vue
 // etc...
 ```
 
 ### 2. Liaison de Données
+
+> Livewire c'est simple et magique, tout est à positionner dans le tag HTML concerné.
 
 ```html
 <!-- Mise à jour en temps réel -->
@@ -350,6 +441,8 @@ wire:model.blur="title"
 ```
 
 ### 3. Actions
+
+> Interraction possible ici.
 
 ```html
 <!-- Appel de méthode -->
@@ -374,10 +467,68 @@ wire:loading
 
 ### 5. Computed Properties
 
-Cette section pourrait juste faire référence à l'explication précédente
 Voir la section "**[Qu'est-ce qu'une Computed Property (cliquable)](introduction-livewire#quest-ce-quune-computed-property)**" ci-dessus.
+_Inutile d'êre redondant ici._
 
-## Vue Livewire Pure
+## **Layout pour Livewire**
+
+:::note Emplacement Fichier
+**`resources/views/layouts/app.blade.php`**
+:::
+
+```html
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>TALL Tasks - Livewire</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        @livewireStyles
+    </head>
+    <body class="bg-gray-100">
+        <div class="min-h-screen">
+            <!-- Header -->
+            <header class="bg-white shadow-sm border-b">
+                <div class="max-w-4xl mx-auto px-6 py-4">
+                    <div class="flex items-center justify-between">
+                        <h1 class="text-2xl font-bold text-gray-800">
+                            TALL Tasks
+                        </h1>
+                        <div class="flex items-center space-x-2">
+                            <span
+                                class="px-2 py-1 bg-blue-100 text-blue-800 rounded text-sm"
+                                >Tailwind ✓</span
+                            >
+                            <span
+                                class="px-2 py-1 bg-red-100 text-red-800 rounded text-sm"
+                                >Laravel ✓</span
+                            >
+                            <span
+                                class="px-2 py-1 bg-purple-100 text-purple-800 rounded text-sm"
+                                >Livewire ✓</span
+                            >
+                        </div>
+                    </div>
+                    <div class="mt-2 text-sm text-gray-600">
+                        Étape 3:
+                        <span class="text-purple-600 font-medium"
+                            >Réactivité Livewire ⚡</span
+                        >
+                    </div>
+                </div>
+            </header>
+
+            <!-- Contenu principal -->
+            <main class="py-8">{{ $slot }}</main>
+        </div>
+
+        @livewireScripts
+    </body>
+</html>
+```
+
+## **Vue Livewire Pure**
 
 :::note Emplacement Fichier
 **`resources/views/livewire/task-manager.blade.php`**
@@ -663,65 +814,7 @@ Voir la section "**[Qu'est-ce qu'une Computed Property (cliquable)](introduction
 </div>
 ```
 
-## Layout pour Livewire
-
-:::note Emplacement Fichier
-**`resources/views/layouts/app.blade.php`**
-:::
-
-```html
-<!DOCTYPE html>
-<html lang="fr">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>TALL Tasks - Livewire</title>
-        <script src="https://cdn.tailwindcss.com"></script>
-        @livewireStyles
-    </head>
-    <body class="bg-gray-100">
-        <div class="min-h-screen">
-            <!-- Header -->
-            <header class="bg-white shadow-sm border-b">
-                <div class="max-w-4xl mx-auto px-6 py-4">
-                    <div class="flex items-center justify-between">
-                        <h1 class="text-2xl font-bold text-gray-800">
-                            TALL Tasks
-                        </h1>
-                        <div class="flex items-center space-x-2">
-                            <span
-                                class="px-2 py-1 bg-blue-100 text-blue-800 rounded text-sm"
-                                >Tailwind ✓</span
-                            >
-                            <span
-                                class="px-2 py-1 bg-red-100 text-red-800 rounded text-sm"
-                                >Laravel ✓</span
-                            >
-                            <span
-                                class="px-2 py-1 bg-purple-100 text-purple-800 rounded text-sm"
-                                >Livewire ✓</span
-                            >
-                        </div>
-                    </div>
-                    <div class="mt-2 text-sm text-gray-600">
-                        Étape 3:
-                        <span class="text-purple-600 font-medium"
-                            >Réactivité Livewire ⚡</span
-                        >
-                    </div>
-                </div>
-            </header>
-
-            <!-- Contenu principal -->
-            <main class="py-8">{{ $slot }}</main>
-        </div>
-
-        @livewireScripts
-    </body>
-</html>
-```
-
-## Route Simplifiée
+## **Route Simplifiée**
 
 :::note Emplacement Fichier
 **`routes/web.php`**
@@ -735,7 +828,7 @@ use App\Livewire\TaskManager;
 Route::get('/', TaskManager::class);
 ```
 
-## Diagramme de Séquence Livewire
+## **Diagramme de Séquence Livewire**
 
 ```mermaid
 ---
@@ -770,7 +863,7 @@ sequenceDiagram
     L-->>U: DOM mis à jour (sans rechargement)
 ```
 
-## Avantages de Livewire
+## **Avantages de Livewire**
 
 -   ✅ **Simplicité** : _Pas besoin d'API ou de JavaScript complexe._
 -   ✅ **Sécurité** : _Validation et logique côté serveur._
