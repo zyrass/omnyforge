@@ -31,7 +31,7 @@ const sidebars: SidebarsConfig = {
                             items: [
                                 'stacks/tall/todolist/feuille-de-route',
                                 'stacks/tall/todolist/fondations',
-                                'stacks/tall/todolist/interface-laravel-avec-vues',
+                                'stacks/tall/todolist/interface-laravel',
                                 {
                                     type: 'category',
                                     label: 'Étape 3 - Réactivité',
