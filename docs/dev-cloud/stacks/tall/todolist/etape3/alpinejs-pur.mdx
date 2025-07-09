@@ -5,17 +5,25 @@
 **Alpine.js** = _Réactivité côté client_
 :::
 
-## Qu'est-ce qu'Alpine.js ?
+:::note
+_Pour cette partie et apprendre à utiliser Alpine.js, **vous pouvez recréer un projet** avec **tasks-alpine** comme nom._<br />
+_Nous ne le ferons pas ici, mais c'est tout à fait louable et surtout, ça vous fera pratiquer ce qui a déjà été vu auparavant._
+:::
 
-**Alpine.js** est un framework JavaScript minimaliste qui apporte la réactivité directement dans le HTML sans
-la complexité de frameworks lourds. Voici ses principes clés :
+## **Qu'est-ce qu'Alpine.js ?**
+
+**Alpine.js** est un **framework JavaScript minimaliste** qui apporte la réactivité directement dans le HTML sans la complexité de frameworks
+lourds comme React ou Vue.js. Il constitue une alternative moderne pour créer des interfaces interactives tout en conservant la simplicité
+d'utilisation.
+
+**Voici ses principes clés :**
 
 -   **Léger et performant** : _Seulement **~15KB minifié**, idéal pour les performances._
--   **Déclaratif** : _Logique directement dans le **HTML**, syntaxe **intuitive**._
--   **Réactif** : _Mises à jour automatiques de l'interface côté client._
--   **Sans compilation** : _Pas de build step, fonctionne directement dans le navigateur._
+-   **Déclaratif** : _Logique directement intégrée dans le **HTML** avec une syntaxe **intuitive**._
+-   **Réactif** : _Mises à jour automatiques de l'interface utilisateur côté client._
+-   **Sans compilation** : _Fonctionnement direct dans le navigateur sans étape de build._
 
-## Évolution Naturelle
+## **Évolution Naturelle**
 
 ```mermaid
 ---
@@ -23,7 +31,7 @@ title: Progression & Prochaines Étapes
 config:
   theme: 'neutral'
 ---
-graph LR
+graph TB
 A[<b>Application Laravel</b>] -.-> |Challenge| B["Interactions basiques"]
 C[<b>Solution Alpine.js</b>] -.-> |Apporte|D[Réactivité client] --> |Permet| E[Interactions riches] -.-> |Offre| F[UX moderne]
 
@@ -32,31 +40,85 @@ style C fill:#e3e3f3
 style F fill:#e3f3e3
 ```
 
-_Maintenant que je maîtrise Laravel classique, je vais ajouter Alpine.js pour créer des interactions fluides côté client,
-sans la complexité de frameworks comme React ou Vue, tout en gardant la logique côté client._
+_Maintenant que nous maîtrisons Laravel classique, nous allons ajouter Alpine.js pour créer des interactions fluides côté client. Cette
+approche nécessite une architecture différente de Livewire, car la logique s'exécute entièrement dans le navigateur et communique avec le
+serveur via des API REST._
 
-## Différence avec Livewire
+## **Différence Fondamentale avec Livewire**
 
-Contrairement à Livewire qui traite tout côté serveur, Alpine.js fonctionne **entièrement côté client**.<br />
-Cela nécessite donc de créer une **API REST** pour communiquer avec Laravel.
+### Architecture Comparative
 
-## Création de l'API Laravel
+L'approche Alpine.js diffère radicalement de Livewire dans sa philosophie d'exécution. Cette différence architecturale influence
+directement la manière dont nous structurons notre application.
+
+**Livewire - Approche Serveur**
+
+-   Logique métier exécutée côté serveur
+-   Communication via requêtes AJAX automatiques
+-   Validation et sécurité intégrées côté serveur
+-   Pas d'API REST nécessaire
+
+**Alpine.js - Approche Client**
+
+-   Logique métier exécutée côté client
+-   Communication via API REST explicite
+-   Validation côté client ET serveur
+-   Nécessite la création d'endpoints API
+
+### Diagramme Architectural
+
+```mermaid
+---
+config:
+    theme: 'neutral'
+---
+flowchart LR
+    subgraph Livewire["Livewire Architecture"]
+        direction LR
+        L1[Composant Livewire] -.-> L2[Requêtes AJAX]
+        L2 -.-> L3[Serveur Laravel]
+        L3 -.-> L4[Base de données]
+    end
+
+    subgraph Alpine["Alpine.js Architecture"]
+        direction LR
+        A1[Composant Alpine.js] -.-> A2[API REST]
+        A2 -.-> A3[Contrôleur API]
+        A3 -.-> A4[Base de données]
+    end
+
+    style Livewire fill:#e3e3f3
+    style Alpine fill:#e3f3e3
+```
+
+Cette distinction architecturale nécessite de créer une **API REST complète** pour permettre la communication entre
+le **frontend Alpine.js** et le **backend Laravel**.
+
+## **Création de l'API Laravel**
+
+> La création d'un contrôleur API dédié constitue **la première étape** pour établir la communication entre **Alpine.js** et **Laravel**.
+> Ce contrôleur diffère des contrôleurs web classiques par sa spécialisation dans les réponses JSON.
 
 ### Contrôleur API
 
 ```bash
-# Créer le contrôleur API
+# Créer le contrôleur API avec toutes les méthodes REST
 php artisan make:controller Api/TaskController --api
 ```
 
-:::note Fichier créé
+:::info
+Cette commande génère automatiquement **un contrôleur optimisé pour les API REST** avec les méthodes **index**, **store**, **show**,
+**update** et **destroy** de pré-configurées.
+:::
+
+:::note Fichier créé automatiquement
 Contrôleur API : **`app/Http/Controllers/Api/TaskController.php`**
 :::
 
 ### Structure du contrôleur API
 
-:::note Emplacement Fichier
-**`app/Http/Controllers/Api/TaskController.php`**
+:::note Emplacement Fichier utilisé ici
+Contrôleur API : **`app/Http/Controllers/Api/TaskController.php`**
 :::
 
 ```php
@@ -70,29 +132,46 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    // Toutes les méthodes qui suivent doivent être implémentées ici
+    // Toutes les méthodes API seront implémentées ici
 }
 ```
+
+_Le contrôleur API hérite du contrôleur de base mais se spécialise dans **la gestion des requêtes HTTP** et **la création de réponses JSON**
+structurées pour la consommation par Alpine.js._
+
+## **Implémentation des Méthodes API**
 
 ### Méthode `index()`
 
-_Récupère toutes les tâches au format JSON._
+_La méthode **`index()`** constitue le point d'entrée principal pour récupérer la liste complète des tâches.
+**Elle retourne les données au format JSON avec les codes de statut HTTP appropriés**._
 
 ```php
-// Récupérer toutes les tâches
+// Récupérer toutes les tâches au format JSON
 public function index()
 {
     $tasks = Task::latest()->get();
-    return response()->json($tasks);
+
+    return response()->json([
+        'data' => $tasks,
+        'message' => 'Tâches récupérées avec succès'
+    ], 200);
+
+    // Sans message flash
+    // return response()->json($tasks);
 }
 ```
 
+Cette méthode utilise la méthode **`latest()`** d'**Eloquent** ( _ORM - Object Relationnal Mapping_ ) pour trier les tâches par
+**date de création décroissante**, garantissant que les tâches les plus récentes apparaissent en premier dans l'interface utilisateur.
+
 ### Méthode `store()`
 
-_Crée une nouvelle tâche via l'API._
+_La méthode **`store()`** gère la création de nouvelles tâches via des **requêtes POST**.
+**Elle intègre la validation des données** et retourne la tâche créée avec un code de statut **HTTP 201**._
 
 ```php
-// Créer une nouvelle tâche
+// Créer une nouvelle tâche via l'API REST
 public function store(Request $request)
 {
     $validated = $request->validate([
@@ -101,16 +180,27 @@ public function store(Request $request)
     ]);
 
     $task = Task::create($validated);
-    return response()->json($task, 201);
+
+    return response()->json([
+        'data' => $task,
+        'message' => 'Tâche créée avec succès'
+    ], 201);
+
+    // Sans message flash (qui pourrait énervé si c'est trop intrusif)
+    // return response()->json($task, 201);
 }
 ```
 
+**La validation s'effectue côté serveur** pour garantir la sécurité et la cohérence des données, même si **une validation préliminaire** peut
+être implémentée côté client avec Alpine.js.
+
 ### Méthode `update()`
 
-_Met à jour une tâche existante._
+_La méthode **`update()`** permet la modification des tâches existantes via des **requêtes PUT**.
+Elle utilise la liaison de modèle de Laravel pour récupérer automatiquement la tâche à modifier._
 
 ```php
-// Mettre à jour une tâche
+// Mettre à jour une tâche existante
 public function update(Request $request, Task $task)
 {
     $validated = $request->validate([
@@ -120,42 +210,64 @@ public function update(Request $request, Task $task)
     ]);
 
     $task->update($validated);
-    return response()->json($task);
+
+    return response()->json([
+        'data' => $task->fresh(),
+        'message' => 'Tâche mise à jour avec succès'
+    ], 200);
+
+    // Sans message
+    // return response()->json($task);
 }
 ```
 
+La méthode **`fresh()`** garantit que les données retournées reflètent l'état actuel de la tâche en base de données après la mise à jour.
+
 ### Méthode `destroy()`
 
-_Supprime une tâche._
+_La méthode **`destroy()`** gère la suppression des tâches via des **requêtes DELETE**.
+Elle retourne un message de confirmation sans données supplémentaires._
 
 ```php
-// Supprimer une tâche
+// Supprimer une tâche définitivement
 public function destroy(Task $task)
 {
     $task->delete();
-    return response()->json(['message' => 'Tâche supprimée avec succès']);
+
+    return response()->json([
+        'message' => 'Tâche supprimée avec succès'
+    ], 200);
 }
 ```
 
 ### Méthode `toggle()`
 
-_Bascule l'état d'une tâche._
+_La méthode **`toggle()`** représente une action personnalisée qui bascule l'état de complétion d'une tâche.
+Elle illustre comment créer des endpoints API spécialisés au-delà des opérations CRUD standard._
 
 ```php
-// Basculer l'état d'une tâche
+// Basculer l'état de complétion d'une tâche
 public function toggle(Task $task)
 {
     $task->update(['completed' => !$task->completed]);
-    return response()->json($task);
+
+    return response()->json([
+        'data' => $task->fresh(),
+        'message' => 'État de la tâche modifié avec succès'
+    ], 200);
+
+    // Sans message
+    // return response()->json($task);
 }
 ```
 
 ### Méthode `stats()`
 
-_Retourne les statistiques._
+_La méthode **`stats()`** fournit des statistiques calculées sur les tâches.
+Elle démontre comment créer des endpoints API pour des données agrégées._
 
 ```php
-// Statistiques
+// Calculer et retourner les statistiques des tâches
 public function stats()
 {
     $total = Task::count();
@@ -164,15 +276,31 @@ public function stats()
     $completionRate = $total > 0 ? round(($completed / $total) * 100) : 0;
 
     return response()->json([
-        'total' => $total,
-        'completed' => $completed,
-        'pending' => $pending,
-        'completion_rate' => $completionRate
-    ]);
+        'data' => [
+            'total' => $total,
+            'completed' => $completed,
+            'pending' => $pending,
+            'completion_rate' => $completionRate
+        ],
+        'message' => 'Statistiques calculées avec succès'
+    ], 200);
+
+    // Sans message
+    // return response()->json([
+    //     'total' => $total,
+    //     'completed' => $completed,
+    //     'pending' => $pending,
+    //     'completion_rate' => $completionRate
+    // ]);
 }
 ```
 
-## Routes API
+Cette méthode utilise des **requêtes Eloquent** optimisées pour calculer efficacement les statistiques nécessaires
+à l'affichage du tableau de bord.
+
+## **Configuration des Routes API**
+
+### Structure des Routes REST
 
 :::note Emplacement Fichier
 **`routes/api.php`**
@@ -185,47 +313,71 @@ use App\Http\Controllers\Api\TaskController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('tasks')->group(function () {
-    Route::get('/', [TaskController::class, 'index']);
-    Route::post('/', [TaskController::class, 'store']);
-    Route::put('/{task}', [TaskController::class, 'update']);
-    Route::delete('/{task}', [TaskController::class, 'destroy']);
-    Route::patch('/{task}/toggle', [TaskController::class, 'toggle']);
-    Route::get('/stats', [TaskController::class, 'stats']);
+    Route::get('/', [TaskController::class, 'index']);                  // GET /api/tasks
+    Route::post('/', [TaskController::class, 'store']);                 // POST /api/tasks
+    Route::put('/{task}', [TaskController::class, 'update']);           // PUT /api/tasks/{id}
+    Route::delete('/{task}', [TaskController::class, 'destroy']);       // DELETE /api/tasks/{id}
+    Route::patch('/{task}/toggle', [TaskController::class, 'toggle']);  // PATCH /api/tasks/{id}/toggle
+    Route::get('/stats', [TaskController::class, 'stats']);             // GET /api/tasks/stats
 });
 ```
 
-## Composant Alpine.js
+### Tableau de Correspondance des Routes
 
-### Qu'est-ce qu'un `Composant Alpine.js`
+| Méthode HTTP | Endpoint                   | Action  | Description                                        |
+| :----------: | -------------------------- | :-----: | -------------------------------------------------- |
+|   **GET**    | `/api/tasks`               |  index  | _Récupération de toutes les tâches._               |
+|   **GET**    | `/api/tasks`               |  stats  | _Récupération des statistiques._                   |
+|   **POST**   | `/api/tasks/\{id\}`        |  store  | _Création d'une nouvelle tâche._                   |
+|   **PUT**    | `/api/tasks/\{id\}`        | update  | _Mise à jour complète d'une tâche._                |
+|  **PATCH**   | `/api/tasks/\{id\}/toggle` | toggle  | _Basculement de l'état de complétion d'une tâche._ |
+|  **DELETE**  | `/api/tasks/\{id\}`        | destroy | _Suppression d'une tâche._                         |
 
-:::warning Fondamentaux pour comprendre la suite
-Un **Composant Alpine.js** est une **fonction JavaScript** qui retourne un objet contenant l'état et les méthodes de votre composant.
+Cette structure respecte les conventions **REST** et facilite la compréhension et la maintenance de l'API.
+
+## **Composant Alpine.js**
+
+### Qu'est-ce qu'un Composant Alpine.js
+
+:::info Fondamentaux pour comprendre la suite
+Un **Composant Alpine.js** est une fonction JavaScript qui retourne un objet contenant l'état réactif et les méthodes de votre composant.
+Cette approche diffère des frameworks comme **React** ou **Vue**.js en privilégiant la simplicité et l'intégration directe dans le HTML.
+:::
 
 #### Convention de nommage
 
+_Les composants Alpine.js suivent une convention de nommage **fonctionnelle** qui facilite leur identification et leur utilisation
+dans les **templates HTML**._
+
 ```javascript
-// Fonction composant
+// Fonction composant avec nommage descriptif
 function taskManager() {
     return {
-        // État réactif
+        // État réactif - Propriétés observées par Alpine.js
         tasks: [],
         loading: false,
 
-        // Méthodes
+        // Méthodes - Actions disponibles pour l'interface
         async addTask() {
-            /* ... */
+            /* Logique d'ajout de tâche */
+        },
+
+        async deleteTask(taskId) {
+            /* Logique de suppression */
         },
     };
 }
 ```
 
-#### Placement dans le code
+### Placement et Intégration
 
-**Le composant se place dans une balise `<script>` à la fin de la vue HTML** - après tout le contenu HTML !
+Le composant se place dans une balise **`<script>`** à la **fin du document HTML**, après tout le contenu de l'interface utilisateur.
+Cette approche **garantit que le DOM est entièrement chargé** avant l'initialisation d'Alpine.js.
 
-:::
+### Structure Complète du composant
 
-### Structure du composant
+_La structure du composant Alpine.js reflète l'architecture de l'application et organise l'état et les méthodes de manière logique
+et maintenable._
 
 ```javascript
 function taskManager() {
@@ -249,71 +401,111 @@ function taskManager() {
         message: '',
         errors: {},
 
-        // Méthodes - Toutes les fonctions ci-dessous vont ici
+        // Méthodes d'initialisation et gestion des données
+        // Toutes les méthodes seront implémentées ici
     };
 }
 ```
 
-:::info Premier & dernier rappel
-_Toutes les méthodes qui suivent doivent être implémentées dans l'objet retourné par la fonction **taskManager**._
+:::warning Premier et dernier rappel
+_Toutes les méthodes qui suivent doivent être implémentées dans l'objet retourné par la fonction **`taskManager()`**.<br />
+Cette structure garantit que l'état et les méthodes sont correctement encapsulés et accessibles par Alpine.js._
 :::
 
 ### Méthode `init()`
 
-_Méthode d'initialisation appelée automatiquement par Alpine.js._
+_La méthode **`init()`** constitue le point d'entrée du composant Alpine.js.
+Elle s'exécute automatiquement lors de l'initialisation du composant et configure l'état initial de l'application._
 
 ```javascript
-// Initialisation
+// Initialisation automatique du composant
 async init() {
     await this.loadTasks();
     await this.loadStats();
 },
 ```
 
+Cette méthode utilise **la programmation asynchrone** ( _async & await_ ) pour charger les données initiales sans bloquer l'interface
+utilisateur. L'ordre d'exécution **garantit que les tâches sont chargées avant le calcul des statistiques**.
+
 ### Méthode `loadTasks()`
 
-_Charge les tâches depuis l'API._
+_La méthode **`loadTasks()`** récupère la liste des tâches depuis l'API REST.
+Elle gère les erreurs de réseau et met à jour l'état du composant avec les données récupérées.._
 
 ```javascript
-// Charger les tâches
+// Chargement des tâches depuis l'API REST
 async loadTasks() {
     try {
+        this.loading = true;
         const response = await fetch('/api/tasks');
-        this.tasks = await response.json();
+
+        if (!response.ok) {
+            throw new Error('Erreur lors du chargement des tâches');
+        }
+
+        const loadingData = await response.json();
+        this.tasks = loadingData.data || [];
     } catch (error) {
+        console.error('Erreur:', error);
         this.showMessage('Erreur lors du chargement des tâches', 'error');
+    } finally {
+        this.loading = false;
     }
 },
 ```
 
+La gestion des erreurs inclut la vérification du statut HTTP et la capture des exceptions réseau pour fournir un feedback
+approprié à l'utilisateur.
+
 ### Méthode `loadStats()`
 
-_Charge les statistiques depuis l'API._
+_La méthode **`loadStats()`** récupère les statistiques calculées depuis l'API et met à jour l'affichage du tableau de bord._
 
 ```javascript
-// Charger les statistiques
+// Chargement des statistiques depuis l'API
 async loadStats() {
     try {
         const response = await fetch('/api/tasks/stats');
-        this.stats = await response.json();
+
+        if (!response.ok) {
+            throw new Error('Erreur lors du chargement des statistiques');
+        }
+
+        const statsData = await response.json();
+        this.stats = statsData.data || {};
     } catch (error) {
         console.error('Erreur lors du chargement des statistiques:', error);
+        // Les statistiques ne sont pas critiques, on continue sans message d'erreur
     }
 },
 ```
 
 ### Méthode `addTask()`
 
-_Ajoute une nouvelle tâche via l'API._
+_La méthode **`addTask()`** gère la création de nouvelles tâches via l'API REST.
+Elle inclut la validation côté client et la gestion des erreurs serveur._
 
 ```javascript
-// Ajouter une tâche
+
+
+        if (response.ok) {
+
+        } else {
+            const errors = await response.json();
+            this.errors = errors.errors || {};
+        }
+
+
+// Ajouter une tâche via l'API REST
 async addTask() {
+    // Validation côté client avant envoi
     if (!this.form.title.trim()) {
         this.errors.title = 'Le titre est obligatoire';
         return;
     }
 
+    // Initialisation de l'état de chargement
     this.loading = true;
     this.errors = {};
 
@@ -328,30 +520,42 @@ async addTask() {
         });
 
         if (response.ok) {
-            const task = await response.json();
-            this.tasks.unshift(task);
+            // Traitement de la réponse avec structure data
+            const newTask = await response.json();
+
+            // Mise à jour optimiste de l'interface
+            this.tasks.unshift(newTask);
             this.resetForm();
             this.showMessage('Tâche ajoutée avec succès !');
+
+            // Rechargement des statistiques
             await this.loadStats();
         } else {
-            const errors = await response.json();
-            this.errors = errors.errors || {};
+            // Gestion des erreurs de validation serveur
+            const errorData = await response.json();
+            this.errors = errorData.errors || {};
         }
     } catch (error) {
+        console.error('Erreur lors de l\'ajout:', error);
         this.showMessage('Erreur lors de l\'ajout de la tâche', 'error');
     } finally {
         this.loading = false;
     }
-},
+}
 ```
+
+Cette méthode illustre la gestion complète d'une requête API avec validation côté client, traitement des réponses structurées
+et mise à jour optimiste de l'interface utilisateur.
 
 ### Méthode `updateTask()`
 
-_Met à jour une tâche existante._
+_La méthode **`updateTask()`** gère la modification des tâches existantes.
+Elle suit le même pattern de traitement des réponses JSON structurées que la méthode **`addTask()`**._
 
 ```javascript
-// Modifier une tâche
+// Modifier une tâche existante via l'API REST
 async updateTask() {
+    // Validation préalable des données
     if (!this.form.title.trim()) {
         this.errors.title = 'Le titre est obligatoire';
         return;
@@ -371,19 +575,28 @@ async updateTask() {
         });
 
         if (response.ok) {
+            // Extraction des données de la réponse structurée
             const updatedTask = await response.json();
-            const index = this.tasks.findIndex(t => t.id === updatedTask.id);
-            if (index !== -1) {
-                this.tasks[index] = updatedTask;
+
+            // Mise à jour locale de la tâche modifiée
+            const taskIndex = this.tasks.findIndex(task => task.id === updatedTask.id);
+            if (taskIndex  !== -1) {
+                this.tasks[taskIndex] = updatedTask;
             }
+
+            // Réinitialisation du mode édition
             this.cancelEdit();
             this.showMessage('Tâche mise à jour !');
+
+            // Actualisation des statistiques
             await this.loadStats();
         } else {
+            // Traitement des erreurs de validation
             const errors = await response.json();
             this.errors = errors.errors || {};
         }
     } catch (error) {
+        console.error('Erreur lors de la mise à jour:', error);
         this.showMessage('Erreur lors de la mise à jour', 'error');
     } finally {
         this.loading = false;
@@ -393,10 +606,11 @@ async updateTask() {
 
 ### Méthode `toggleTask()`
 
-_Bascule l'état d'une tâche._
+_La méthode **`toggleTask()`** bascule l'état de complétion d'une tâche via l'endpoint API spécialisé.
+Elle traite la réponse JSON structurée pour mettre à jour l'interface utilisateur._
 
 ```javascript
-// Basculer l'état d'une tâche
+// Basculer l'état de complétion d'une tâche
 async toggleTask(task) {
     this.loading = true;
 
@@ -409,15 +623,23 @@ async toggleTask(task) {
         });
 
         if (response.ok) {
+            // Traitement de la réponse avec extraction des données
             const updatedTask = await response.json();
-            const index = this.tasks.findIndex(t => t.id === task.id);
-            if (index !== -1) {
-                this.tasks[index] = updatedTask;
+
+            // Localisation et mise à jour de la tâche dans la liste
+            const taskIndex = this.tasks.findIndex(taskDB => taskDB.id === task.id);
+            if (taskIndex !== -1) {
+                this.tasks[taskIndex] = updatedTask;
             }
             this.showMessage('Tâche mise à jour !');
+
+            // Recalcul des statistiques après modification
             await this.loadStats();
+        } else {
+            throw new Error('Erreur lors du basculement de l\'état');
         }
     } catch (error) {
+        console.error('Erreur lors du basculement:', error);
         this.showMessage('Erreur lors de la mise à jour', 'error');
     } finally {
         this.loading = false;
@@ -427,11 +649,13 @@ async toggleTask(task) {
 
 ### Méthode `deleteTask()`
 
-_Supprime une tâche._
+_La méthode **`deleteTask()`** gère la suppression des tâches avec confirmation utilisateur.
+Elle traite la réponse de suppression et met à jour l'interface de manière optimiste.._
 
 ```javascript
-// Supprimer une tâche
+// Supprimer une tâche avec confirmation utilisateur
 async deleteTask(task) {
+    // Demande de confirmation avant suppression
     if (!confirm('Êtes-vous sûr de vouloir supprimer cette tâche ?')) {
         return;
     }
@@ -447,11 +671,21 @@ async deleteTask(task) {
         });
 
         if (response.ok) {
+            // La suppression ne retourne que le message de confirmation
+            const responseData = await response.json();
+
+            // Suppression optimiste de la tâche de la liste locale
             this.tasks = this.tasks.filter(t => t.id !== task.id);
-            this.showMessage('Tâche supprimée !');
+
+            this.showMessage('Tâche supprimée avec succès !');
+
+            // Mise à jour des statistiques après suppression
             await this.loadStats();
+        } else {
+            throw new Error('Erreur lors de la suppression');
         }
     } catch (error) {
+        console.error('Erreur lors de la suppression:', error);
         this.showMessage('Erreur lors de la suppression', 'error');
     } finally {
         this.loading = false;
@@ -459,9 +693,13 @@ async deleteTask(task) {
 },
 ```
 
+## **Méthodes Utilitaires et de Gestion d'État**
+
+_Ces méthodes gèrent l'état local du composant sans interaction avec l'API, maintenant la cohérence de l'expérience utilisateur._
+
 ### Méthode `editTask()`
 
-_Démarre l'édition d'une tâche._
+_Permet de démarrer le mode édition d'une tâche._
 
 ```javascript
 // Commencer l'édition
@@ -477,10 +715,10 @@ editTask(task) {
 
 ### Méthode `cancelEdit()`
 
-_Annule l'édition en cours._
+_Permet d'annuler le mode édition et réinitialiser l'état._
 
 ```javascript
-// Annuler l'édition
+// Annuler le mode édition et réinitialiser l'état
 cancelEdit() {
     this.editingTask = null;
     this.resetForm();
@@ -489,10 +727,10 @@ cancelEdit() {
 
 ### Méthode `resetForm()`
 
-_Réinitialise le formulaire._
+_Permet de réinitialiser le formulaire à son état initial._
 
 ```javascript
-// Réinitialiser le formulaire
+// Réinitialiser le formulaire à son état initial
 resetForm() {
     this.form = {
         title: '',
@@ -504,10 +742,10 @@ resetForm() {
 
 ### Méthode `resetFilters()`
 
-_Réinitialise les filtres._
+_Permet de réinitialiser les filtres de recherche et de statut._
 
 ```javascript
-// Réinitialiser les filtres
+// Réinitialiser les filtres de recherche et de statut
 resetFilters() {
     this.search = '';
     this.filter = 'all';
@@ -516,10 +754,10 @@ resetFilters() {
 
 ### Méthode `showMessage()`
 
-_Affiche un message à l'utilisateur._
+_Permet d'afficher un message temporaire à l'utilisateur._
 
 ```javascript
-// Afficher un message
+// Afficher un message temporaire à l'utilisateur
 showMessage(text, type = 'success') {
     this.message = text;
     setTimeout(() => {
@@ -530,110 +768,229 @@ showMessage(text, type = 'success') {
 
 ### Méthode `formatDate()`
 
-_Formate une date de manière lisible._
+_Permet de formater les dates pour l'affichage utilisateur._
 
 ```javascript
-// Formatage de date
+// Formater les dates pour l'affichage utilisateur
 formatDate(dateString) {
     const date = new Date(dateString);
     const now = new Date();
-    const diff = now - date;
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const timeDifference = now - date;
+    const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
 
-    if (days === 0) return 'aujourd\'hui';
-    if (days === 1) return 'hier';
-    if (days < 7) return `il y a ${days} jours`;
+    if (daysDifference === 0) return 'aujourd\'hui';
+    if (daysDifference === 1) return 'hier';
+    if (daysDifference < 7) return `il y a ${daysDifference} jours`;
 
     return date.toLocaleDateString('fr-FR');
-},
+}
 ```
 
 ### Propriété calculée `filteredTasks`
 
-_Computed property pour filtrer les tâches._
+_Cette propriété calculée démontre la réactivité d'Alpine.js en filtrant automatiquement les tâches selon les critères de recherche
+et de statut._
 
 ```javascript
-// Computed property pour les tâches filtrées
+// Propriété calculée pour le filtrage dynamique des tâches
 get filteredTasks() {
-    let filtered = this.tasks;
+    let filteredResults = this.tasks;
 
-    // Filtre par recherche
+    // Application du filtre de recherche textuelle
     if (this.search) {
-        filtered = filtered.filter(task =>
-            task.title.toLowerCase().includes(this.search.toLowerCase()) ||
-            (task.description && task.description.toLowerCase().includes(this.search.toLowerCase()))
+        const searchTerm  = this.search.toLowerCase();
+        filteredResults = filteredResults.filter(task =>
+            const titleMatch = task.title.toLowerCase().includes(searchTerm);
+            const descriptionMatch = task.description && task.description.toLowerCase().includes(searchTerm);
+            return titleMatch || descriptionMatch
         );
     }
 
-    // Filtre par statut
+    // Application du filtre de statut
     if (this.filter === 'completed') {
-        filtered = filtered.filter(task => task.completed);
+        filteredResults = filteredResults.filter(task => task.completed);
     } else if (this.filter === 'pending') {
-        filtered = filtered.filter(task => !task.completed);
+        filteredResults = filteredResults.filter(task => !task.completed);
     }
 
-    return filtered;
+    return filteredResults;
 }
 ```
 
-## Concepts Clés Alpine.js
+## **Concepts Clés Alpine.js**
+
+### Architecture Déclarative
+
+Alpine.js privilégie une approche déclarative où la logique est exprimée directement dans le HTML via des directives spécialisées.
+Cette philosophie rapproche le comportement de la présentation pour une meilleure lisibilité.
+
+### Directives Fondamentales
+
+```mermaid
+---
+title: "Directives lié à l'initialisation"
+config:
+    theme: 'neutral'
+---
+graph LR
+    A["Directives Alpine.js"] --> B[Initialisation]
+
+    B --> B1["x-data"]
+    B --> B2["x-init"]
+
+    style A fill:#e3e3f3
+    style B1 fill:#e3f3e3
+    style B2 fill:#e3f3e3
+```
+
+```mermaid
+---
+title: 'Directives lié aux Liaisons de Données'
+config:
+    theme: 'neutral'
+---
+graph LR
+    A["Directives Alpine.js"] --> C[Liaison de Données]
+
+    C --> C1["x-model"]
+    C --> C2["x-text"]
+    C --> C3["x-show"]
+
+    style A fill:#e3e3f3
+    style C1 fill:#e3f3e3
+    style C2 fill:#e3f3e3
+    style C3 fill:#e3f3e3
+```
+
+```mermaid
+---
+title: "Directives lié aux Gestions d'Événements"
+config:
+    theme: 'neutral'
+---
+graph LR
+    A["Directives Alpine.js"] --> D[Gestion d'Événements]
+
+    D --> D1["@click"]
+    D --> D2["@submit"]
+    D --> D3["@keyup"]
+
+    style A fill:#e3e3f3
+    style D1 fill:#e3f3e3
+    style D2 fill:#e3f3e3
+    style D3 fill:#e3f3e3
+```
+
+```mermaid
+---
+title: 'Directives lié aux rendus Conditionnels'
+config:
+    theme: 'neutral'
+---
+graph LR
+    A["Directives Alpine.js"] --> E[Rendu Conditionnel]
+
+    E --> E1["x-if"]
+    E --> E2["x-for"]
+    E --> E3[":class"]
+
+    style A fill:#e3e3f3
+    style E1 fill:#e3f3e3
+    style E2 fill:#e3f3e3
+    style E3 fill:#e3f3e3
+```
+
+```mermaid
+---
+title: 'Directives lié aux Transitions'
+config:
+    theme: 'neutral'
+---
+graph LR
+    A["Directives Alpine.js"] --> F[Transitions]
+
+    F --> F1["x-transition"]
+    F --> F2["x-transition:enter"]
+    F --> F3["x-transition:leave"]
+
+    style A fill:#e3e3f3
+    style F1 fill:#e3f3e3
+    style F2 fill:#e3f3e3
+    style F3 fill:#e3f3e3
+```
+
+<br />
 
 :::danger Urgent
-Il est important de comprendre cette partie afin de pouvoir implémenter ce concept dans le fichier HTML.
+Il est important de comprendre cette partie afin de pouvoir implémenter ce concept dans nos fichiers HTML.
 :::
 
 ### 1. Initialisation du composant
 
-```html
-<!-- Initialise le composant Alpine.js -->
-x-data="taskManager()"
+> Les directives d'initialisation établissent le contexte Alpine.js et configurent l'état initial du composant.
 
-<!-- Exécute la méthode init() au chargement -->
-x-init="init()"
+```html
+<!-- Initialisation du composant avec les données -->
+<div x-data="taskManager()">
+    <!-- Exécution automatique lors de l'initialisation -->
+    <div x-init="init()">
+        <!-- Contenu du composant ici ... -->
+    </div>
+</div>
 ```
 
 ### 2. Liaison de données
 
 ```html
-<!-- Liaison bidirectionnelle -->
-x-model="form.title"
+<!-- Liaison bidirectionnelle avec le modèle -->
+<input x-model="form.title" type="text" placeholder="Titre de la tâche" />
 
-<!-- Affichage de texte -->
-x-text="task.title"
+<!-- Affichage de texte dynamique -->
+<h3 x-text="task.title"></h3>
 
 <!-- Affichage conditionnel -->
-x-show="loading"
+<div x-show="loading">Chargement en cours...</div>
 ```
 
 ### 3. Gestion d'événements
 
+> Les directives d'événements connectent les interactions utilisateur aux méthodes du composant.
+
 ```html
-<!-- Clic sur bouton -->
-@click="addTask()"
+<!-- Gestion du clic sur un bouton -->
+<button @click="addTask()">Ajouter une tâche</button>
 
-<!-- Soumission de formulaire -->
-@submit.prevent="addTask()"
+<!-- Soumission de formulaire avec une prévention du comportement par défaut -->
+<form @submit.prevent="addTask()">
+    <!-- Contenu du formulaire -->
+</form>
 
-<!-- Événement clavier -->
-@keyup.enter="addTask()"
+<!-- Gestion des événements clavier -->
+<input @keyup.enter="addTask()" type="text" />
 ```
 
-### 4. Boucles et conditions
+### 4. Rendu de Listes et Conditions
+
+> Les directives de rendu gèrent l'affichage dynamique du contenu selon l'état de l'application.
 
 ```html
-<!-- Boucle -->
+<!-- Rendu de liste avec clé unique -->
 <template x-for="task in filteredTasks" :key="task.id">
     <div x-text="task.title"></div>
 </template>
 
-<!-- Classe conditionnelle -->
-:class="{ 'completed': task.completed }"
+<!-- Classes conditionnelles -->
+<div :class="{ 'completed': task.completed, 'pending': !task.completed }">
+    <!-- Contenu de la tâche -->
+</div>
 
-<!-- Attribut conditionnel -->
-:disabled="loading"
+<!-- Attributs dynamiques -->
+<button :disabled="loading">Action</button>
 ```
 
-### 5. Transitions et animations
+### 5. Transitions et Animations
+
+> Les directives de transition créent des animations fluides lors des changements d'état.
 
 ```html
 <!-- Transition d'entrée -->
@@ -641,13 +998,25 @@ x-transition:enter="transition ease-out duration-300"
 x-transition:enter-start="opacity-0 transform translate-y-2"
 x-transition:enter-end="opacity-100 transform translate-y-0"
 
-<!-- Transition de sortie -->
-x-transition:leave="transition ease-in duration-150"
-x-transition:leave-start="opacity-100 transform translate-y-0"
-x-transition:leave-end="opacity-0 transform translate-y-2"
+<!-- Transition d'entrée & de sortie -->
+<div
+    x-show="message"
+    x-transition:enter="transition ease-out duration-300"
+    x-transition:enter-start="opacity-0 transform translate-y-2"
+    x-transition:enter-end="opacity-100 transform translate-y-0"
+    x-transition:leave="transition ease-in duration-150"
+    x-transition:leave-start="opacity-100 transform translate-y-0"
+    x-transition:leave-end="opacity-0 transform translate-y-2"
+>
+    Message affiché
+</div>
 ```
 
-## Vue Alpine.js Pure
+## **Vue Alpine.js Complète**
+
+### Structure HTML avec Intégration Alpine.js
+
+> L'interface utilisateur intègre toutes les directives Alpine.js dans une structure HTML sémantique et accessible.
 
 :::note Emplacement Fichier
 **`resources/views/alpine-tasks.blade.php`**
@@ -669,7 +1038,7 @@ x-transition:leave-end="opacity-0 transform translate-y-2"
     </head>
     <body class="bg-gray-100">
         <div class="min-h-screen">
-            <!-- Header -->
+            <!-- En-tête de l'application -->
             <header class="bg-white shadow-sm border-b">
                 <div class="max-w-4xl mx-auto px-6 py-4">
                     <div class="flex items-center justify-between">
@@ -692,7 +1061,7 @@ x-transition:leave-end="opacity-0 transform translate-y-2"
                         </div>
                     </div>
                     <div class="mt-2 text-sm text-gray-600">
-                        Étape 4:
+                        Étape 3:
                         <span class="text-green-600 font-medium"
                             >Réactivité Alpine.js 🏔️</span
                         >
@@ -700,10 +1069,10 @@ x-transition:leave-end="opacity-0 transform translate-y-2"
                 </div>
             </header>
 
-            <!-- Application Alpine.js -->
+            <!-- Application principale avec Alpine.js -->
             <main class="py-8" x-data="taskManager()" x-init="init()">
                 <div class="max-w-4xl mx-auto px-6">
-                    <!-- Messages -->
+                    <!-- Messages utilisateur -->
                     <div
                         x-show="message"
                         x-transition:enter="transition ease-out duration-300"
@@ -725,7 +1094,7 @@ x-transition:leave-end="opacity-0 transform translate-y-2"
                         </div>
                     </div>
 
-                    <!-- Bannière Alpine.js -->
+                    <!-- Bannière informative Alpine.js -->
                     <div
                         class="mb-6 p-4 bg-green-50 border-l-4 border-green-400"
                     >
@@ -743,7 +1112,7 @@ x-transition:leave-end="opacity-0 transform translate-y-2"
                         </div>
                     </div>
 
-                    <!-- Tableau de bord statistique -->
+                    <!-- Tableau de bord des statistiques -->
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
                         <div class="bg-white p-4 rounded-lg shadow text-center">
                             <div
@@ -1040,323 +1409,7 @@ x-transition:leave-end="opacity-0 transform translate-y-2"
         <script>
             function taskManager() {
                 return {
-                    // État des données
-                    tasks: [],
-                    stats: {
-                        total: 0,
-                        completed: 0,
-                        pending: 0,
-                        completion_rate: 0,
-                    },
-                    form: {
-                        title: '',
-                        description: '',
-                    },
-                    editingTask: null,
-                    search: '',
-                    filter: 'all',
-                    loading: false,
-                    message: '',
-                    errors: {},
-
-                    // Initialisation
-                    async init() {
-                        await this.loadTasks();
-                        await this.loadStats();
-                    },
-
-                    // Charger les tâches
-                    async loadTasks() {
-                        try {
-                            const response = await fetch('/api/tasks');
-                            this.tasks = await response.json();
-                        } catch (error) {
-                            this.showMessage(
-                                'Erreur lors du chargement des tâches',
-                                'error',
-                            );
-                        }
-                    },
-
-                    // Charger les statistiques
-                    async loadStats() {
-                        try {
-                            const response = await fetch('/api/tasks/stats');
-                            this.stats = await response.json();
-                        } catch (error) {
-                            console.error(
-                                'Erreur lors du chargement des statistiques:',
-                                error,
-                            );
-                        }
-                    },
-
-                    // Ajouter une tâche
-                    async addTask() {
-                        if (!this.form.title.trim()) {
-                            this.errors.title = 'Le titre est obligatoire';
-                            return;
-                        }
-
-                        this.loading = true;
-                        this.errors = {};
-
-                        try {
-                            const response = await fetch('/api/tasks', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'X-CSRF-TOKEN': document
-                                        .querySelector(
-                                            'meta[name="csrf-token"]',
-                                        )
-                                        .getAttribute('content'),
-                                },
-                                body: JSON.stringify(this.form),
-                            });
-
-                            if (response.ok) {
-                                const task = await response.json();
-                                this.tasks.unshift(task);
-                                this.resetForm();
-                                this.showMessage('Tâche ajoutée avec succès !');
-                                await this.loadStats();
-                            } else {
-                                const errors = await response.json();
-                                this.errors = errors.errors || {};
-                            }
-                        } catch (error) {
-                            this.showMessage(
-                                "Erreur lors de l'ajout de la tâche",
-                                'error',
-                            );
-                        } finally {
-                            this.loading = false;
-                        }
-                    },
-
-                    // Modifier une tâche
-                    async updateTask() {
-                        if (!this.form.title.trim()) {
-                            this.errors.title = 'Le titre est obligatoire';
-                            return;
-                        }
-
-                        this.loading = true;
-                        this.errors = {};
-
-                        try {
-                            const response = await fetch(
-                                `/api/tasks/${this.editingTask.id}`,
-                                {
-                                    method: 'PUT',
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                        'X-CSRF-TOKEN': document
-                                            .querySelector(
-                                                'meta[name="csrf-token"]',
-                                            )
-                                            .getAttribute('content'),
-                                    },
-                                    body: JSON.stringify(this.form),
-                                },
-                            );
-
-                            if (response.ok) {
-                                const updatedTask = await response.json();
-                                const index = this.tasks.findIndex(
-                                    (t) => t.id === updatedTask.id,
-                                );
-                                if (index !== -1) {
-                                    this.tasks[index] = updatedTask;
-                                }
-                                this.cancelEdit();
-                                this.showMessage('Tâche mise à jour !');
-                                await this.loadStats();
-                            } else {
-                                const errors = await response.json();
-                                this.errors = errors.errors || {};
-                            }
-                        } catch (error) {
-                            this.showMessage(
-                                'Erreur lors de la mise à jour',
-                                'error',
-                            );
-                        } finally {
-                            this.loading = false;
-                        }
-                    },
-
-                    // Basculer l'état d'une tâche
-                    async toggleTask(task) {
-                        this.loading = true;
-
-                        try {
-                            const response = await fetch(
-                                `/api/tasks/${task.id}/toggle`,
-                                {
-                                    method: 'PATCH',
-                                    headers: {
-                                        'X-CSRF-TOKEN': document
-                                            .querySelector(
-                                                'meta[name="csrf-token"]',
-                                            )
-                                            .getAttribute('content'),
-                                    },
-                                },
-                            );
-
-                            if (response.ok) {
-                                const updatedTask = await response.json();
-                                const index = this.tasks.findIndex(
-                                    (t) => t.id === task.id,
-                                );
-                                if (index !== -1) {
-                                    this.tasks[index] = updatedTask;
-                                }
-                                this.showMessage('Tâche mise à jour !');
-                                await this.loadStats();
-                            }
-                        } catch (error) {
-                            this.showMessage(
-                                'Erreur lors de la mise à jour',
-                                'error',
-                            );
-                        } finally {
-                            this.loading = false;
-                        }
-                    },
-
-                    // Supprimer une tâche
-                    async deleteTask(task) {
-                        if (
-                            !confirm(
-                                'Êtes-vous sûr de vouloir supprimer cette tâche ?',
-                            )
-                        ) {
-                            return;
-                        }
-
-                        this.loading = true;
-
-                        try {
-                            const response = await fetch(
-                                `/api/tasks/${task.id}`,
-                                {
-                                    method: 'DELETE',
-                                    headers: {
-                                        'X-CSRF-TOKEN': document
-                                            .querySelector(
-                                                'meta[name="csrf-token"]',
-                                            )
-                                            .getAttribute('content'),
-                                    },
-                                },
-                            );
-
-                            if (response.ok) {
-                                this.tasks = this.tasks.filter(
-                                    (t) => t.id !== task.id,
-                                );
-                                this.showMessage('Tâche supprimée !');
-                                await this.loadStats();
-                            }
-                        } catch (error) {
-                            this.showMessage(
-                                'Erreur lors de la suppression',
-                                'error',
-                            );
-                        } finally {
-                            this.loading = false;
-                        }
-                    },
-
-                    // Commencer l'édition
-                    editTask(task) {
-                        this.editingTask = task;
-                        this.form = {
-                            title: task.title,
-                            description: task.description || '',
-                        };
-                        this.errors = {};
-                    },
-
-                    // Annuler l'édition
-                    cancelEdit() {
-                        this.editingTask = null;
-                        this.resetForm();
-                    },
-
-                    // Réinitialiser le formulaire
-                    resetForm() {
-                        this.form = {
-                            title: '',
-                            description: '',
-                        };
-                        this.errors = {};
-                    },
-
-                    // Réinitialiser les filtres
-                    resetFilters() {
-                        this.search = '';
-                        this.filter = 'all';
-                    },
-
-                    // Afficher un message
-                    showMessage(text, type = 'success') {
-                        this.message = text;
-                        setTimeout(() => {
-                            this.message = '';
-                        }, 3000);
-                    },
-
-                    // Formatage de date
-                    formatDate(dateString) {
-                        const date = new Date(dateString);
-                        const now = new Date();
-                        const diff = now - date;
-                        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-
-                        if (days === 0) return "aujourd'hui";
-                        if (days === 1) return 'hier';
-                        if (days < 7) return `il y a ${days} jours`;
-
-                        return date.toLocaleDateString('fr-FR');
-                    },
-
-                    // Computed property pour les tâches filtrées
-                    get filteredTasks() {
-                        let filtered = this.tasks;
-
-                        // Filtre par recherche
-                        if (this.search) {
-                            filtered = filtered.filter(
-                                (task) =>
-                                    task.title
-                                        .toLowerCase()
-                                        .includes(this.search.toLowerCase()) ||
-                                    (task.description &&
-                                        task.description
-                                            .toLowerCase()
-                                            .includes(
-                                                this.search.toLowerCase(),
-                                            )),
-                            );
-                        }
-
-                        // Filtre par statut
-                        if (this.filter === 'completed') {
-                            filtered = filtered.filter(
-                                (task) => task.completed,
-                            );
-                        } else if (this.filter === 'pending') {
-                            filtered = filtered.filter(
-                                (task) => !task.completed,
-                            );
-                        }
-
-                        return filtered;
-                    },
+                    // Il ne reste plus qu'à implémenter l'ensemble des scripts qui a été vu en amont.
                 };
             }
         </script>
@@ -1364,7 +1417,11 @@ x-transition:leave-end="opacity-0 transform translate-y-2"
 </html>
 ```
 
-## Route pour la Vue Alpine.js
+:::warning
+Veuillez ajouter le code JavaScript qui a été expliquer à l'emplacement attendu.
+:::
+
+## **Route pour la Vue Alpine.js**
 
 :::note Emplacement Fichier
 **`routes/web.php`**
