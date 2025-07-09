@@ -140,9 +140,45 @@ protected $messages = [
 ];
 ```
 
-:::danger A Expliquer mieux que ça
-
 ### Validation en temps réel
+
+:::info Comprendre le Mécanisme de Validation Dynamique
+La validation en temps réel constitue l'une des fonctionnalités les plus puissantes de Livewire.<br />
+**Elle permet de valider les données saisies par l'utilisateur instantanément**, sans attendre la soumission du formulaire. Cette approche
+améliore considérablement l'expérience utilisateur en fournissant un retour immédiat sur la validité des données.
+:::
+
+#### Le Cycle de Vie des Propriétés Livewire
+
+Lorsqu'une **propriété publique du composant Livewire est modifiée**, un cycle de validation automatique se déclenche.<br />
+Ce processus suit une séquence précise qui garantit la cohérence des données et la réactivité de l'interface.
+
+```mermaid
+---
+config:
+    theme: 'neutral'
+---
+graph TB
+    A[Utilisateur saisit<br />dans le champ] --> B[Propriété mise à jour]
+    B --> C[Méthode updated déclenchée]
+    C --> D[Validation de la propriété]
+    D --> E{Validation réussie ?}
+    E -->|Oui| F[Interface mise à jour]
+    E -->|Non| G[Affichage erreur en temps réel]
+    F --> H[Utilisateur continue la saisie]
+    G --> H
+
+    style A fill:#e3e3f3
+    style E fill:#f3f3e3
+    style H fill:#e3f3e3
+```
+
+_Il ne nous reste plus qu'à implémenter la méthode Updated._
+
+### Méthode `updated()`
+
+> La méthode **`updated()`** représente le point d'entrée pour la validation en temps réel.<br />
+> Cette méthode intercepte automatiquement toute modification des propriétés publiques du composant.
 
 ```php
 // Validation en temps réel
@@ -152,7 +188,8 @@ public function updated($propertyName)
 }
 ```
 
-:::
+> La méthode **`validateOnly()`** applique uniquement les règles de validation correspondant à la propriété modifiée.<br />
+> Cette approche ciblée évite de valider l'ensemble du formulaire à chaque modification, optimisant ainsi les performances.
 
 ### Méthode `addTask()`
 
@@ -812,6 +849,38 @@ _Inutile d'êre redondant ici._
         </p>
     </div>
 </div>
+```
+
+### Directives principales couvertes
+
+```mermaid
+---
+config:
+    theme: 'neutral'
+---
+graph LR
+    A[Directives Livewire] --> B[Liaison de Données]
+    A --> C[Actions]
+    A --> D[États de Chargement]
+
+    B --> B1(wire:model.live)
+    B --> B2(wire:model.blur)
+
+    C --> C1(wire:click)
+    C --> C2(wire:submit)
+
+    D --> D1(wire:loading.attr)
+    D --> D2(wire:loading.remove)
+    D --> D3(wire:loading)
+
+    style A fill:#e3e3f3
+    style B1 fill:#e3f3e3
+    style B2 fill:#e3f3e3
+    style C1 fill:#e3f3e3
+    style C2 fill:#e3f3e3
+    style D1 fill:#e3f3e3
+    style D2 fill:#e3f3e3
+    style D3 fill:#e3f3e3
 ```
 
 ## **Route Simplifiée**
