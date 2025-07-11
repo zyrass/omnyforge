@@ -13,7 +13,7 @@ import type { SidebarsConfig } from '@docusaurus/plugin-content-docs';
  */
 
 const sidebars: SidebarsConfig = {
-    cyberDevSecOpsSidebar: ['introduction'],
+    cyberDevSecOpsSidebar: ['introduction', 'chiffrement'],
 };
 
 export default sidebars;
