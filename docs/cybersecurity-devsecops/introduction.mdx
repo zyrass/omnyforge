@@ -1,61 +1,535 @@
-# Introduction
+---
+# title: Introduction générale à la cybersécurité et documentation associée
+description: Présentation de la structure documentaire, des outils, des bonnes pratiques fondamentales, incluant cybersécurité, administration système, réseau, DevSecOps, développement web.
+---
 
-## SDSI et méthodes projet
+# Introduction générale
 
-Le SDSI s'articule autour de méthodologies éprouvées :
+_Introduction générale à la cybersécurité et documentation associée._
 
--   **Conception** : [Merise → lien vers Développement]
--   **Gestion projet** : Cycle en V, Agile
--   **Gouvernance** : COBIT, ITIL
+## **Objectif et public visé**
 
-## Cybersécurité
+Cette documentation vise à fournir une **base complète, claire et structurée** pour maîtriser la cybersécurité moderne, de l'initiation à l'expertise avancée.
 
-🛡️ Cybersécurité (97/100)
-Cryptographie et PKI
+**Public visé** :
 
-Chiffrement : symétrique (AES), asymétrique (RSA, ECC), hybride
-Hachage : SHA-256, bcrypt, rainbow tables, salt
-PKI : certificats, CA, révocation, HSM
-Protocoles : TLS 1.3, Perfect Forward Secrecy, key exchange
+-   Étudiants
+-   Professionnels en reconversion
+-   Administrateurs systèmes & réseaux
+-   Développeurs
+-   Décideurs techniques
+-   Auditeurs sécurité.
 
-Identity and Access Management
+## **Responsabilité éthique**
 
-Authentification : multi-facteur, biométrie, passwordless
-Autorisation : RBAC, ABAC, zero trust, privilege escalation
-Federation : SAML, OAuth 2.0, OpenID Connect
-PAM : privileged access, session recording, just-in-time access
+:::danger Avertissement éthique
+**Toutes les informations, outils et techniques présentés dans cette documentation doivent être utilisés uniquement dans un cadre strictement légal, avec l’accord explicite des détenteurs des systèmes ou réseaux audités**.
 
-Vulnérabilités et exploitation
+_Aucun usage malveillant ne saurait engager la responsabilité de l’auteur ou de l’hébergeur de cette documentation._
+:::
 
-OWASP Top 10 : injection, broken auth, sensitive data, XXE, etc.
-Common exploits : buffer overflow, privilege escalation, lateral movement
-Vulnerability assessment : scanning, prioritization, remediation
-Penetration testing : methodology, tools (Metasploit, Burp), reporting
+**Certifications** : RNCP 36399, CEH, OSCP, CISSP selon niveau
 
-Defensive security
+## **Parcours d'apprentissage recommandé**
 
-SIEM/SOAR : log correlation, automated response, threat hunting
-Endpoint protection : EDR, behavior analysis, sandboxing
-Network security : IDS/IPS, DLP, network segmentation
-Application security : WAF, RASP, secure coding practices
+### 🟢 Niveau 1 - Fondamentaux
 
-Threat intelligence et hunting
+_Durée estimée : 3-4 mois_
 
-Threat intelligence : IOCs, TTPs, threat actors, feeds
-Threat hunting : hypothesis-driven, behavioral analysis
-Malware analysis : static, dynamic, reverse engineering
-Forensics : acquisition, analysis, chain of custody, timeline
+**Prérequis** : Connaissances de base en informatique et réseaux<br />
+**Temps d'étude** : 8-10h/semaine
 
-Gouvernance et conformité
+-   Concepts de base de la cybersécurité
+-   Cryptographie fondamentale
+-   Administration système Linux de base
+-   Introduction aux réseaux et protocoles
+-   Premiers outils de monitoring
 
-Risk management : assessment, treatment, monitoring
-Frameworks : NIST, ISO 27001, CIS Controls, MITRE ATT&CK
-Incident response : preparation, detection, containment, eradication
-Business continuity : BCP, DRP, crisis management
+### 🟡 Niveau 2 - Intermédiaire
 
-Sécurité émergente
+_Durée estimée : 4-5 mois_
 
-Cloud security : CSPM, CWPP, shared responsibility
-DevSecOps : security in pipelines, shift-left, infrastructure security
-IoT/Mobile security : device security, mobile app security
-Zero Trust : architecture, implementation, verification
+**Prérequis** : Niveau 1 complété<br />
+**Temps d'étude** : 10-12h/semaine
+
+-   Pentest méthodologique
+-   Analyse de vulnérabilités
+-   Outils d'exploitation de base
+-   Sécurité applicative
+-   DevSecOps initiation
+
+### 🔴 Niveau 3 - Avancé
+
+_Durée estimée : 6+ mois_
+
+**Prérequis** : Niveau 2 complété + expérience pratique<br />
+**Temps d'étude** : 12-15h/semaine
+
+-   Forensic avancé
+-   Malware analysis
+-   Red Team operations
+-   Threat hunting
+-   Gouvernance SSI
+
+## **Métriques d'apprentissage**
+
+### Temps total estimé
+
+-   **Niveau 1** : ~120-150 heures
+-   **Niveau 2** : ~160-200 heures
+-   **Niveau 3** : ~240+ heures
+-   **Total parcours complet** : ~520-550 heures sur 12-18 mois
+
+Cette structure modulaire permet un apprentissage progressif et adapté à chaque profil, de l'initiation à l'expertise avancée en cybersécurité.
+
+## **FONDAMENTAUX THÉORIQUES**
+
+### Cryptographie et PKI
+
+**Temps estimé : 3-4 semaines**<br />
+**Niveau** : 1-2
+
+### Concepts de base
+
+-   [x] Chiffrement symétrique (AES, DES, 3DES, ChaCha20)
+-   [x] Chiffrement asymétrique (RSA, ECC, Diffie-Hellman)
+-   [x] Chiffrement hybride
+-   [ ] Fonctions de hachage (SHA, MD5, BLAKE2, Argon2)
+-   [ ] Signatures numériques et MAC
+-   [ ] Protocoles : TLS 1.3, Perfect Forward Secrecy
+-   [ ] PKI : certificats, CA, révocation, OCSP, HSM
+
+### Outils cryptographiques
+
+-   [ ] **OpenSSL** - Boîte à outils cryptographique
+-   [ ] **GPG/PGP** - Chiffrement de fichiers et emails
+-   [ ] **HashCat** - Cassage de hash avancé
+-   [ ] **John the Ripper** - Cassage de mots de passe
+-   [ ] **Hydra** - Brute force réseau
+-   [ ] **Medusa** - Brute force parallèle
+-   [ ] **Crunch** - Génération de wordlists
+-   [ ] **CeWL** - Extraction de mots depuis sites web
+-   [ ] **Hashcat-utils** - Utilitaires pour hashcat
+-   [ ] **RainbowCrack** - Attaques par tables arc-en-ciel
+
+### IAM ( Identity & Access Management )
+
+**Temps estimé : 2-3 semaines**<br />
+**Niveau** : 1-2
+
+-   [ ] Authentification : MFA, passwordless, biométrie, FIDO2
+-   [ ] Autorisation : RBAC, ABAC, Zero Trust, ZTNA
+-   [ ] Federation : SAML, OAuth 2.0, OpenID Connect, JWT
+-   [ ] PAM : gestion des accès privilégiés
+-   [ ] Active Directory et LDAP
+-   [ ] Kerberos et délégation
+
+## **RECONNAISSANCE ET OSINT**
+
+### OSINT et collecte d'informations
+
+**Temps estimé : 2-3 semaines**<br />
+**Niveau** : 1
+
+### Outils de reconnaissance passive
+
+-   [ ] **TheHarvester** - Collecte d'emails et sous-domaines
+-   [ ] **Maltego** - Analyse de liens et investigation
+-   [ ] **SpiderFoot** - Automatisation OSINT
+-   [ ] **Shodan** - Moteur de recherche IoT
+-   [ ] **Censys** - Analyse d'infrastructures internet
+-   [ ] **Recon-ng** - Framework de reconnaissance
+-   [ ] **FOCA** - Analyse de métadonnées documents
+-   [ ] **Metagoofil** - Extraction métadonnées Google
+-   [ ] **Sublist3r** - Énumération sous-domaines
+-   [ ] **Amass** - Cartographie réseau et DNS
+-   [ ] **Photon** - OSINT crawler rapide
+-   [ ] **Sherlock** - Recherche de pseudos sur réseaux sociaux
+
+### Outils DNS et sous-domaines
+
+-   [ ] **DNSrecon** - Énumération DNS avancée
+-   [ ] **DNSenum** - Énumération DNS classique
+-   [ ] **Fierce** - Scanner DNS
+-   [ ] **Subfinder** - Découverte sous-domaines passive
+-   [ ] **Assetfinder** - Recherche d'assets
+-   [ ] **Findomain** - Monitoring continu sous-domaines
+
+## **SCANNING ET ÉNUMÉRATION**
+
+### Découverte réseau
+
+**Temps estimé : 3-4 semaines**<br />
+**Niveau** : 1-2
+
+### Scanners de ports et services
+
+-   [ ] **Nmap** - Scanner réseau de référence
+-   [ ] **Masscan** - Scanner ultra-rapide
+-   [ ] **Zmap** - Scanner internet complet
+-   [ ] **RustScan** - Scanner moderne en Rust
+-   [ ] **Unicornscan** - Scanner asynchrone
+-   [ ] **Hping3** - Générateur de paquets personnalisés
+
+### Énumération de services
+
+-   [ ] **NBTscan** - Énumération NetBIOS
+-   [ ] **SNMPwalk** - Énumération SNMP
+-   [ ] **Onesixtyone** - Scanner SNMP
+-   [ ] **SMBclient** - Énumération SMB/CIFS
+-   [ ] **enum4linux** - Énumération Linux/Windows
+-   [ ] **smbmap** - Énumération partages SMB
+-   [ ] **rpcclient** - Client RPC Windows
+-   [ ] **showmount** - Énumération NFS
+
+## **ASSESSMENT DE VULNÉRABILITÉS**
+
+### Scanners de vulnérabilités
+
+**Temps estimé : 2-3 semaines**<br />
+**Niveau** : 1-2
+
+### Scanners génériques
+
+-   [ ] **OpenVAS** - Scanner de vulnérabilités open source
+-   [ ] **Nessus** - Scanner commercial de référence
+-   [ ] **Qualys VMDR** - Solution cloud enterprise
+-   [ ] **Rapid7 Nexpose** - Scanner enterprise
+-   [ ] **Nikto** - Scanner web spécialisé
+-   [ ] **Nuclei** - Scanner moderne basé templates
+-   [ ] **Wapiti** - Scanner web open source
+
+### Scanners spécialisés
+
+-   [ ] **SSLyze** - Audit SSL/TLS
+-   [ ] **testssl.sh** - Test SSL en ligne de commande
+-   [ ] **Lynis** - Audit sécurité système
+-   [ ] **Tiger** - Audit sécurité Unix
+-   [ ] **Chkrootkit** - Détection rootkits
+-   [ ] **rkhunter** - Détection rootkits et malwares
+-   [ ] **YARA** - Détection de motifs malwares
+
+## **EXPLOITATION ET PENTEST**
+
+### Frameworks d'exploitation
+
+**Temps estimé : 4-6 semaines**<br />
+**Niveau** : 2-3
+
+### Frameworks principaux
+
+-   [ ] **Metasploit** - Framework d'exploitation de référence
+-   [ ] **Cobalt Strike** - Plateforme Red Team commerciale
+-   [ ] **Empire** - Framework post-exploitation PowerShell
+-   [ ] **Covenant** - Framework .NET C2
+-   [ ] **Sliver** - Framework C2 moderne
+-   [ ] **PoshC2** - Framework Python/PowerShell
+
+### Outils d'exploitation web
+
+-   [ ] **Burp Suite** - Proxy intercepteur web complet
+-   [ ] **OWASP ZAP** - Proxy web open source
+-   [ ] **SQLmap** - Exploitation SQL injection
+-   [ ] **NoSQLMap** - Exploitation NoSQL injection
+-   [ ] **XSStrike** - Détection et exploitation XSS
+-   [ ] **Commix** - Exploitation command injection
+-   [ ] **wfuzz** - Fuzzing applications web
+-   [ ] **ffuf** - Fuzzing web rapide
+-   [ ] **Gobuster** - Bruteforce directories/DNS
+-   [ ] **dirb** - Scanner de répertoires web
+
+### Exploitation système
+
+-   [ ] **Exploit-DB** - Base de données d'exploits
+-   [ ] **SearchSploit** - Recherche locale exploits
+-   [ ] **MSFvenom** - Générateur de payloads
+-   [ ] **Veil** - Générateur de payloads furtifs
+-   [ ] **TheFatRat** - Générateur de backdoors
+-   [ ] **Social Engineer Toolkit (SET)** - Ingénierie sociale
+
+## **POST-EXPLOITATION ET PIVOTING**
+
+### Maintien d'accès
+
+**Temps estimé : 3-4 semaines**<br />
+**Niveau** : 2-3
+
+### Outils de persistance
+
+-   [ ] **Mimikatz** - Extraction identifiants Windows
+-   [ ] **BloodHound** - Analyse Active Directory
+-   [ ] **PowerView** - Reconnaissance Active Directory
+-   [ ] **Rubeus** - Outils Kerberos
+-   [ ] **Impacket** - Outils réseau Python
+-   [ ] **CrackMapExec** - Post-exploitation réseau
+-   [ ] **Evil-WinRM** - Shell WinRM malveillant
+-   [ ] **PowerShell Empire** - Agents PowerShell
+
+### Pivoting et tunneling
+
+-   [ ] **Proxychains** - Chaînage de proxies
+-   [ ] **SSHuttle** - VPN via SSH
+-   [ ] **Chisel** - Tunneling TCP/UDP rapide
+-   [ ] **Socat** - Relais réseau bidirectionnel
+-   [ ] **Netcat/Ncat** - Couteau suisse réseau
+-   [ ] **Plink** - Client SSH Windows
+
+## **ANALYSE RÉSEAU**
+
+### Capture et analyse de trafic
+
+**Temps estimé : 3-4 semaines**<br />
+**Niveau** : 1-2
+
+### Analyseurs de protocoles
+
+-   [ ] **Wireshark** - Analyseur de protocoles graphique
+-   [ ] **Tshark** - Wireshark en ligne de commande
+-   [ ] **TCPdump** - Capture de paquets Unix/Linux
+-   [ ] **Windump** - TCPdump pour Windows
+-   [ ] **Zeek (Bro)** - Analyseur de trafic réseau
+-   [ ] **Moloch** - Indexation et recherche paquets
+-   [ ] **NetworkMiner** - Analyseur forensic réseau
+
+### Monitoring et détection
+
+-   [ ] **Snort** - IDS/IPS de référence
+-   [ ] **Suricata** - IDS/IPS multi-threadé
+-   [ ] **OSSEC** - HIDS multi-plateforme
+-   [ ] **Wazuh** - SIEM et XDR open source
+-   [ ] **Security Onion** - Distribution sécurité réseau
+-   [ ] **pfSense** - Firewall et routeur open source
+-   [ ] **OPNsense** - Firewall FreeBSD avancé
+
+## **SÉCURITÉ WIRELESS**
+
+### Audit Wi-Fi et Bluetooth
+
+**Temps estimé : 2-3 semaines**<br />
+**Niveau** : 2
+
+### Outils Wi-Fi
+
+-   [ ] **Aircrack-ng** - Suite complète audit Wi-Fi
+-   [ ] **Wifite** - Automatisation attaques Wi-Fi
+-   [ ] **Kismet** - Détecteur réseau sans fil
+-   [ ] **Reaver** - Attaque WPS
+-   [ ] **Bully** - Alternative Reaver
+-   [ ] **Pixiewps** - Exploitation faille WPS
+-   [ ] **hcxdumptool** - Capture handshakes modernes
+-   [ ] **hcxpcaptool** - Conversion captures hashcat
+-   [ ] **WiFi-Pumpkin** - Framework rogue AP
+-   [ ] **Fluxion** - Attaque rogue AP social engineering
+
+### Bluetooth et autres
+
+-   [ ] **BlueZ** - Stack Bluetooth Linux
+-   [ ] **Btscanner** - Scanner Bluetooth
+-   [ ] **Spooftooph** - Spoofing Bluetooth
+-   [ ] **Ubertooth** - Analyse Bluetooth LE
+-   [ ] **HackRF** - SDR pour analyse radio
+
+## **FORENSIC ET RÉPONSE À INCIDENT**
+
+### Investigation numérique
+
+**Temps estimé : 4-6 semaines**<br />
+**Niveau** : 2-3
+
+### Acquisition et imagerie
+
+-   [ ] **dd** - Copie bit à bit Unix/Linux
+-   [ ] **dc3dd** - Version améliorée de dd
+-   [ ] **ddrescue** - Récupération données endommagées
+-   [ ] **FTK Imager** - Imagerie forensic Windows
+-   [ ] **Guymager** - Interface graphique dd
+-   [ ] **PALADIN** - Distribution forensic Linux
+
+### Analyse filesystem
+
+-   [ ] **Autopsy** - Interface graphique Sleuth Kit
+-   [ ] **The Sleuth Kit (TSK)** - Outils forensic filesystem
+-   [ ] **Foremost** - Récupération de fichiers par header
+-   [ ] **Scalpel** - Carving de fichiers avancé
+-   [ ] **PhotoRec** - Récupération photos/documents
+-   [ ] **TestDisk** - Récupération partitions
+-   [ ] **Bulk Extractor** - Extraction d'informations bulk
+
+### Analyse mémoire
+
+-   [ ] **Volatility** - Framework analyse mémoire
+-   [ ] **Rekall** - Alternative moderne Volatility
+-   [ ] **DumpIt** - Acquisition mémoire Windows
+-   [ ] **LiME** - Acquisition mémoire Linux
+-   [ ] **WinPmem** - Acquisition mémoire Windows
+-   [ ] **MemDump** - Utilitaires dump mémoire
+
+### Timeline et corrélation
+
+-   [ ] **log2timeline** - Création de timelines
+-   [ ] **Plaso** - Framework timeline forensic
+-   [ ] **Timesketch** - Analyse collaborative timeline
+-   [ ] **MACtime** - Analyse timeline Sleuth Kit
+
+## **ANALYSE DE MALWARES**
+
+### Reverse engineering
+
+**Temps estimé : 6-8 semaines**<br />
+**Niveau** : 3
+
+### Analyse statique
+
+-   [ ] **IDA Pro** - Désassembleur professionnel
+-   [ ] **Ghidra** - Suite reverse NSA
+-   [ ] **Radare2** - Framework reverse open source
+-   [ ] **Cutter** - Interface graphique Radare2
+-   [ ] **x64dbg** - Débogueur Windows
+-   [ ] **OllyDbg** - Débogueur Windows 32-bit
+-   [ ] **Hex-Rays** - Décompilateur IDA Pro
+
+### Analyse dynamique
+
+-   [ ] **Cuckoo Sandbox** - Bac à sable automatisé
+-   [ ] **ANY.RUN** - Sandbox interactif cloud
+-   [ ] **Joe Sandbox** - Analyse comportementale
+-   [ ] **VirtualBox/VMware** - Environnements isolés
+-   [ ] **Process Monitor** - Monitoring processus Windows
+-   [ ] **API Monitor** - Monitoring appels API
+-   [ ] **Wireshark** - Analyse trafic malware
+
+### Outils spécialisés
+
+-   [ ] **YARA** - Création de règles détection
+-   [ ] **PEiD** - Identification packers PE
+-   [ ] **UPX** - Packer/unpacker
+-   [ ] **PE-bear** - Éditeur PE
+-   [ ] **CFF Explorer** - Explorateur PE
+-   [ ] **Resource Hacker** - Éditeur ressources
+
+## **DEFENSIVE SECURITY**
+
+### Protection et monitoring
+
+**Temps estimé : 4-5 semaines**<br />
+**Niveau** : 1-2
+
+### Endpoint protection
+
+-   [ ] **ClamAV** - Antivirus open source
+-   [ ] **YARA** - Détection basée règles
+-   [ ] **Sysmon** - Logging avancé Windows
+-   [ ] **Auditd** - Audit système Linux
+-   [ ] **OSSEC** - HIDS multi-plateforme
+-   [ ] **Tripwire** - Monitoring intégrité fichiers
+-   [ ] **AIDE** - Alternative open source Tripwire
+
+### Durcissement système
+
+-   [ ] **Lynis** - Audit sécurité système
+-   [ ] **CIS-CAT** - Benchmarks CIS
+-   [ ] **OpenSCAP** - Framework conformité sécurité
+-   [ ] **Bastille** - Durcissement Unix/Linux
+-   [ ] **Fail2ban** - Protection brute force
+-   [ ] **DenyHosts** - Protection SSH
+-   [ ] **ConfigServer Firewall** - Firewall iptables
+
+### SIEM et logging
+
+-   [ ] **ELK Stack** - Elasticsearch, Logstash, Kibana
+-   [ ] **Splunk** - Plateforme SIEM commerciale
+-   [ ] **Graylog** - Gestion centralisée logs
+-   [ ] **OSSIM** - SIEM open source
+-   [ ] **Wazuh** - SIEM et XDR
+-   [ ] **Fluentd** - Collecteur de logs unifié
+
+## **DEVSECOPS ET INFRASTRUCTURES**
+
+### CI/CD sécurisé
+
+**Temps estimé : 3-4 semaines**<br />
+**Niveau** : 2-3
+
+### Conteneurisation sécurisée
+
+-   [ ] **Docker** - Conteneurisation d'applications
+-   [ ] **Kubernetes** - Orchestration de conteneurs
+-   [ ] **Helm** - Gestionnaire de packages K8s
+-   [ ] **Istio** - Service mesh sécurisé
+-   [ ] **Falco** - Détection d'anomalies conteneurs
+-   [ ] **Twistlock/Prisma** - Sécurité conteneurs
+-   [ ] **Clair** - Analyse vulnérabilités conteneurs
+
+### Automation et infrastructure
+
+-   [ ] **Ansible** - Automatisation infrastructure
+-   [ ] **Terraform** - Infrastructure as Code
+-   [ ] **Vault** - Gestion secrets HashiCorp
+-   [ ] **GitHub Actions** - CI/CD intégré GitHub
+-   [ ] **Jenkins** - Serveur CI/CD
+-   [ ] **GitLab CI** - CI/CD intégré GitLab
+
+### Analyse de code
+
+-   [ ] **SonarQube** - Analyse qualité code
+-   [ ] **Bandit** - Analyse sécurité Python
+-   [ ] **Brakeman** - Analyse sécurité Ruby/Rails
+-   [ ] **ESLint** - Linting JavaScript
+-   [ ] **Checkmarx** - SAST commercial
+-   [ ] **Veracode** - Analyse sécurité cloud
+
+## **GOUVERNANCE ET CONFORMITÉ**
+
+### Standards et frameworks
+
+**Temps estimé : 4-6 semaines**<br />
+**Niveau** : 2-3
+
+### Risk management
+
+-   [ ] **NIST Cybersecurity Framework**
+-   [ ] **ISO 27001/27002** - SMSI et contrôles
+-   [ ] **ISO 27005** - Gestion des risques
+-   [ ] **CIS Controls** - Contrôles critiques
+-   [ ] **COBIT** - Gouvernance IT
+-   [ ] **ITIL** - Gestion services IT
+
+### Conformité réglementaire
+
+-   [ ] **RGPD/GDPR** - Protection données
+-   [ ] **SOX** - Sarbanes-Oxley
+-   [ ] **HIPAA** - Confidentialité santé
+-   [ ] **PCI-DSS** - Sécurité cartes paiement
+-   [ ] **FedRAMP** - Cloud gouvernement US
+
+## **THREAT HUNTING ET CTI**
+
+### Chasse aux menaces
+
+**Temps estimé : 4-5 semaines**<br />
+**Niveau** : 3
+
+### Threat Intelligence
+
+-   [ ] **MISP** - Plateforme partage CTI
+-   [ ] **OpenCTI** - Plateforme CTI open source
+-   [ ] **YETI** - Your Everyday Threat Intelligence
+-   [ ] **ThreatConnect** - Plateforme CTI commerciale
+-   [ ] **Anomali** - CTI et détection
+-   [ ] **STIX/TAXII** - Standards échange CTI
+
+### Hunting tools
+
+-   [ ] **Sigma** - Règles détection génériques
+-   [ ] **HELK** - Hunting ELK stack
+-   [ ] **MozDef** - Défense en temps réel Mozilla
+-   [ ] **GRR** - Response framework Google
+-   [ ] **Velociraptor** - Hunting et forensic
+
+## **Synthèse**
+
+Cette introduction fixe les fondations d’une **documentation modulaire, progressive et pédagogique** :
+
+-   Chaque **catégorie = section principale**
+-   Chaque **outil / technologie = fiche technique dédiée**
+-   Structuration claire pour que **le lecteur puisse facilement trouver, comprendre et expérimenter en environnement isolé**
